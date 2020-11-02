@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>数据库工具类</title>
+      <link href="2020/11/02/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B7%A5%E5%85%B7%E7%B1%BB/"/>
+      <url>2020/11/02/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B7%A5%E5%85%B7%E7%B1%BB/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><p>写一个数据库工具类，不过感觉不太像工具类，更像一个数据库操作类hhh</p><p>写完后记起来，读取配置文件除了使用之前提到的Properties类，还有这个ResourceBundle类</p></blockquote><blockquote><p>普普通通User类</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class User &#123;    </span><br><span class="line">private String username;    </span><br><span class="line">private String password;    </span><br><span class="line">private String realname;    </span><br><span class="line">private String salary;    </span><br><span class="line">public User(String username, String password, String realname, String salary) &#123;           this.username &#x3D; username;        </span><br><span class="line">this.password &#x3D; password;        </span><br><span class="line">this.realname &#x3D; realname;        </span><br><span class="line">this.salary &#x3D; salary;    </span><br><span class="line">&#125;    </span><br><span class="line">public User()&#123;&#125;</span><br><span class="line">&#x2F;&#x2F;get,set,toString方法省略</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>SqlUtil类</p></blockquote><blockquote><p>jdbc.properties资源文件</p></blockquote><p>mysql_driver=com.mysql.cj.jdbc.Driver<br>my_url=jdbc:mysql://localhost:3306/oneforall?serverTimezone=GMT<br>        &amp;useSSL=false&amp;characterEncoding=utf-8<br>my_user=root<br>my_password=123456</p><p>teacher_url=jdbc:mysql://192.168.8.121:3306/hbnu?serverTimezone=GMT&amp;useSSL=false&amp;characterEncoding=utf-8<br>teacher_user=hbnujixin<br>teacher_password=123456</p><p>insert=insert into userinfo(username,password,realname,salary) values(?,?,?,?)<br>delete=delete from userinfo where username=?<br>query=select username,password,realname,salary from userinfo where username =?<br>queryAll=select username,password,realname,salary from userinfo<br>update= update userinfo set username=?,password=?,realname=?,salary=? where username=?</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>重装系统</title>
       <link href="2020/11/02/Win10%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/"/>
       <url>2020/11/02/Win10%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/</url>
