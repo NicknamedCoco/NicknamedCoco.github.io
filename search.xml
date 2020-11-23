@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>配置环境变量的理解</title>
+      <link href="2020/11/23/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%9A%84%E7%90%86%E8%A7%A3/"/>
+      <url>2020/11/23/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%9A%84%E7%90%86%E8%A7%A3/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><h4 id="不会吧，不会有人认为我懂环境变量吧hhhhh"><a href="#不会吧，不会有人认为我懂环境变量吧hhhhh" class="headerlink" title="不会吧，不会有人认为我懂环境变量吧hhhhh"></a>不会吧，不会有人认为我懂环境变量吧hhhhh</h4><p>昨天看了动力节点老杜的servlet视频，讲到了tomcat的环境变量的配置，非常牛皮。</p><p>重要的不是配置环境变量，重要的是，为什么要配环境变量</p><p>环境变量中的path永远要配到根目录中的bin目录中，bin中都是可执行文件，配置好后cmd中就可以直接执行bin中的文件，这是第一步</p><p>第二步，拿tomcat这个例子来说，把tomcat的bin目录配置到path中后<br>cmd直接启动tomcat，<code>startup</code>，会报错，提示你要配置CATALINA_HOME<br>每个项目肯定是要配置不同的xxx_HOME的，Tomcat要配置的就是CATALINA_HOME<br>卡特琳娜的家，有没有一种爱情的感觉hhhhh</p><p>第三步，配置一个CATALINA_HOME，用户变量还是系统变量随意，推荐用户变量<br>变量名：CATALINA_HOME，值就是tomcat的根目录</p><p>最后，配置好后，直接在cmd中输入<code>startup</code>就可以直接运行tomcat服务。<br>关闭的话，要改一下bin中shutdown.bat的文件名，因为会和window的关机命令有冲突</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 环境变量 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 环境变量 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>网络编程及注解简述</title>
       <link href="2020/11/17/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%8F%8A%E6%B3%A8%E8%A7%A3%E7%AE%80%E8%BF%B0/"/>
       <url>2020/11/17/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%8F%8A%E6%B3%A8%E8%A7%A3%E7%AE%80%E8%BF%B0/</url>
@@ -310,21 +335,19 @@
       <link href="2020/09/21/Java%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/"/>
       <url>2020/09/21/Java%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><center>Java安装及配置环境变量</center><ol><li>在<code>https://www.oracle.com/java/technologies/javase-downloads.html</code>下载java安装包。</li><li>因为12版本以后的Jdk没有jre,可以通过命令生成jre文件。打开命令窗口，切换到jdk安装目录<br>输入命令：<code>bin\jlink.exe --module-path jmods --add-modules java.desktop --output jre</code></li><li>配置环境变量<br>创建系统变量，JAVA_HOME，值为jdk的安装路径D:\java<br>在path中配置%JAVA_HOME%\bin，%JAVA_HOME%\jre\bin</li></ol>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><center>Java安装及配置环境变量</center>1. 在`https://www.oracle.com/java/technologies/javase-downloads.html`下载java安装包。2. 因为12版本以后的Jdk没有jre,可以通过命令生成jre文件。打开命令窗口，切换到jdk安装目录   输入命令：`bin\jlink.exe --module-path jmods --add-modules java.desktop --output jre`3. 配置环境变量   创建系统变量，JAVA_HOME，值为jdk的安装路径D:\java   在path中配置%JAVA_HOME%\bin，%JAVA_HOME%\jre\bin]]></content>
       
       
       <categories>
           
-          <category> Java </category>
+          <category> 环境变量 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Java </tag>
-            
-            <tag> 环境配置 </tag>
+            <tag> 环境变量 </tag>
             
         </tags>
       
