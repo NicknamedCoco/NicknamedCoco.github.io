@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>代理模式之动态代理</title>
+      <link href="2020/12/08/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/"/>
+      <url>2020/12/08/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><h4 id="代理模式概念"><a href="#代理模式概念" class="headerlink" title="代理模式概念"></a>代理模式概念</h4></blockquote><ul><li>代理模式能帮助接口的实现类扩展功能，提高程序的健壮性。</li><li>其基本原理为：接口实现类并不直接调用实现类中的方法，而是将该实现类对象，交给其他实现类去控制，这个其他实现类就是代理类。</li><li>根据代理类被创建的时间不同，可以分为两类：<ul><li>静态代理：在程序运行之前，由程序员创建或工具生成的代理类，总之，在程序运行之前，已经有一个明确的类作为代理类，比如Thread类</li><li>动态代理：在程序运行之前，并没有实际的class文件作为代理类，而是在内存中通过反射创建形成的代理类</li></ul></li></ul><blockquote><p>之前写过静态代理，今天把动态代理记录一下</p></blockquote><blockquote><h4 id="动态代理案例"><a href="#动态代理案例" class="headerlink" title="动态代理案例"></a>动态代理案例</h4></blockquote><p>Marry(Interface)</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Marry</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">happyMarry</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>You(接口实现类)</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">You</span> <span class="keyword">implements</span> <span class="title">Marry</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">happyMarry</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;春宵一刻值千金，GKD，GKD&quot;</span>);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>DynamicTest(测试类)</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        You you = <span class="keyword">new</span> You();</span><br><span class="line">        Marry proxy_you = (Marry) Proxy.newProxyInstance(you.getClass().getClassLoader(), </span><br><span class="line">        you.getClass().getInterfaces(), <span class="keyword">new</span> InvocationHandler() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> </span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">                    增强真实对象方法可以增强三处：</span></span><br><span class="line"><span class="comment">                        增强方法体：真实对象方法执行前后执行代理对象的方法，即对真实对象方法体的增强</span></span><br><span class="line"><span class="comment">                        增强参数：对真实对象方法参数进行修改，可以达到增强真实对象方法的参数</span></span><br><span class="line"><span class="comment">                        增强返回值：对真实对象方法返回值进行修改，将返回值类型该为其他类型，</span></span><br><span class="line"><span class="comment">                        可以达到增强真实对象方法的返回值</span></span><br><span class="line"><span class="comment">                    本例只演示了增强真实对象方法的方法体</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                System.out.println(<span class="string">&quot;杭州一套房！&quot;</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;给100万彩礼！&quot;</span>);</span><br><span class="line">                Object o = method.invoke(you, args);        <span class="comment">//通过反射，使得真实对象方法被执行</span></span><br><span class="line">                System.out.println(<span class="string">&quot;曾经不知道春宵一刻值千金是什么意思，现在终于领悟到了！&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> o;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        proxy_you.happyMarry();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 设计模式 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 设计模式 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JSP笔记</title>
       <link href="2020/12/07/JSP%E7%AC%94%E8%AE%B0/"/>
       <url>2020/12/07/JSP%E7%AC%94%E8%AE%B0/</url>
@@ -138,14 +163,14 @@
       
       <categories>
           
-          <category> Java </category>
+          <category> 设计模式 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Java </tag>
+            <tag> 设计模式 </tag>
             
         </tags>
       
