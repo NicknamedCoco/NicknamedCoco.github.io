@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Jackson的使用</title>
+      <link href="2020/12/23/Jackson%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+      <url>2020/12/23/Jackson%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><p>记录一下Jackson，为以后学习这个技术打前站~~<br>        Jackson也是一个操作json的工具</p></blockquote><blockquote><p>简单的例子</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">后端从数据库查询出数据，封装成一个list集合，转成如下格式：</span><br><span class="line">&#123;</span><br><span class="line"><span class="string">&quot;result&quot;</span>:<span class="string">&quot;成功&quot;</span>,</span><br><span class="line"><span class="string">&quot;data&quot;</span>:[&#123;<span class="string">&quot;id&quot;</span>:<span class="number">1</span>,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;江西&quot;</span>&#125;,&#123;<span class="string">&quot;id&quot;</span>:<span class="number">2</span>,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;成都&quot;</span>&#125;,&#123;<span class="string">&quot;id&quot;</span>:<span class="number">3</span>,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;湖北&quot;</span>&#125;]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ObjectMapper mapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">HashMap&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">map.put(<span class="string">&quot;data&quot;</span>,provincesList);<span class="comment">//provincesList是数据list集合</span></span><br><span class="line">map.put(<span class="string">&quot;result&quot;</span>,<span class="string">&quot;成功&quot;</span>);</span><br><span class="line">String s = mapper.writeValueAsString(map);</span><br><span class="line">System.out.println(s);</span><br><span class="line"></span><br><span class="line">最后后端把该数据直接返回给前端就OK了</span><br></pre></td></tr></table></figure><p>更多详细操作请访问<a href="https://yq.aliyun.com/articles/696266">Jackson文章</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Jackson </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>AJAX笔记</title>
       <link href="2020/12/22/AJAX%E7%AC%94%E8%AE%B0/"/>
       <url>2020/12/22/AJAX%E7%AC%94%E8%AE%B0/</url>
