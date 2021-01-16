@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Spring基础内容笔记</title>
+      <link href="2021/01/16/Spring%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/"/>
+      <url>2021/01/16/Spring%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><p>这里记录下spring的笔记</p><p>之前本来把spring笔记整理了一部分，但是放在网页上样式非常难看<br>所以直接把笔记放GitHub上算了</p><p>笔记分两部分</p><ul><li><a href="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/spring/Spring%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0.txt">spring的基础内容笔记</a></li><li><a href="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/spring/Spring%E6%B3%A8%E8%A7%A3%E7%AC%94%E8%AE%B0.txt">spring的注解笔记</a></li></ul></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> Web后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Spring </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>在Maven中配置Jquery</title>
       <link href="2021/01/11/%E5%9C%A8Maven%E4%B8%AD%E9%85%8D%E7%BD%AEJquery/"/>
       <url>2021/01/11/%E5%9C%A8Maven%E4%B8%AD%E9%85%8D%E7%BD%AEJquery/</url>
