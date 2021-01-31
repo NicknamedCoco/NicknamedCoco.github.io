@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>Bug之jdbcTemplate</title>
+      <link href="2021/01/31/Bug%E4%B9%8BjdbcTemplate/"/>
+      <url>2021/01/31/Bug%E4%B9%8BjdbcTemplate/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><p>使用jdbcTemplate时连接数据库获取数据封装到实体类中时</p><p>会因为数据库字段和实体类属性不一致，导致有些字段封装不上，</p><p>解决办法：jdbcTemplate使用sql查询数据时，使用别名</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">queryUser</span><span class="params">(String username)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//使用jdbcTemplate要求列名和实体类名一致，如果不一致需要使用别名</span></span><br><span class="line">        String sql=<span class="string">&quot;select username,pwd as password,email </span></span><br><span class="line"><span class="string">        from user_info where username = ?&quot;</span>;</span><br><span class="line">        User user = jdbcTemplate.queryForObject(sql, </span><br><span class="line">        <span class="keyword">new</span> BeanPropertyRowMapper&lt;User&gt;(User.class), username);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Bug </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Bug </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Bug之pom.xml依赖冲突</title>
+      <link href="2021/01/31/Bug%E4%B9%8Bpom-xml%E4%BE%9D%E8%B5%96%E5%86%B2%E7%AA%81/"/>
+      <url>2021/01/31/Bug%E4%B9%8Bpom-xml%E4%BE%9D%E8%B5%96%E5%86%B2%E7%AA%81/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><h6 id="Tomcat启动时报错：java-lang-NoSuchMethodError"><a href="#Tomcat启动时报错：java-lang-NoSuchMethodError" class="headerlink" title="Tomcat启动时报错：java.lang.NoSuchMethodError:"></a>Tomcat启动时报错：java.lang.NoSuchMethodError:</h6><h6 id="org-springframework-core-type-AnnotationMetadata-introspect-Ljava-lang"><a href="#org-springframework-core-type-AnnotationMetadata-introspect-Ljava-lang" class="headerlink" title="org.springframework.core.type.AnnotationMetadata.introspect(Ljava/lang/)"></a>org.springframework.core.type.AnnotationMetadata.introspect(Ljava/lang/)</h6></blockquote><blockquote><p>pom.xml文件</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--JdbcTemplate依赖--&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-jdbc&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.0.9.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;!--springmvc依赖--&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-webmvc&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.2.6.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">报错原因是spring-jdbc版本与spring-webmvc版本不一致，jdbcTemplate依赖会引入到</span><br><span class="line">spring的其他低版本依赖，而spring-webmvc依赖同样引入了相同的高版本依赖，导致依赖冲突。</span><br><span class="line">并且pom.xml依赖的先后顺序也有要求，低版本依赖配置在前，就会使用低版本依赖，不过最好还是版本相同。</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Bug </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Bug </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>BeanUtils</title>
       <link href="2021/01/17/BeanUtils/"/>
       <url>2021/01/17/BeanUtils/</url>
