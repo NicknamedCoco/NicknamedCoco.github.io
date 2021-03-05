@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>IDEA配置tomcat细节</title>
+      <link href="2021/03/05/IDEA%E9%85%8D%E7%BD%AEtomcat%E7%BB%86%E8%8A%82/"/>
+      <url>2021/03/05/IDEA%E9%85%8D%E7%BD%AEtomcat%E7%BB%86%E8%8A%82/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><p>IDEA配置Tomcat时需要的设置</p></blockquote><ul><li><p>打开tomcat根目录中的server.xml文件</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">&quot;8080&quot;</span> <span class="attr">protocol</span>=<span class="string">&quot;HTTP/1.1&quot;</span></span></span><br><span class="line"><span class="tag">               <span class="attr">connectionTimeout</span>=<span class="string">&quot;20000&quot;</span></span></span><br><span class="line"><span class="tag">               <span class="attr">redirectPort</span>=<span class="string">&quot;8443&quot;</span> <span class="attr">URIEncoding</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">添加URIEncoding=&quot;UTF-8&quot;属性</span><br></pre></td></tr></table></figure></li><li><p>IDEA运行tomcat时，控制台会出现乱码，打开tomcat根目录下的logging.properties</p><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">将UTF-8编码改成GBK格式</span></span><br><span class="line"><span class="meta">1catalina.org.apache.juli.AsyncFileHandler.encoding</span> = <span class="string">GBK</span></span><br><span class="line"><span class="meta">2localhost.org.apache.juli.AsyncFileHandler.encoding</span> = <span class="string">GBK</span></span><br><span class="line"><span class="meta">java.util.logging.ConsoleHandler.encoding</span> = <span class="string">GBK</span></span><br></pre></td></tr></table></figure></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> IDEA </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SpringMVC基础内容笔记</title>
       <link href="2021/03/05/SpringMVC%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/"/>
       <url>2021/03/05/SpringMVC%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/</url>
