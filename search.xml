@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>SpringMVC基础内容笔记</title>
+      <link href="2021/03/05/SpringMVC%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/"/>
+      <url>2021/03/05/SpringMVC%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><p>看了两个SpringMVC的视频，都是一些基础的内容<br>至此，学了Spring和SpringMVC的基础使用，底层很多东西还是不太懂<br>以后会持续学习这几个框架。以下是笔记，放在了github上，不然弄到markdown上<br>要花很多时间在格式样式上，很浪费时间。</p></blockquote><ul><li><p><a href="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springmvc/springmvc1.txt">springmvc笔记1</a></p></li><li><p><a href="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springmvc/springmvc2.txt">springmvc笔记2</a></p></li></ul><blockquote><p>未来在实习之前需要完成的目标，继续努力吧！</p></blockquote><ul><li><p>mybatis</p></li><li><p>springboot</p></li><li><p>elementUI/easyUI</p></li><li><p>Linux</p></li><li><p>bootstrap</p></li><li><p>hibernate</p></li><li><p>了解redis，docker</p></li><li><p>英语四级(这是一块心病)</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Web后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SpringMVC </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SpringMVC的文件上传和下载</title>
       <link href="2021/03/03/SpringMVC%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD/"/>
       <url>2021/03/03/SpringMVC%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD/</url>
