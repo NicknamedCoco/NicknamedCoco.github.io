@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Bug之PointCut注解报错</title>
+      <link href="2021/03/08/Bug%E4%B9%8BPointCut%E6%B3%A8%E8%A7%A3%E6%8A%A5%E9%94%99/"/>
+      <url>2021/03/08/Bug%E4%B9%8BPointCut%E6%B3%A8%E8%A7%A3%E6%8A%A5%E9%94%99/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><p>@PointCut注解，Spring中AOP的注解，使用报错.</p></blockquote><p>这个bug找了好久，原来是引入的依赖版本太低，我吐了</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">    AspectJ依赖</span></span><br><span class="line"><span class="comment">    aspectjweaver依赖包含aspectjrt</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.aspectj<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aspectjweaver<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.9.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Bug </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Bug </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>IDEA配置tomcat细节</title>
       <link href="2021/03/05/IDEA%E9%85%8D%E7%BD%AEtomcat%E7%BB%86%E8%8A%82/"/>
       <url>2021/03/05/IDEA%E9%85%8D%E7%BD%AEtomcat%E7%BB%86%E8%8A%82/</url>
