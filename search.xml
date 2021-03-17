@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Mybatis基础内容笔记</title>
+      <link href="2021/03/17/Mybatis%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/"/>
+      <url>2021/03/17/Mybatis%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><p>Mybatis</p></blockquote><p>最近终于把雷神网课中的mybatis框架基础使用看完了，学习效率太慢了，学校这边很多事情，害</p><p>学习笔记放在了github上了，<a href="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/mybatis/mybatis.txt">Mybatis</a></p><p>今天任务把SSM整合好放到github上</p><p>这个Mybatis视频有点老了，注解用的很少，而且基本没有什么太多源码，没有springmvc源码多<br>回头找其他视频看看</p><p>下一阶段主要是学习Springboot，还是老样子，看网课，做笔记，敲demo。。。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Web后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Mybatis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Bug之PointCut注解报错</title>
       <link href="2021/03/08/Bug%E4%B9%8BPointCut%E6%B3%A8%E8%A7%A3%E6%8A%A5%E9%94%99/"/>
       <url>2021/03/08/Bug%E4%B9%8BPointCut%E6%B3%A8%E8%A7%A3%E6%8A%A5%E9%94%99/</url>
