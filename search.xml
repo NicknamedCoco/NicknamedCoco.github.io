@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>SpringMVC之BindingAwareModelMap</title>
+      <link href="2021/04/04/SpringMVC%E4%B9%8BBindingAwareModelMap/"/>
+      <url>2021/04/04/SpringMVC%E4%B9%8BBindingAwareModelMap/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><p>随便聊聊</p></blockquote><p>我们都知道，控制器方法参数上，Model参数和Map参数，其实都是一个对象，即BindingAwareModelMap<br>被叫做隐含模型，向隐含模型中放的数据最终都会被放进request域中，隐含模型和@ModelAttribute注解<br>有着比较强的关联，我们来聊一聊。</p><p>@ModelAttribute注解，我不知道这个注解在开发中常不常用，但是，尚硅谷网课中提到，而且以大量篇幅，<br>所以就了解了一下。</p><ul><li>这个注解标在方法上，则该方法在控制器方法执行前被执行，并且如果该方法有返回值，则会将返回值类型的<br>首字母小写作为key，返回值作为value放进隐含模型中，如果@ModelAttribute注解指定了value，<br>则将指定的value，作为key，返回值作为value存放在隐含模型中。</li><li>控制器方法参数如果是自定义类型参数，则自定义类型参数会以自定义类型首字母小写作为key，从隐含模型中查找是否存在该类型的对象，如果存在则取出隐含模型中的对象赋值给自定义类型参数，然后再根据前端传递过来的参数进行赋值，<br>例如：隐含模型中有以user为key的对象，该对象的username=xixi，password=123456<br>控制器方法上自定义类型参数就是User类型，则会先从隐含模型中将user对象赋值给自定义类型User参<br>数，此时的user对象参数属性就是username=xixi,password=123456，如果前端此时又传递过来了user对<br>象参数，如果只传了username=万一，则user参数的属性变成了username=万一，password=123456</li><li>当控制器方法自定义类型参数经过从隐含模型中取出，前端传递参数，对参数进行更改后，又会将自定义类型<br>参数User，以类型首字母小写作为key，user对象作为value放进隐含模型中，<br>此时会覆盖掉原先的以user为key的对象。</li><li>如果控制器方法参数为自定义类型参数，且被@ModelAttribute注解标注，默认以自定义类型参数类型首字母<br>小写作为key在隐含模型中查找对应的对象，如果为注解指定了value，则会以注解value值作为key在隐含模型中查找对象，找到就赋值给参数上的自定义类型对象，当然了，你用不用@ModelAttribute注解，自定义类型参数都会去隐含模型中找对应类型的数据，使用了注解的意义在于，你可以根据注解的value，指定key去隐含模型中找数据。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Web后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SpringMVC </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SpringBoot之内容协商</title>
       <link href="2021/04/01/SpringBoot%E4%B9%8B%E5%86%85%E5%AE%B9%E5%8D%8F%E5%95%86/"/>
       <url>2021/04/01/SpringBoot%E4%B9%8B%E5%86%85%E5%AE%B9%E5%8D%8F%E5%95%86/</url>
