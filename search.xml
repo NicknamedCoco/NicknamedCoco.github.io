@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>SpringBoot基础笔记</title>
+      <link href="2021/04/21/SpringBoot%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/"/>
+      <url>2021/04/21/SpringBoot%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><h5 id="目前进度"><a href="#目前进度" class="headerlink" title="目前进度"></a>目前进度</h5></blockquote><p>终于把SpringBoot看完了，感觉自己效率还是比较慢的，没办法，专业课上还有计算机网络等等，<br>我看视频又想看完视频就去敲代码验证一下，写个博客总结一下，所以进度很慢，<br>目前个人熟悉使用Spring，SpringMVC，Mybatis，SpringBoot，MyBatisPlus这几个后端框架<br>其中对SpringMVC的原理比较熟悉，其他框架使用没问题，要说说底层的原理，还是不太行，得后期更加<br>细致的看哪些源码讲解，前端一块，很久之前学过，但技术就是这样，你不常用就容易忘掉，所以前端也比较薄弱</p><blockquote><h5 id="实习前要完成的任务"><a href="#实习前要完成的任务" class="headerlink" title="实习前要完成的任务"></a>实习前要完成的任务</h5></blockquote><ul><li>专业课的进度<br>还不知道能不能找的到实习工作，算法数据结构什么的没学过，专业课暂时只学了操作系统，数据库原理，<br>但仅限于了解的程度，操作系统学的还行吧，什么分页分段段页式存储等等还有个不错的认识，数据库原理<br>真的仅限于基础的Sql增删改查了，还有一门计算机网络正在学习，这门课挺复杂的，但是我正在看网课，也还行</li><li>开发中需要学习的<ul><li>Git，听说实际项目开发都要用，我现在只会基础的操作</li><li>mysql，只会基本的增删改查还是不太行，连三范式都不太懂，更何况事务，乐观悲观锁。</li><li>算法，数据结构，这一直是薄弱项。</li></ul></li></ul><p>SpringBoot笔记放在github上，写在博客上挺麻烦的，<a href="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springboot/springboot%E7%AC%94%E8%AE%B0.txt">springboot</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Web后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SpringBoot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SpringBoot之自定义starter</title>
       <link href="2021/04/20/SpringBoot%E4%B9%8B%E8%87%AA%E5%AE%9A%E4%B9%89starter/"/>
       <url>2021/04/20/SpringBoot%E4%B9%8B%E8%87%AA%E5%AE%9A%E4%B9%89starter/</url>
