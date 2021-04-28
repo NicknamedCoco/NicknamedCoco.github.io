@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Mysql基础内容笔记</title>
+      <link href="2021/04/28/Mysql%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/"/>
+      <url>2021/04/28/Mysql%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><p>最近把mysql基础内容过了一遍</p><p>mysql笔记放在了github，整理起来搞成一篇博客非常耗费时间，我已经没有多少时间了<br><a href="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/mysql/mysql%E7%AC%94%E8%AE%B0.txt">mysql笔记</a></p><p>目前缺少练手的项目，目前后端方面学的差不多了，前端方面之前学到Jquery那里<br>JavaScript感觉已经忘了差不多了，害。</p><p>5月份打算学习英语，英语四级心病啊啊啊啊，基础太差了我，四级一致是我的执念<br>6月份回顾基础知识，看面试题了，也不知道能不能找的到实习，听天由命了。。。</p></blockquote>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Mysql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Git的简单学习</title>
       <link href="2021/04/23/Git%E7%9A%84%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/"/>
       <url>2021/04/23/Git%E7%9A%84%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/</url>
