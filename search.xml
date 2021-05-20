@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>常用的设计模式</title>
+      <link href="2021/05/20/%E5%B8%B8%E7%94%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+      <url>2021/05/20/%E5%B8%B8%E7%94%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><p>常用的设计模式</p></blockquote><p>最近一段时间学习了设计模式方面的内容，总的来说，设计模式是为了解决不同场景下所面临问题的解决方案<br>使得我们的代码更加高效，高内聚，低耦合。</p><p>我学习了一些常用的设计模式：单例模式，工厂模式，代理模式，适配器模式，装饰器模式，<br>观察者模式，责任链模式，模板方法模式，并每一个设计模式都敲上代码实验。<br>个人觉得还是不够，有时候见山是山，见山不是山，见山还是山，真正学好设计模式就需要去看真实的应用场景<br>还是需要看优秀的代码，设计模式的学习还远远未止步，今后会不断学习。</p><p>学习设计模式的笔记已上传到github，<a href="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/design/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.txt">笔记</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 设计模式 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>类的加载顺序</title>
       <link href="2021/05/17/%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F/"/>
       <url>2021/05/17/%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F/</url>
