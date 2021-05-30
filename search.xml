@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Redis基础内容笔记</title>
+      <link href="2021/05/30/Redis%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/"/>
+      <url>2021/05/30/Redis%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><blockquote><p>Redis基础笔记</p></blockquote><p>Redis中大体的基本内容都比较了解，但却没有实际开发经验，实践方面还非常匮乏<br>Redis笔记上传到github上了，<a href="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/redis/redis%E7%AC%94%E8%AE%B0.txt">redis笔记</a></p><p>下个目标看nginx网课，6月份就主要学学前端内容了。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Redis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>搭建Redis集群笔记</title>
       <link href="2021/05/29/%E6%90%AD%E5%BB%BARedis%E9%9B%86%E7%BE%A4%E7%AC%94%E8%AE%B0/"/>
       <url>2021/05/29/%E6%90%AD%E5%BB%BARedis%E9%9B%86%E7%BE%A4%E7%AC%94%E8%AE%B0/</url>
