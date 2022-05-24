@@ -311,7 +311,7 @@ file:C:/Users/OneForAll/Desktop/img/2021/07/05/
 <h5 id="SpringBoot静态资源映射的默认规则"><a href="#SpringBoot静态资源映射的默认规则" class="headerlink" title="SpringBoot静态资源映射的默认规则"></a>SpringBoot静态资源映射的默认规则</h5></blockquote>
 <p>静态资源映射指的是当用户发出请求的时候，服务器端应该按照哪些规则查找静态资源返回给用户。<br>以下是springboot默认的资源映射规则</p>
 <ul>
-<li><p>webjars：以jar包的方式引入外部静态资源<br>当发起所有&#x2F;webjars&#x2F;**请求时，springboot会去<code>classpath:/META-INF/resources/webjars/</code>下找资源。</p>
+<li><p>webjars：以jar包的方式引入外部静态资源<br>当发起所有/webjars/**请求时，springboot会去<code>classpath:/META-INF/resources/webjars/</code>下找资源。</p>
 <pre class="language-none"><code class="language-none">例如：springboot中引入jquery的maven依赖
     &lt;dependency&gt;
         &lt;groupId&gt;org.webjars&lt;&#x2F;groupId&gt;
@@ -348,7 +348,7 @@ public void addResourceHandlers(ResourceHandlerRegistry registry) &#123;
     spring.resources.static-locations&#x3D;classpath:&#x2F;myabc&#x2F;,classpath:&#x2F;myhhh
 当指定了静态资源访问路径后，默认的资源资源路径就不起作用了</code></pre>
 </li>
-<li><p>首页index.html，被&#x2F;**映射<br>指的是当首页index.html文件放置在静态文件目录中，即resources目录下的static，resources，public下<br>springboot便会自动映射到该首页文件，例如发出<code>http://localhost:8080</code>请求时，springboot自动映射<br>在静态资源目录中查找index.html文件。</p>
+<li><p>首页index.html，被/**映射<br>指的是当首页index.html文件放置在静态文件目录中，即resources目录下的static，resources，public下<br>springboot便会自动映射到该首页文件，例如发出<code>http://localhost:8080</code>请求时，springboot自动映射<br>在静态资源目录中查找index.html文件。</p>
 </li>
 <li><p>自定义图标<br>跟index.html映射类似，只要将网站图标放置在默认的静态资源文件下，即static,resources,public下<br>便会自动映射该图标文件，前提是该图标命名是favicon.ico</p>
 </li>

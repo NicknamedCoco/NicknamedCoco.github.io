@@ -51,8 +51,8 @@ document.addEventListener("pjax:success", initScrollReveal);
 <p>SqlUtil类</p>
 </blockquote>
 <pre class="language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">world<span class="token punctuation">.</span>mysql<span class="token punctuation">.</span></span><span class="token class-name">Demo1</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>sql<span class="token punctuation">.</span></span><span class="token operator">*</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">ResourceBundle</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>sql<span class="token punctuation">.</span></span><span class="token operator">*</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">ResourceBundle</span><span class="token punctuation">;</span>
 
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SqlUtil</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">Connection</span> connection<span class="token operator">=</span><span class="token keyword">null</span><span class="token punctuation">;</span>
@@ -225,7 +225,7 @@ document.addEventListener("pjax:success", initScrollReveal);
 <blockquote>
 <p>jdbc.properties资源文件</p>
 </blockquote>
-<pre class="language-java" data-language="java"><code class="language-java">mysql_driver<span class="token operator">=</span><span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>mysql<span class="token punctuation">.</span>cj<span class="token punctuation">.</span>jdbc<span class="token punctuation">.</span></span>Driver</span>
+<pre class="language-java" data-language="java"><code class="language-java">mysql_driver<span class="token operator">=</span>com<span class="token punctuation">.</span>mysql<span class="token punctuation">.</span>cj<span class="token punctuation">.</span>jdbc<span class="token punctuation">.</span><span class="token class-name">Driver</span>
 my_url<span class="token operator">=</span>jdbc<span class="token operator">:</span>mysql<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token operator">:</span><span class="token number">3306</span><span class="token operator">/</span>oneforall<span class="token operator">?</span>serverTimezone<span class="token operator">=</span>GMT
 		<span class="token operator">&amp;</span>useSSL<span class="token operator">=</span><span class="token boolean">false</span><span class="token operator">&amp;</span>characterEncoding<span class="token operator">=</span>utf<span class="token operator">-</span><span class="token number">8</span>
 my_user<span class="token operator">=</span>root

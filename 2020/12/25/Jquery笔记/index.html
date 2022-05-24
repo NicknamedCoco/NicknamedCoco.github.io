@@ -8,12 +8,12 @@ document.addEventListener("pjax:success", initScrollReveal);
 </script><link rel="icon" type="image/png" href="/images/keyi.ico"><link rel="mask-icon" href="/images/keyi.ico" color="#0078E7"><link rel="preload" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
     window.Yun = {}
     window.CONFIG = {"hostname":"www.keyi.world","root":"/","title":["Coco","Coding"],"version":"1.9.3","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"local_search":{"path":"/search.xml"},"fireworks":{"colors":null},"vendors":{"darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
-  </script><link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="Jquery  DOM对象和Jquery对象的区别及转换  通过JS代码获取的对象都是DOM对象，而通过JQuery获取的对象是Jquery包装集对象，简称Jquery对象,	只有Jquery对象才能获取Jquery提供的方法。   &#x2F;&#x2F;dom对象 var domDiv &#x3D; document.getElementById(&quot;mydiv&quot;); &#x2F;&#x2F;Jquery对象 var jqueryDiv &#x3D;">
+  </script><link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="Jquery  DOM对象和Jquery对象的区别及转换  通过JS代码获取的对象都是DOM对象，而通过JQuery获取的对象是Jquery包装集对象，简称Jquery对象,    只有Jquery对象才能获取Jquery提供的方法。   &#x2F;&#x2F;dom对象 var domDiv &#x3D; document.getElementById(&quot;mydiv&quot;); &#x2F;&#x2F;Jquery对象 var jqueryDiv">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jquery笔记">
 <meta property="og:url" content="http://www.keyi.world/2020/12/25/Jquery%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="CocoBlog">
-<meta property="og:description" content="Jquery  DOM对象和Jquery对象的区别及转换  通过JS代码获取的对象都是DOM对象，而通过JQuery获取的对象是Jquery包装集对象，简称Jquery对象,	只有Jquery对象才能获取Jquery提供的方法。   &#x2F;&#x2F;dom对象 var domDiv &#x3D; document.getElementById(&quot;mydiv&quot;); &#x2F;&#x2F;Jquery对象 var jqueryDiv &#x3D;">
+<meta property="og:description" content="Jquery  DOM对象和Jquery对象的区别及转换  通过JS代码获取的对象都是DOM对象，而通过JQuery获取的对象是Jquery包装集对象，简称Jquery对象,    只有Jquery对象才能获取Jquery提供的方法。   &#x2F;&#x2F;dom对象 var domDiv &#x3D; document.getElementById(&quot;mydiv&quot;); &#x2F;&#x2F;Jquery对象 var jqueryDiv">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-12-25T04:33:10.000Z">
 <meta property="article:modified_time" content="2020-12-26T15:12:24.627Z">
@@ -29,7 +29,7 @@ document.addEventListener("pjax:success", initScrollReveal);
 <blockquote>
 <h4 id="DOM对象和Jquery对象的区别及转换"><a href="#DOM对象和Jquery对象的区别及转换" class="headerlink" title="DOM对象和Jquery对象的区别及转换"></a>DOM对象和Jquery对象的区别及转换</h4></blockquote>
 <ul>
-<li><p>通过JS代码获取的对象都是DOM对象，而通过JQuery获取的对象是Jquery包装集对象，简称Jquery对象,	只有Jquery对象才能获取Jquery提供的方法。</p>
+<li><p>通过JS代码获取的对象都是DOM对象，而通过JQuery获取的对象是Jquery包装集对象，简称Jquery对象,    只有Jquery对象才能获取Jquery提供的方法。</p>
   <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//dom对象</span>
 <span class="token keyword">var</span> domDiv <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">"mydiv"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">//Jquery对象</span>
@@ -48,7 +48,11 @@ console.log(newJqueryDiv)
 &#x2F;&#x2F;通过下标获取,或者叫遍历jquery包装集数组，包装集就像数组
 var newDomDiv &#x3D; newJqueryDiv[0]
 console.log(newDomDiv)
-&#x2F;&#x2F;遍历Jquery对象数组得到的对象是Dom对象，可以通过$()转换为Jquery对象</code></pre></li>
+&#x2F;&#x2F;遍历Jquery对象数组得到的对象是Dom对象，可以通过$()转换为Jquery对象</code></pre>
+
+
+
+</li>
 </ul>
 <blockquote>
 <h4 id="Jquery选择器"><a href="#Jquery选择器" class="headerlink" title="Jquery选择器"></a>Jquery选择器</h4></blockquote>
@@ -56,7 +60,7 @@ console.log(newDomDiv)
 <li><h5 id="基础选择器"><a href="#基础选择器" class="headerlink" title="基础选择器"></a>基础选择器</h5><ul>
 <li>id选择器<br>  $(“#testDiv”)，选择id为testDiv的元素，如果有多个同名ID，则以第一个为准</li>
 <li>元素名称选择器<br>  $(“div”)，选择所有div元素</li>
-<li>类选择器<br>  $(“.blue”)，选择所有class&#x3D;bule的元素</li>
+<li>类选择器<br>  $(“.blue”)，选择所有class=bule的元素</li>
 <li>选择所有元素<br>  $(“*”)，选择页面所有元素</li>
 <li>组合选择器<br>  $(“#testDiv，span，.blue”)，同时选中多个选择器匹配的元素</li>
 </ul>
@@ -64,8 +68,8 @@ console.log(newDomDiv)
 <li><h5 id="层次选择器"><a href="#层次选择器" class="headerlink" title="层次选择器"></a>层次选择器</h5><ul>
 <li>后代选择器<br>  $(“#parent  div”)，选择id为parent元素的所有div元素</li>
 <li>子代选择器<br>$(“#parent &gt;div”)，选择id为parent的直接div子元素，第一代</li>
-<li>相邻选择器<br>$(“.blue+img”)，选择class&#x3D;blue元素的下一个img元素，只找一个。<br>如果下一个元素不是img元素，则找不到。必须要相邻紧挨着的。</li>
-<li>同辈选择器<br>$(“.blue~img”)，选择class&#x3D;blue元素的之后的所有同辈元素</li>
+<li>相邻选择器<br>$(“.blue+img”)，选择class=blue元素的下一个img元素，只找一个。<br>如果下一个元素不是img元素，则找不到。必须要相邻紧挨着的。</li>
+<li>同辈选择器<br>$(“.blue~img”)，选择class=blue元素的之后的所有同辈元素</li>
 </ul>
 </li>
 <li><h5 id="表单选择器"><a href="#表单选择器" class="headerlink" title="表单选择器"></a>表单选择器</h5>  <pre class="language-none"><code class="language-none">表单选择器		:input	查找所有的input元素,$(&quot;:input&quot;),与标签选择器有区别
@@ -76,7 +80,12 @@ console.log(newDomDiv)
 密码框选择器		:password	查找所有密码框$(&quot;:password&quot;)
 
 单选按钮选择器		:radio	查找所有单选按钮$(&quot;:radio&quot;)
-...</code></pre></li>
+...</code></pre>
+
+
+
+
+</li>
 </ul>
 <blockquote>
 <h4 id="Jquery-Dom操作"><a href="#Jquery-Dom操作" class="headerlink" title="Jquery Dom操作"></a>Jquery Dom操作</h4></blockquote>
@@ -108,15 +117,12 @@ prop(&quot;属性名称&quot;)	获取具有true和false两个属性的属性值	
 如果设置的属性是自定义属性，只能使用attr方法</code></pre>
 </li>
 <li><p>移除属性<br>  使用方法removeAttr(“属性名”)</p>
+<p>总结：如果属性的类型是boolean，则使用prop方法，其他都用attr方法。</p>
 </li>
 </ul>
-<p>  总结：如果属性的类型是boolean，则使用prop方法，其他都用attr方法。</p>
 </li>
-<li><h5 id="操作元素的样式"><a href="#操作元素的样式" class="headerlink" title="操作元素的样式"></a>操作元素的样式</h5><p>  元素的样式也是一种属性，因为样式特别多，所以除了当做属性处理外，</p>
-</li>
-</ul>
-<p>还有专门的方法进行处理</p>
-<pre><code><pre class="language-none"><code class="language-none">1.attr(&quot;class&quot;)		
+<li><h5 id="操作元素的样式"><a href="#操作元素的样式" class="headerlink" title="操作元素的样式"></a>操作元素的样式</h5><p>  元素的样式也是一种属性，因为样式特别多，所以除了当做属性处理外，<br>还有专门的方法进行处理</p>
+  <pre class="language-none"><code class="language-none">1.attr(&quot;class&quot;)		
 	获取class属性的值，即样式名称
 2.attr(&quot;class&quot;,&quot;样式名&quot;)
 	修改class属性的值，修改样式，原本的样式会被覆盖
@@ -145,8 +151,7 @@ prop(&quot;属性名称&quot;)	获取具有true和false两个属性的属性值	
 	
 5.removeClass(class)			移除样式名称
 ​&#96;&#96;&#96;</code></pre>
-</code></pre>
-<ul>
+</li>
 <li><h5 id="操作元素的内容"><a href="#操作元素的内容" class="headerlink" title="操作元素的内容"></a>操作元素的内容</h5><p>对于元素还可以操作其中的内容，就像Dom对象的innerText，innerHTML方法一样</p>
 <pre class="language-none"><code class="language-none">1，html()
 	获取元素的html内容
@@ -168,7 +173,10 @@ prop(&quot;属性名称&quot;)	获取具有true和false两个属性的属性值	
 	div，span，h1-h6，table，tr，td，li，p</code></pre>
 
 
+
 </li>
+</ul>
+<ul>
 <li><h5 id="创建，添加，删除，遍历元素"><a href="#创建，添加，删除，遍历元素" class="headerlink" title="创建，添加，删除，遍历元素"></a>创建，添加，删除，遍历元素</h5><ul>
 <li><p>创建元素</p>
 <pre class="language-none"><code class="language-none">$(&quot;元素内容&quot;)
@@ -239,7 +247,9 @@ empty()		清空所选元素的内容，保留标签和样式</code></pre>
                console.log(lsp.html())
            &#125;)
         &lt;&#x2F;script&gt;
-    &lt;&#x2F;body&gt;</code></pre></li>
+    &lt;&#x2F;body&gt;</code></pre>
+
+</li>
 </ul>
 </li>
 </ul>
@@ -312,7 +322,9 @@ $(&quot;元素&quot;).事件名(function()&#123;
     	alert(&quot;kao&quot;)
     &#125;)
 
-&#x2F;&#x2F;直接绑定最常用</code></pre></li>
+&#x2F;&#x2F;直接绑定最常用</code></pre>
+
+</li>
 </ul>
 <blockquote>
 <h4 id="Jquery-Ajax"><a href="#Jquery-Ajax" class="headerlink" title="Jquery Ajax"></a>Jquery Ajax</h4></blockquote>
@@ -341,7 +353,10 @@ $(&quot;元素&quot;).事件名(function()&#123;
     &#125;);</code></pre>
 
 
+
 </li>
+</ul>
+<ul>
 <li><p>$.get</p>
 <pre class="language-none"><code class="language-none">这是一个简单的get请求功能以取代复杂的$.ajax。
 请求成功时可调用回调函数，如果需要在出错时执行函数，请使用$.ajax

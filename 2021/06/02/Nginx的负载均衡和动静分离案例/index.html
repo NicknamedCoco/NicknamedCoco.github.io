@@ -53,7 +53,8 @@ document.addEventListener("pjax:success", initScrollReveal);
 &#125;
 
 实现效果就是：当我以http:&#x2F;&#x2F;linux服务器地址&#x2F;edu&#x2F;a.html请求发送到反向代理服务器后，
-反向代理服务器将所有这种请求平均分摊到两个tomcat中去。</code></pre></li>
+反向代理服务器将所有这种请求平均分摊到两个tomcat中去。</code></pre>
+</li>
 </ul>
 </li>
 <li><p>nginx中负载均衡的策略</p>
@@ -87,7 +88,8 @@ document.addEventListener("pjax:success", initScrollReveal);
 
 如果给一个资源设置过期时间为3天，表示在这三天之内访问这个url，发送一个请求，
 比对服务器该文件最后更新时间没有变化，则不会从服务器抓取，返回状态码304，
-如果有修改，则直接从服务器重新下载，返回状态码200</code></pre></li>
+如果有修改，则直接从服务器重新下载，返回状态码200</code></pre>
+</li>
 </ul>
 </li>
 <li><h5 id="动静分离案例，使用第一种方式实现"><a href="#动静分离案例，使用第一种方式实现" class="headerlink" title="动静分离案例，使用第一种方式实现"></a>动静分离案例，使用第一种方式实现</h5><ul>
@@ -118,7 +120,9 @@ document.addEventListener("pjax:success", initScrollReveal);
 	然后找到该linux系统下&#x2F;staticData&#x2F;image&#x2F;1.jpg资源
 	
 注意：location中的uri(&#x2F;www&#x2F;,&#x2F;image&#x2F;)，要求你在&#x2F;staticData&#x2F;目录下必须有这些目录，www,image
-	nginx先找到staticData目录，再根据你的uri(www，image)，在staticData目录下找这些目录。</code></pre></li>
+	nginx先找到staticData目录，再根据你的uri(www，image)，在staticData目录下找这些目录。</code></pre>
+
+</li>
 </ul>
 </li>
 </ul>

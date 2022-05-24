@@ -46,7 +46,7 @@ document.addEventListener("pjax:success", initScrollReveal);
 <li><p>首先来到main.js，所有组件都必须直接或间接在main.js才能让webpack管理起来</p>
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> <span class="token string">'./assets/icons'</span>	<span class="token comment">//引入icons文件夹下的index.js文件 </span></code></pre>
 </li>
-<li><p>assets&#x2F;icons目录中的index.js文件</p>
+<li><p>assets/icons目录中的index.js文件</p>
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
 <span class="token keyword">import</span> SvgIcon <span class="token keyword">from</span> <span class="token string">'@/components/SvgIcon'</span>   <span class="token comment">//图标组件 </span>
 
@@ -130,7 +130,7 @@ svgName图标的名字，将参数传递到封装好的svg组件中即可，:cla
 </li>
 <li><p>文章与资源</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/dangpugui/article/details/113863727">require.context(‘.&#x2F;svg‘, false, &#x2F;.svg$&#x2F;)</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/dangpugui/article/details/113863727">require.context(‘./svg‘, false, /.svg$/)</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36764510/article/details/100161680">vue-cli项目中svg组件的使用，及svg使用原理分析</a></li>
 </ul>
 </li>
@@ -329,7 +329,7 @@ export default &#123;
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span></code></pre>
 </li>
-<li><p>再进入.&#x2F;cache.js看看具体实现吧</p>
+<li><p>再进入./cache.js看看具体实现吧</p>
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> sessionCache <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
   <span class="token function">set</span> <span class="token punctuation">(</span>key<span class="token punctuation">,</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>sessionStorage<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -401,11 +401,11 @@ export default &#123;
   <span class="token comment">/**
    * 会话级缓存
    */</span>
-  <span class="token literal-property property">session</span><span class="token operator">:</span> sessionCache<span class="token punctuation">,</span>
+  session<span class="token operator">:</span> sessionCache<span class="token punctuation">,</span>
   <span class="token comment">/**
    * 本地缓存
    */</span>
-  <span class="token literal-property property">local</span><span class="token operator">:</span> localCache
+  local<span class="token operator">:</span> localCache
 <span class="token punctuation">&#125;</span></code></pre>
 </li>
 <li><p>最后看看实际使用吧</p>
@@ -424,7 +424,8 @@ export default &#123;
         &#125;</span><span class="token template-punctuation string">`</span></span>
     <span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$modal<span class="token punctuation">.</span><span class="token function">closeLoading</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span></code></pre></li>
+<span class="token punctuation">&#125;</span></code></pre>
+</li>
 </ul>
 </li>
 <li><p>模态框插件<br>模态框指的是当用户在页面进行某些操作时，系统弹出提示，消息，确认框，来看看若依中是如何设计的吧</p>
@@ -482,15 +483,15 @@ export default &#123;
   <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
   <span class="token comment">// 错误提示</span>
   <span class="token function">alertError</span><span class="token punctuation">(</span><span class="token parameter">content</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    MessageBox<span class="token punctuation">.</span><span class="token function">alert</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span> <span class="token string">"系统提示"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'error'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    MessageBox<span class="token punctuation">.</span><span class="token function">alert</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span> <span class="token string">"系统提示"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> type<span class="token operator">:</span> <span class="token string">'error'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
   <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
   <span class="token comment">// 成功提示</span>
   <span class="token function">alertSuccess</span><span class="token punctuation">(</span><span class="token parameter">content</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    MessageBox<span class="token punctuation">.</span><span class="token function">alert</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span> <span class="token string">"系统提示"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'success'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    MessageBox<span class="token punctuation">.</span><span class="token function">alert</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span> <span class="token string">"系统提示"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> type<span class="token operator">:</span> <span class="token string">'success'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
   <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
   <span class="token comment">// 警告提示</span>
   <span class="token function">alertWarning</span><span class="token punctuation">(</span><span class="token parameter">content</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    MessageBox<span class="token punctuation">.</span><span class="token function">alert</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span> <span class="token string">"系统提示"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'warning'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    MessageBox<span class="token punctuation">.</span><span class="token function">alert</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span> <span class="token string">"系统提示"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> type<span class="token operator">:</span> <span class="token string">'warning'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
   <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
   <span class="token comment">// 通知提示</span>
   <span class="token function">notify</span><span class="token punctuation">(</span><span class="token parameter">content</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -511,26 +512,26 @@ export default &#123;
   <span class="token comment">// 确认窗体</span>
   <span class="token function">confirm</span><span class="token punctuation">(</span><span class="token parameter">content</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">return</span> MessageBox<span class="token punctuation">.</span><span class="token function">confirm</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span> <span class="token string">"系统提示"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
-      <span class="token literal-property property">confirmButtonText</span><span class="token operator">:</span> <span class="token string">'确定'</span><span class="token punctuation">,</span>
-      <span class="token literal-property property">cancelButtonText</span><span class="token operator">:</span> <span class="token string">'取消'</span><span class="token punctuation">,</span>
-      <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">"warning"</span><span class="token punctuation">,</span>
+      confirmButtonText<span class="token operator">:</span> <span class="token string">'确定'</span><span class="token punctuation">,</span>
+      cancelButtonText<span class="token operator">:</span> <span class="token string">'取消'</span><span class="token punctuation">,</span>
+      type<span class="token operator">:</span> <span class="token string">"warning"</span><span class="token punctuation">,</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
   <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
   <span class="token comment">// 提交内容</span>
   <span class="token function">prompt</span><span class="token punctuation">(</span><span class="token parameter">content</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">return</span> MessageBox<span class="token punctuation">.</span><span class="token function">prompt</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span> <span class="token string">"系统提示"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
-      <span class="token literal-property property">confirmButtonText</span><span class="token operator">:</span> <span class="token string">'确定'</span><span class="token punctuation">,</span>
-      <span class="token literal-property property">cancelButtonText</span><span class="token operator">:</span> <span class="token string">'取消'</span><span class="token punctuation">,</span>
-      <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">"warning"</span><span class="token punctuation">,</span>
+      confirmButtonText<span class="token operator">:</span> <span class="token string">'确定'</span><span class="token punctuation">,</span>
+      cancelButtonText<span class="token operator">:</span> <span class="token string">'取消'</span><span class="token punctuation">,</span>
+      type<span class="token operator">:</span> <span class="token string">"warning"</span><span class="token punctuation">,</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
   <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
   <span class="token comment">// 打开遮罩层</span>
   <span class="token function">loading</span><span class="token punctuation">(</span><span class="token parameter">content</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     loadingInstance <span class="token operator">=</span> Loading<span class="token punctuation">.</span><span class="token function">service</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-      <span class="token literal-property property">lock</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-      <span class="token literal-property property">text</span><span class="token operator">:</span> content<span class="token punctuation">,</span>
-      <span class="token literal-property property">spinner</span><span class="token operator">:</span> <span class="token string">"el-icon-loading"</span><span class="token punctuation">,</span>
-      <span class="token literal-property property">background</span><span class="token operator">:</span> <span class="token string">"rgba(0, 0, 0, 0.7)"</span><span class="token punctuation">,</span>
+      lock<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      text<span class="token operator">:</span> content<span class="token punctuation">,</span>
+      spinner<span class="token operator">:</span> <span class="token string">"el-icon-loading"</span><span class="token punctuation">,</span>
+      background<span class="token operator">:</span> <span class="token string">"rgba(0, 0, 0, 0.7)"</span><span class="token punctuation">,</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
   <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
   <span class="token comment">// 关闭遮罩层</span>
@@ -565,7 +566,11 @@ export default &#123;
         &#125;</span><span class="token template-punctuation string">`</span></span>
     <span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$modal<span class="token punctuation">.</span><span class="token function">closeLoading</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span></code></pre></li>
+<span class="token punctuation">&#125;</span></code></pre>
+
+
+
+</li>
 </ul>
 </li>
 </ul>
@@ -576,15 +581,15 @@ export default &#123;
 <ul>
 <li><p>使用query代替params</p>
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//这种方式是不行的，对了参数尽量都是字符串而不是数字，例如arr中，否则有警告</span>
-<span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">name</span><span class="token operator">:</span><span class="token string">"Essay"</span><span class="token punctuation">,</span><span class="token literal-property property">params</span><span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token literal-property property">id</span><span class="token operator">:</span><span class="token string">"1024"</span><span class="token punctuation">,</span><span class="token literal-property property">name</span><span class="token operator">:</span><span class="token string">"万一"</span><span class="token punctuation">,</span><span class="token literal-property property">arr</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>name<span class="token operator">:</span><span class="token string">"Essay"</span><span class="token punctuation">,</span>params<span class="token operator">:</span><span class="token punctuation">&#123;</span>id<span class="token operator">:</span><span class="token string">"1024"</span><span class="token punctuation">,</span>name<span class="token operator">:</span><span class="token string">"万一"</span><span class="token punctuation">,</span>arr<span class="token operator">:</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 
 <span class="token comment">//这种方式可以，因为在页面跳转时，参数会拼接在url中，再次刷新页面后，url依然有参数，所以数据依然存在</span>
-<span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">path</span><span class="token operator">:</span><span class="token string">"/front/kepu/essay"</span><span class="token punctuation">,</span><span class="token literal-property property">query</span><span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token literal-property property">id</span><span class="token operator">:</span><span class="token string">"1024"</span><span class="token punctuation">,</span><span class="token literal-property property">name</span><span class="token operator">:</span><span class="token string">"万一"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
+<span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>path<span class="token operator">:</span><span class="token string">"/front/kepu/essay"</span><span class="token punctuation">,</span>query<span class="token operator">:</span><span class="token punctuation">&#123;</span>id<span class="token operator">:</span><span class="token string">"1024"</span><span class="token punctuation">,</span>name<span class="token operator">:</span><span class="token string">"万一"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
 </li>
 <li><p>依然使用query，不同的是：传递参数时，将参数序列化</p>
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//传递参数</span>
-<span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">path</span><span class="token operator">:</span><span class="token string">"/front/kepu/essay"</span><span class="token punctuation">,</span>
-                   <span class="token literal-property property">query</span><span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token literal-property property">data</span><span class="token operator">:</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">id</span><span class="token operator">:</span><span class="token string">"1024"</span><span class="token punctuation">,</span><span class="token literal-property property">name</span><span class="token operator">:</span><span class="token string">"万一"</span><span class="token punctuation">,</span><span class="token literal-property property">data</span><span class="token operator">:</span><span class="token punctuation">&#123;</span><span class="token literal-property property">a</span><span class="token operator">:</span><span class="token string">"b"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>path<span class="token operator">:</span><span class="token string">"/front/kepu/essay"</span><span class="token punctuation">,</span>
+                   query<span class="token operator">:</span><span class="token punctuation">&#123;</span>data<span class="token operator">:</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>id<span class="token operator">:</span><span class="token string">"1024"</span><span class="token punctuation">,</span>name<span class="token operator">:</span><span class="token string">"万一"</span><span class="token punctuation">,</span>data<span class="token operator">:</span><span class="token punctuation">&#123;</span>a<span class="token operator">:</span><span class="token string">"b"</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 
 <span class="token comment">//接收参数，也可以将数据存到data的变量中</span>
 <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>$route<span class="token punctuation">.</span>query<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">.</span>id<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
@@ -596,20 +601,20 @@ export default &#123;
 <li><p>使用动态路由来传递参数</p>
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 路由配置</span>
 <span class="token punctuation">&#123;</span>
-   <span class="token literal-property property">path</span><span class="token operator">:</span><span class="token string">'/detail/:id'</span><span class="token punctuation">,</span>
-   <span class="token literal-property property">name</span><span class="token operator">:</span><span class="token string">'detail'</span><span class="token punctuation">,</span>
-   <span class="token literal-property property">component</span><span class="token operator">:</span>Detail<span class="token punctuation">,</span>
-   <span class="token literal-property property">props</span><span class="token operator">:</span><span class="token boolean">true</span>             <span class="token comment">// 如果props设置为true，$route.params将被设置为组件属性  </span>
+   path<span class="token operator">:</span><span class="token string">'/detail/:id'</span><span class="token punctuation">,</span>
+   name<span class="token operator">:</span><span class="token string">'detail'</span><span class="token punctuation">,</span>
+   component<span class="token operator">:</span>Detail<span class="token punctuation">,</span>
+   props<span class="token operator">:</span><span class="token boolean">true</span>             <span class="token comment">// 如果props设置为true，$route.params将被设置为组件属性  </span>
 <span class="token punctuation">&#125;</span>
  
 <span class="token comment">// 路由跳转</span>
 <span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-   <span class="token literal-property property">path</span><span class="token operator">:</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">/detail/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>id<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span>
+   path<span class="token operator">:</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">/detail/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">$&#123;</span>id<span class="token interpolation-punctuation punctuation">&#125;</span></span><span class="token template-punctuation string">`</span></span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
  
 <span class="token comment">// 详情页获取参数</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span>
-  <span class="token literal-property property">props</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>      <span class="token comment">// 将路由中传递的参数id解耦到组件的props属性上</span>
+  props<span class="token operator">:</span><span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>      <span class="token comment">// 将路由中传递的参数id解耦到组件的props属性上</span>
   <span class="token function">mounted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>  
   <span class="token punctuation">&#125;</span>

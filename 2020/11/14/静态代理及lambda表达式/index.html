@@ -33,10 +33,10 @@ document.addEventListener("pjax:success", initScrollReveal);
 <blockquote>
 <h4 id="lambda与其他形式的对比"><a href="#lambda与其他形式的对比" class="headerlink" title="lambda与其他形式的对比"></a>lambda与其他形式的对比</h4></blockquote>
 <p>最普通方式，某一个类实现一个接口，就称为该类是这个接口的实现类，通过创建实现类对象可以调用实现方法</p>
-<pre class="language-java" data-language="java"><code class="language-java"><span class="token keyword">interface</span> <span class="token class-name">USB</span><span class="token punctuation">&#123;</span>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token keyword">interface</span> USB<span class="token punctuation">&#123;</span>
 	<span class="token keyword">void</span> <span class="token function">usbSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token keyword">class</span> <span class="token class-name">Vivo</span> <span class="token keyword">implements</span> <span class="token class-name">USB</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">class</span> <span class="token class-name">Vivo</span> <span class="token keyword">implements</span> USB<span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">usbSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
         <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"vivo手机的USB尺寸"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
@@ -75,7 +75,7 @@ public class Test&#123;
 &#125;</code></pre>
 
 <p>其中，(形参列表)-&gt;{</p>
-<p>​	抽象方法usbSize的具体实现</p>
+<p>​    抽象方法usbSize的具体实现</p>
 <p>}</p>
 <ul>
 <li>当形参列表没有时，直接写()-&gt;{}的形式，即上面的例子</li>

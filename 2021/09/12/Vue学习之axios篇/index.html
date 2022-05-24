@@ -129,14 +129,14 @@ return &quot;getUserInfo(&quot;真实数据&quot;)&quot;
 </li>
 <li><p>配置跨域<br>网络请求不可避免的会产生跨域问题，在项目根目录下创建vue.config.js文件，配置跨域如下：</p>
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript">  module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
-      <span class="token literal-property property">devServer</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-          <span class="token literal-property property">proxy</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-              <span class="token string-property property">'/home'</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">//请求的代称，写在Axios里的BaseUrl</span>
-                  <span class="token literal-property property">target</span><span class="token operator">:</span> <span class="token string">'http://api.qingyunke.com'</span><span class="token punctuation">,</span>
-                  <span class="token literal-property property">ws</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-                  <span class="token literal-property property">changeOrigin</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> 
-                  <span class="token literal-property property">pathRewrite</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-                      <span class="token string-property property">'^/home'</span><span class="token operator">:</span> <span class="token string">''</span> 
+      devServer<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          proxy<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+              <span class="token string">'/home'</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token comment">//请求的代称，写在Axios里的BaseUrl</span>
+                  target<span class="token operator">:</span> <span class="token string">'http://api.qingyunke.com'</span><span class="token punctuation">,</span>
+                  ws<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+                  changeOrigin<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> 
+                  pathRewrite<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+                      <span class="token string">'^/home'</span><span class="token operator">:</span> <span class="token string">''</span> 
                       <span class="token comment">// '^/home': '/home'</span>
                   <span class="token punctuation">&#125;</span>
               <span class="token punctuation">&#125;</span>
@@ -160,11 +160,11 @@ return &quot;getUserInfo(&quot;真实数据&quot;)&quot;
 <span class="token comment">//将url前缀设置为默认路径，这里的配置会将所有请求都会加上url前缀，即所有请求都被代理</span>
 axios<span class="token punctuation">.</span>defaults<span class="token punctuation">.</span>baseURL <span class="token operator">=</span><span class="token string">'/home'</span><span class="token punctuation">;</span>    
 <span class="token function">axios</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-    <span class="token literal-property property">url</span><span class="token operator">:</span> <span class="token string">"/api.php"</span><span class="token punctuation">,</span>  <span class="token comment">//如果没有指定method属性，则默认使用get请求，这里直接跟baseURL后面的地址即可</span>
-    <span class="token literal-property property">params</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>	<span class="token comment">//param就是url中?后跟的参数</span>
-        <span class="token literal-property property">key</span><span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">appid</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">msg</span><span class="token operator">:</span> <span class="token string">'你好吗'</span>
+    url<span class="token operator">:</span> <span class="token string">"/api.php"</span><span class="token punctuation">,</span>  <span class="token comment">//如果没有指定method属性，则默认使用get请求，这里直接跟baseURL后面的地址即可</span>
+    params<span class="token operator">:</span> <span class="token punctuation">&#123;</span>	<span class="token comment">//param就是url中?后跟的参数</span>
+        key<span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
+        appid<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        msg<span class="token operator">:</span> <span class="token string">'你好吗'</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>      <span class="token comment">//axios内部返回了promise，所以这里调用then方法，能拿到返回结果</span>
     console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -180,7 +180,11 @@ axios<span class="token punctuation">.</span>defaults<span class="token punctuat
         4)axios.post(url[,data[,config]])
         4)axios.put(url[,data[,config]])
         4)axios.patch(url[,data[,config]])
-*/</span></code></pre></li>
+*/</span></code></pre>
+
+
+
+</li>
 </ul>
 <blockquote>
 <p><span id="d">axios发出并发请求</span></p>
@@ -189,19 +193,19 @@ axios<span class="token punctuation">.</span>defaults<span class="token punctuat
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//baseURL,跨域等配置同上</span>
 axios<span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
     <span class="token function">axios</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">url</span><span class="token operator">:</span> <span class="token string">"/api.php"</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">params</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-            <span class="token literal-property property">key</span><span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
-            <span class="token literal-property property">appid</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
-            <span class="token literal-property property">msg</span><span class="token operator">:</span> <span class="token string">'你叫什么名字'</span>
+        url<span class="token operator">:</span> <span class="token string">"/api.php"</span><span class="token punctuation">,</span>
+        params<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            key<span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
+            appid<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+            msg<span class="token operator">:</span> <span class="token string">'你叫什么名字'</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
     <span class="token function">axios</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">url</span><span class="token operator">:</span> <span class="token string">"/api.php"</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">params</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-            <span class="token literal-property property">key</span><span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
-            <span class="token literal-property property">appid</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
-            <span class="token literal-property property">msg</span><span class="token operator">:</span> <span class="token string">'杭州天气怎么样'</span>
+        url<span class="token operator">:</span> <span class="token string">"/api.php"</span><span class="token punctuation">,</span>
+        params<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            key<span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
+            appid<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+            msg<span class="token operator">:</span> <span class="token string">'杭州天气怎么样'</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
@@ -216,12 +220,12 @@ axios<span class="token punctuation">.</span><span class="token function">all</s
 <p>全局配置指的是，抽离请求中的一些固定部分，例如，请求前缀(协议+域名+端口号),请求头设置一些固定值等等</p>
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript">原始配置：
     <span class="token function">axios</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">url</span><span class="token operator">:</span> <span class="token string">"http://api.qingyunke.com/api.php"</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">timeout</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>  <span class="token comment">//超时时间</span>
-        <span class="token literal-property property">params</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>       <span class="token comment">//请求参数</span>
-            <span class="token literal-property property">key</span><span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
-            <span class="token literal-property property">appid</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
-            <span class="token literal-property property">msg</span><span class="token operator">:</span> <span class="token string">'你好吗'</span>
+        url<span class="token operator">:</span> <span class="token string">"http://api.qingyunke.com/api.php"</span><span class="token punctuation">,</span>
+        timeout<span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>  <span class="token comment">//超时时间</span>
+        params<span class="token operator">:</span> <span class="token punctuation">&#123;</span>       <span class="token comment">//请求参数</span>
+            key<span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
+            appid<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+            msg<span class="token operator">:</span> <span class="token string">'你好吗'</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
         console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -233,11 +237,11 @@ axios<span class="token punctuation">.</span><span class="token function">all</s
     axios<span class="token punctuation">.</span>defaults<span class="token punctuation">.</span>timeout<span class="token operator">=</span><span class="token number">5000</span>
     <span class="token function">axios</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
         <span class="token comment">//baseURL: ''</span>
-        <span class="token literal-property property">url</span><span class="token operator">:</span> <span class="token string">"/api.php"</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">params</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>       <span class="token comment">//请求参数</span>
-            <span class="token literal-property property">key</span><span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
-            <span class="token literal-property property">appid</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
-            <span class="token literal-property property">msg</span><span class="token operator">:</span> <span class="token string">'你好吗'</span>
+        url<span class="token operator">:</span> <span class="token string">"/api.php"</span><span class="token punctuation">,</span>
+        params<span class="token operator">:</span> <span class="token punctuation">&#123;</span>       <span class="token comment">//请求参数</span>
+            key<span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
+            appid<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+            msg<span class="token operator">:</span> <span class="token string">'你好吗'</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
         console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -269,15 +273,15 @@ axios<span class="token punctuation">.</span><span class="token function">all</s
 <p>我们从axios模块中导入对象后，使用的实例是默认的实例，当给该实例设置一些默认配置时，这些配置就被固定下来了<br>但是后续开发中，某些配置可能会不太一样，比如某些请求需要使用特定的baseURL或者timeout或者content-type等<br>这个时候，我们就可以创建新的实例，并且传入属于该实例的配置信息<br>简而言之，不同的请求需要不同的配置，我们之前使用的都是默认的axios实例，所以现在我们需要创建新的axios实例<br>创建axios实例去发送请求，每个axios对应不同的配置，下面是一个简单的案例：</p>
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//这里的/home配置同上，配置了跨域。</span>
 <span class="token keyword">let</span> axiosInstance <span class="token operator">=</span> axios<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>      <span class="token comment">//这里的axiosInstance是一个axios实例，保存配置的</span>
-    <span class="token literal-property property">baseURL</span><span class="token operator">:</span> <span class="token string">'/home'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">timeout</span><span class="token operator">:</span> <span class="token number">5000</span>
+    baseURL<span class="token operator">:</span> <span class="token string">'/home'</span><span class="token punctuation">,</span>
+    timeout<span class="token operator">:</span> <span class="token number">5000</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">axiosInstance</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>         <span class="token comment">//使用对应的配置实例来发送网络请求，做到请求配置和实际请求的分离</span>
-    <span class="token literal-property property">url</span><span class="token operator">:</span> <span class="token string">"/api.php"</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">params</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">key</span><span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">appid</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">msg</span><span class="token operator">:</span> <span class="token string">'江西省九江市彭泽县'</span>
+    url<span class="token operator">:</span> <span class="token string">"/api.php"</span><span class="token punctuation">,</span>
+    params<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        key<span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
+        appid<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        msg<span class="token operator">:</span> <span class="token string">'江西省九江市彭泽县'</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
     console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -296,8 +300,8 @@ axios<span class="token punctuation">.</span><span class="token function">all</s
 <span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">request</span><span class="token punctuation">(</span><span class="token parameter">config</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">//创建一个axios实例</span>
     <span class="token keyword">let</span> axiosInstance <span class="token operator">=</span> axios<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>    <span class="token comment">//这个对象感觉可以抽离，让使用者配置，但是也可以在本js文件中创建多个函数</span>
-        <span class="token literal-property property">baseURL</span><span class="token operator">:</span> <span class="token string">'/home'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">timeout</span><span class="token operator">:</span> <span class="token number">5000</span>
+        baseURL<span class="token operator">:</span> <span class="token string">'/home'</span><span class="token punctuation">,</span>
+        timeout<span class="token operator">:</span> <span class="token number">5000</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment">//发送网络请求</span>
     <span class="token keyword">return</span> <span class="token function">axiosInstance</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span>    <span class="token comment">//本身返回的就是promise,所以使用者调用request方法后可直接跟then函数</span>
@@ -307,11 +311,11 @@ axios<span class="token punctuation">.</span><span class="token function">all</s
 <span class="token comment">//使用者使用时：</span>
 <span class="token keyword">import</span> <span class="token punctuation">&#123;</span>request<span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'./network/request'</span><span class="token punctuation">;</span>
 <span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-  <span class="token literal-property property">url</span><span class="token operator">:</span> <span class="token string">"/api.php"</span><span class="token punctuation">,</span>
-  <span class="token literal-property property">params</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
-    <span class="token literal-property property">key</span><span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">appid</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">msg</span><span class="token operator">:</span> <span class="token string">'我爱你'</span>
+  url<span class="token operator">:</span> <span class="token string">"/api.php"</span><span class="token punctuation">,</span>
+  params<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    key<span class="token operator">:</span> <span class="token string">'free'</span><span class="token punctuation">,</span>
+    appid<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    msg<span class="token operator">:</span> <span class="token string">'我爱你'</span>
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>	<span class="token comment">//直接可以拿到网络请求的响应结果</span>
   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -329,8 +333,8 @@ axios<span class="token punctuation">.</span><span class="token function">all</s
 <span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">request</span><span class="token punctuation">(</span><span class="token parameter">config</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">//1，创建一个axios实例</span>
     <span class="token keyword">let</span> axiosInstance <span class="token operator">=</span> axios<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">baseURL</span><span class="token operator">:</span> <span class="token string">'/home'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">timeout</span><span class="token operator">:</span> <span class="token number">5000</span>
+        baseURL<span class="token operator">:</span> <span class="token string">'/home'</span><span class="token punctuation">,</span>
+        timeout<span class="token operator">:</span> <span class="token number">5000</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment">//2，配置拦截器</span>
     <span class="token comment">//请求拦截，有两个回调函数，请求成功函数，请求失败回调函数</span>

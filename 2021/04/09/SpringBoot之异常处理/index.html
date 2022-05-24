@@ -8,12 +8,12 @@ document.addEventListener("pjax:success", initScrollReveal);
 </script><link rel="icon" type="image/png" href="/images/keyi.ico"><link rel="mask-icon" href="/images/keyi.ico" color="#0078E7"><link rel="preload" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
     window.Yun = {}
     window.CONFIG = {"hostname":"www.keyi.world","root":"/","title":["Coco","Coding"],"version":"1.9.3","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"local_search":{"path":"/search.xml"},"fireworks":{"colors":null},"vendors":{"darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
-  </script><link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="其实这些都应该是SpringMVC的内容，但想到是在学SpringBoot时学到的更深层次一点的内容就当做是SpringBoot的内容吧，反正SpringBoot也是整合各个框架的一个框架。   先总结一下，SpringBoot或者是SpringMVC异常处理的几种方式   配合thymeleaf模板引擎的使用下，我们直接在thymeleaf&#x2F;error&#x2F; 目录下放置4xx.">
+  </script><link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="其实这些都应该是SpringMVC的内容，但想到是在学SpringBoot时学到的更深层次一点的内容就当做是SpringBoot的内容吧，反正SpringBoot也是整合各个框架的一个框架。   先总结一下，SpringBoot或者是SpringMVC异常处理的几种方式   配合thymeleaf模板引擎的使用下，我们直接在thymeleaf&#x2F;error&#x2F; 目录下放置4xx.html，5xx.h">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot之异常处理">
 <meta property="og:url" content="http://www.keyi.world/2021/04/09/SpringBoot%E4%B9%8B%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/index.html">
 <meta property="og:site_name" content="CocoBlog">
-<meta property="og:description" content="其实这些都应该是SpringMVC的内容，但想到是在学SpringBoot时学到的更深层次一点的内容就当做是SpringBoot的内容吧，反正SpringBoot也是整合各个框架的一个框架。   先总结一下，SpringBoot或者是SpringMVC异常处理的几种方式   配合thymeleaf模板引擎的使用下，我们直接在thymeleaf&#x2F;error&#x2F; 目录下放置4xx.">
+<meta property="og:description" content="其实这些都应该是SpringMVC的内容，但想到是在学SpringBoot时学到的更深层次一点的内容就当做是SpringBoot的内容吧，反正SpringBoot也是整合各个框架的一个框架。   先总结一下，SpringBoot或者是SpringMVC异常处理的几种方式   配合thymeleaf模板引擎的使用下，我们直接在thymeleaf&#x2F;error&#x2F; 目录下放置4xx.html，5xx.h">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-04-09T06:53:09.000Z">
 <meta property="article:modified_time" content="2021-04-10T03:47:46.125Z">
@@ -31,7 +31,7 @@ document.addEventListener("pjax:success", initScrollReveal);
 <p>先总结一下，SpringBoot或者是SpringMVC异常处理的几种方式</p>
 </blockquote>
 <ul>
-<li><p>配合thymeleaf模板引擎的使用下，我们直接在thymeleaf&#x2F;error&#x2F; 目录下放置4xx.html，5xx.html<br>就可以实现，当目标方法执行错误时，如果是状态码是4xx之类的错误就能跳转到4xx.html，5xx之类的错误<br>就能跳转5xx.html页面，我们在4xx.html和5xx.html可以通过thymeleaf表达式获取错误信息<br>${status},${message}等等，其中的原理接下来就讲！</p>
+<li><p>配合thymeleaf模板引擎的使用下，我们直接在thymeleaf/error/ 目录下放置4xx.html，5xx.html<br>就可以实现，当目标方法执行错误时，如果是状态码是4xx之类的错误就能跳转到4xx.html，5xx之类的错误<br>就能跳转5xx.html页面，我们在4xx.html和5xx.html可以通过thymeleaf表达式获取错误信息<br>${status},${message}等等，其中的原理接下来就讲！</p>
 </li>
 <li><p>我们还可以使用@ControllerAdvice+@ExceptionHandler注解来处理全局的异常，该注解底层是<br>ExceptionHandlerExceptionResolver处理器异常解析器在工作</p>
 </li>
@@ -39,11 +39,11 @@ document.addEventListener("pjax:success", initScrollReveal);
 <pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@ResponseStatus</span><span class="token punctuation">(</span>reason <span class="token operator">=</span> <span class="token string">"用户登录被拒绝"</span><span class="token punctuation">,</span>value <span class="token operator">=</span> <span class="token class-name">HttpStatus</span><span class="token punctuation">.</span>NOT_ACCEPTABLE<span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserNotFoundException</span> <span class="token keyword">extends</span> <span class="token class-name">RuntimeException</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span></code></pre>
 
-<p>@ResponseStatus注解，底层是由ResponseStatusExceptionResolver异常解析器来处理目标方法发生的<br>异常，在该异常解析器中，会把@ResponseStatus注解中的数据(reason,value)封装成ModelAndView对象<br>并且再次发送一个&#x2F;error请求，response.sendError(statusCode,resolvedReason)(表示本请求立即结束，<br>并发送一个新的请求，&#x2F;error)，该&#x2F;error请求则会被底层的BasicErrorController进行处理。</p>
+<p>@ResponseStatus注解，底层是由ResponseStatusExceptionResolver异常解析器来处理目标方法发生的<br>异常，在该异常解析器中，会把@ResponseStatus注解中的数据(reason,value)封装成ModelAndView对象<br>并且再次发送一个/error请求，response.sendError(statusCode,resolvedReason)(表示本请求立即结束，<br>并发送一个新的请求，/error)，该/error请求则会被底层的BasicErrorController进行处理。</p>
 </li>
 <li><p>Spring底层的异常，如参数类型转换异常，底层是DefaultHandlerExceptionResolver处理框架底层的异常</p>
 </li>
-<li><p>自定义实现HandleExceptionResolver接口处理异常，可以作为默认的全局异常处理规则    在接口方法中，<br>直接response.sendError(“500”,”错误消息”)，表示结束当前请求，重新发送&#x2F;error请求，让底层默认的<br>BasicErrorController处理请求    然后BasicErrorController又调用defaultErrorViewResolver对状态码进行解析，并返回ModelAndView，其中视图名要么是&#x2F;error下的状态码，要么是error，这取决于你有没有在<br>templates&#x2F;error下放置状态码.html页面。</p>
+<li><p>自定义实现HandleExceptionResolver接口处理异常，可以作为默认的全局异常处理规则    在接口方法中，<br>直接response.sendError(“500”,”错误消息”)，表示结束当前请求，重新发送/error请求，让底层默认的<br>BasicErrorController处理请求    然后BasicErrorController又调用defaultErrorViewResolver对状态码进行解析，并返回ModelAndView，其中视图名要么是/error下的状态码，要么是error，这取决于你有没有在<br>templates/error下放置状态码.html页面。</p>
 <pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Order</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token class-name">Ordered</span><span class="token punctuation">.</span>HIGHEST_PRECEDENCE<span class="token punctuation">)</span>  <span class="token comment">//优先级，数字越小优先级越高</span>
 <span class="token annotation punctuation">@Component</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyHandlerExceptionResolver</span> <span class="token keyword">implements</span> <span class="token class-name">HandlerExceptionResolver</span> <span class="token punctuation">&#123;</span>
@@ -59,7 +59,7 @@ document.addEventListener("pjax:success", initScrollReveal);
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span></code></pre>
 </li>
-<li><p>ErrorViewResolver实现自定义处理异常<br>通过之前的分析，我们已经知道，SpringBoot在底层已经默认注册了一个DefautErrorViewResolver,<br>这个错误视图解析器根据状态码找到ViewName，如果你在templates&#x2F;error目录下设置了以状态码为html<br>名称的页面，即404.html,5xx.html等等，则viewname&#x3D;error&#x2F;404.html，如果你没有设置，则viewName<br>等于error，最终会找到底层的StaticView对象，也就是渲染白页，即没有设置任何异常处理，就使用这个对象<br>渲染视图。你可以自定义ErrorViewResolver，达到并不根据状态码设置viewName，或者并不从<br>templates&#x2F;error目录下寻找页面。</p>
+<li><p>ErrorViewResolver实现自定义处理异常<br>通过之前的分析，我们已经知道，SpringBoot在底层已经默认注册了一个DefautErrorViewResolver,<br>这个错误视图解析器根据状态码找到ViewName，如果你在templates/error目录下设置了以状态码为html<br>名称的页面，即404.html,5xx.html等等，则viewname=error/404.html，如果你没有设置，则viewName<br>等于error，最终会找到底层的StaticView对象，也就是渲染白页，即没有设置任何异常处理，就使用这个对象<br>渲染视图。你可以自定义ErrorViewResolver，达到并不根据状态码设置viewName，或者并不从<br>templates/error目录下寻找页面。</p>
 </li>
 <li><p>以上就是针对异常的处理方法，可能看的有点懵逼，下面讲讲异常处理的流程</p>
 </li>
@@ -181,14 +181,14 @@ mv<span class="token punctuation">,</span> dispatchException<span class="token p
 <li><p>HandleExceptionResolverComposite(异常的组合类，在该类中又有三个处理器异常解析器)</p>
 <ul>
 <li>ExceptionHandlerExceptionResolver(处理目标方法标注了@ExceptionHandle注解的异常)</li>
-<li>ResponseStatusExceptionResolver(处理目标方法&#x2F;自定义异常类标注了@ResponseStatus注解<br>的异常)</li>
-<li>DefaultHandlerExceptionResolver(处理springMVC自带的异常，例如参数类型转换等异常)</li>
+<li>ResponseStatusExceptionResolver(处理目标方法/自定义异常类标注了@ResponseStatus注解<br>的异常)</li>
+<li> DefaultHandlerExceptionResolver(处理springMVC自带的异常，例如参数类型转换等异常)</li>
 </ul>
 </li>
 </ul>
 <p>回到异常流程中，我们的目标方法异常假设是算术异常，并且也没有为其配置异常处理，即没有使用<br>@ExceptionHandler，没有使用@ResponseStatus+自定义异常类，则容器中所有的异常解析器都处理<br>不了我们的异常，就会使得exMv(ModelAndView)还是为null，则异常继续往上抛出</p>
 </li>
-<li><p>异常继续往上抛，会经过一系列的方法，执行拦截器的AfterCompletion等等，最终底层会再次发送&#x2F;error<br>请求，这个请求是tomcat发送的(response.sendError(statusCode,resolvedReason))，这个请求会被容器中<br>BasicErrorController控制器进行处理，这个控制器是容器初始化时ErrorMvcAutoConfiguration自动配置类<br>注册的。</p>
+<li><p>异常继续往上抛，会经过一系列的方法，执行拦截器的AfterCompletion等等，最终底层会再次发送/error<br>请求，这个请求是tomcat发送的(response.sendError(statusCode,resolvedReason))，这个请求会被容器中<br>BasicErrorController控制器进行处理，这个控制器是容器初始化时ErrorMvcAutoConfiguration自动配置类<br>注册的。</p>
 <pre class="language-java" data-language="java"><code class="language-java"><span class="token comment">//在ErrorMvcAutoConfiguration注册BasicErrorController</span>
 <span class="token annotation punctuation">@Bean</span>
 <span class="token annotation punctuation">@ConditionalOnMissingBean</span><span class="token punctuation">(</span>
@@ -275,9 +275,9 @@ mv<span class="token punctuation">,</span> dispatchException<span class="token p
                               <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">resolveResource</span><span class="token punctuation">(</span>errorViewName<span class="token punctuation">,</span> model<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span></code></pre>
 </li>
-<li><p>OK，至此BasicErrorController已经对&#x2F;error请求进行处理，并返回了ModelAndView对象，从上面我们可以<br>知道，ModelAndView中的viewName，要么等于”error”(你没有在templates&#x2F;error目录下配置状态码.html)<br>要么等于”&#x2F;error&#x2F;500.html”，接下来就是使用容器中的视图解析器根据ViewName解析出View对象，</p>
+<li><p>OK，至此BasicErrorController已经对/error请求进行处理，并返回了ModelAndView对象，从上面我们可以<br>知道，ModelAndView中的viewName，要么等于”error”(你没有在templates/error目录下配置状态码.html)<br>要么等于”/error/500.html”，接下来就是使用容器中的视图解析器根据ViewName解析出View对象，</p>
 <ul>
-<li><p>如果viewName等于”&#x2F;error&#x2F;500.html”，则thymeleafViewResolver会解析出thymeleafView，接下去就是调用thymeleafView的render方法，进行渲染数据，跳转页面，</p>
+<li><p>如果viewName等于”/error/500.html”，则thymeleafViewResolver会解析出thymeleafView，接下去就是调用thymeleafView的render方法，进行渲染数据，跳转页面，</p>
 </li>
 <li><p>如果viewName等于”error”，则会被BeanNameViewResolver解析器进行处理，这个解析器在异常自动<br>配置类中，也被配置了一个，这个解析器的作用是，以viewName作为Id在容器中找同id的组件，正好<br>自动配置类也已经在容器启动时配置了一个View，叫StaticView。这个view就是springmvc底层的白页<br>表示，你什么异常都没处理，目标方法报错后则由StaticView进行渲染产生白页。</p>
 <pre class="language-java" data-language="java"><code class="language-java"><span class="token comment">//异常自动配置类ErrorMvcAutoConfiguration中配置了BeanNameViewResolver视图解析器</span>
@@ -335,7 +335,8 @@ mv<span class="token punctuation">,</span> dispatchException<span class="token p
             builder<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"&lt;/body>&lt;/html>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             response<span class="token punctuation">.</span><span class="token function">getWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>builder<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span></code></pre></li>
+    <span class="token punctuation">&#125;</span></code></pre>
+</li>
 </ul>
 </li>
 <li><p>好了，至此我已经讲完了一个没有被处理的异常是怎样被SpringMVC解析处理生成白页的。</p>

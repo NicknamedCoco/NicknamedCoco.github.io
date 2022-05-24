@@ -83,7 +83,11 @@ document.addEventListener("pjax:success", initScrollReveal);
 将www.123.com转换成反向代理服务器的ip地址，即访问反向代理服务器的80端口，此时nginx监听到
 有请求访问后，将请求转发到真实服务器的ip地址和端口
 
-本次实验nginx和tomcat都在一个linux系统上，所以是转发到本地的8080端口。</code></pre></li>
+本次实验nginx和tomcat都在一个linux系统上，所以是转发到本地的8080端口。</code></pre>
+
+
+
+</li>
 </ul>
 </li>
 </ul>
@@ -96,11 +100,8 @@ document.addEventListener("pjax:success", initScrollReveal);
 </li>
 <li><h5 id="具体实现-1"><a href="#具体实现-1" class="headerlink" title="具体实现"></a>具体实现</h5><ul>
 <li><p>搭建两个tomcat服务，监听8080端口，8081端口</p>
-<p>直接复制tomcat安装目录到另一个文件夹，修改<code>tomcat/conf/server.xml</code>文件将监听的端口</p>
+<p>直接复制tomcat安装目录到另一个文件夹，修改<code>tomcat/conf/server.xml</code>文件将监听的端口<br>更改成8081端口，其他监听的端口也更改掉，防止和之前的tomcat监听的端口冲突。配置好后，<br>启动两个tomcat，最后在window浏览器测试两个tomcat是否成功。</p>
 </li>
-</ul>
-<p>更改成8081端口，其他监听的端口也更改掉，防止和之前的tomcat监听的端口冲突。配置好后，<br>  启动两个tomcat，最后在window浏览器测试两个tomcat是否成功。</p>
-<ul>
 <li><p>在两个tomcat的webapps目录下分别创建一个项目edu，vod，并在项目下创建测试html</p>
 <pre class="language-none"><code class="language-none">在tomcat8080的webapps目录下增加edu目录，并在该目录下新增a.html，在该文件中写
 &lt;h1&gt;this is port 8080&lt;&#x2F;h1&gt;，当我们访问http:&#x2F;&#x2F;linuxIp地址:8080&#x2F;edu&#x2F;a.html
@@ -139,7 +140,9 @@ location [ &#x3D; | ~ | ~* | ^~ ] uri &#123;
 4)^~ :用于不含正则表达式的uri前，要求nginx服务器找到标识uri和请求字符串匹配度最高的location|
 	后立即使用此location处理请求，而不再使用location块中的正则uri和请求字符串做匹配
 	
-注意：如果uri包含正则表达式，则必须要有~或者~*标识</code></pre></li>
+注意：如果uri包含正则表达式，则必须要有~或者~*标识</code></pre>
+
+</li>
 </ul>
 </li>
 </ul>

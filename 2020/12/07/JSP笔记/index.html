@@ -33,7 +33,7 @@ document.addEventListener("pjax:success", initScrollReveal);
 <li>Tomcat内置了一个jsp翻译引擎，专门负责jsp翻译文件，编译java源文件</li>
 <li>index.jsp文件被翻译成index_jsp.java文件，编译生成index_jsp.class源文件<br>  index_jsp这个类继承HttpJspBase,而HttpJspBase继承了HttpServlet</li>
 <li>Tomcat目录下的work文件就是存放jsp转化成的.java文件</li>
-<li>JSP文件后缀，默认是.jsp，JSP后缀可以通过修改CATALINA_HOME&#x2F;conf&#x2F;web.xml中修改</li>
+<li>JSP文件后缀，默认是.jsp，JSP后缀可以通过修改CATALINA_HOME/conf/web.xml中修改</li>
 <li>jsp就是servlet，只不过职责不同，jsp的强项是做页面展示</li>
 <li>在jsp文件中编写的所有html，css,JavaScript，对jsp来说，只不过是普通的字符串<br>  翻译成out.write(“翻译成这里”);</li>
 </ul>
@@ -74,45 +74,44 @@ page                java.lang.Object(page&#x3D;this,就是指向本身)</code></
 </li>
 <li><p>以上内置对象只能在service方法中“直接”使用，在其他方法中无法“直接”使用，可以间接使用</p>
 </li>
-<li><p>四个作用域对象&#x2F;范围对象<br>pageContext:在同一个jsp页面中共享数据，不能跨jsp页面<br>request:在同一个请求中共享数据<br>session:在同一个会话中共享数据<br>application:所有用户共享的数据可以放到应用范围</p>
+<li><p>四个作用域对象/范围对象<br>pageContext:在同一个jsp页面中共享数据，不能跨jsp页面<br>request:在同一个请求中共享数据<br>session:在同一个会话中共享数据<br>application:所有用户共享的数据可以放到应用范围</p>
 </li>
 </ul>
-<p>5，jsp表达式<br>登录成功，欢迎&lt;%&#x3D;username%&gt;回来，这种格式就是jsp表达式<br>6，jsp的指令</p>
+<p>5，jsp表达式<br>登录成功，欢迎&lt;%=username%&gt;回来，这种格式就是jsp表达式<br>6，jsp的指令</p>
 <ul>
 <li><p>指令的作用是指导jsp的翻译引擎如何翻译jsp代码</p>
 </li>
 <li><p>jsp中共三个指令：<br>page          页面指令<br>include       包含指令<br>taglib        标签库指令</p>
 </li>
-<li><p>指令的语法格式：&lt;%@指令名 属性名&#x3D;属性值 属性名&#x3D;属性值%&gt;</p>
+<li><p>指令的语法格式：&lt;%@指令名 属性名=属性值 属性名=属性值%&gt;</p>
 </li>
 <li><p>关于jsp中page指令，page指令中常用的属性</p>
 <ul>
-<li>contentType         设置JSP的响应内容类型，同时在响应的内容类型后面也可以指定响应的字符编码方式<br>&lt;%@page contentType&#x3D;”text&#x2F;html;charset&#x3D;utf-8”%&gt;</li>
-</ul>
+<li><p>contentType         设置JSP的响应内容类型，同时在响应的内容类型后面也可以指定响应的字符编码方式<br>&lt;%@page contentType=”text/html;charset=utf-8”%&gt;<br>和&lt;%@page contentType=”text/html” pageEncoding=”UTF-8”%&gt;一样</p>
 </li>
-</ul>
-<p>和&lt;%@page contentType&#x3D;”text&#x2F;html” pageEncoding&#x3D;”UTF-8”%&gt;一样</p>
-<ul>
 <li><p>pageEncoding        设置jsp响应时的字符编码方式</p>
 </li>
 <li><p>import              组织导入，导java类</p>
 </li>
 <li><p>session             设置当前jsp页面中是否可以直接使用session内置对象</p>
 <ul>
-<li>session&#x3D;”true”，表示在当前jsp中可以直接使用内置对象session，程序在执行的时候获取当前session会话对象，若获取不到则新建session对象</li>
-<li>session&#x3D;“false”,表示在当前jsp中不可以直接使用内置对象session,有时候并不想新建session,只是想获取当前session,就可以使用session&#x3D;”false”，若想用session，可以自己创建一个<br>HttpSession session &#x3D; request.getSession(false),获取当前session,获取不到返回null<br>若session属性不写，则默认session&#x3D;”true”</li>
+<li>session=”true”，表示在当前jsp中可以直接使用内置对象session，程序在执行的时候获取当前session会话对象，若获取不到则新建session对象</li>
+<li>session=“false”,表示在当前jsp中不可以直接使用内置对象session,有时候并不想新建session,只是想获取当前session,就可以使用session=”false”，若想用session，可以自己创建一个<br>HttpSession session = request.getSession(false),获取当前session,获取不到返回null<br>若session属性不写，则默认session=”true”</li>
 </ul>
 </li>
 <li><p>errorPage          错误页面，当程序出错时，跳转到指定的错误页面，跳转使用转发技术，</p>
 </li>
 </ul>
-  <pre class="language-none"><code class="language-none">errorPage&#x3D;&quot;&#x2F;index4.jsp&quot;,路径不包括项目名</code></pre>
+<pre class="language-none"><code class="language-none">errorPage&#x3D;&quot;&#x2F;index4.jsp&quot;,路径不包括项目名</code></pre>
+
 <ul>
 <li><p>isErrorPage         是否是错误页面，如果为true，表示当前页面为错误页面，可以使用exception对象，exception引用指向了抛出的异常</p>
 </li>
 <li><p>isELIgnored         是否忽略EL表达式</p>
 </li>
-<li><p>include指令<br>&lt;%@include file&#x3D;””%&gt;， 导入其他jsp文件内容，include指令只有一个file属性，一个jsp文件可以使用多个include指令，include指令是静态联编，即两个文件组成一份java源代码</p>
+</ul>
+</li>
+<li><p>include指令<br>&lt;%@include file=””%&gt;， 导入其他jsp文件内容，include指令只有一个file属性，一个jsp文件可以使用多个include指令，include指令是静态联编，即两个文件组成一份java源代码</p>
 </li>
 </ul>
 <p>7，jsp的动作</p>
@@ -131,28 +130,33 @@ page                java.lang.Object(page&#x3D;this,就是指向本身)</code></
 <blockquote>
 <h4 id="EL表达式"><a href="#EL表达式" class="headerlink" title="EL表达式"></a>EL表达式</h4></blockquote>
 <ul>
-<li>在EL表达式中，jsp四大域对象都有相应的别名<br>application         applicationScope<br>session             sessionScope<br>request             requestScope<br>pageContext         pageScope</li>
-<li>EL表达式的作用：将作用域中的数据写到响应体中，即输出用的</li>
-<li>使用EL表达式的语法格式：${作用域.关键字}</li>
-<li>输出高级对象中的数据：<br>${作用域.user.name}，前提，user类中一定要提供get，set方法</li>
-<li>简化版EL表达式：<br>${作用域.关键字}中的作用域可以省略，EL表达式会自己去域对象中挨个找数据<br>查找顺序是从小到大的范围，先从pageScope中找，最后到applicationContext中查找</li>
-<li>EL表达式中除了以上四种内置对象，还有以下内置对象<ul>
-<li><p>param<br>使用：${param.请求参数名}<br>作用：读取请求协议包参数内容，即读取表单数据<br>代替：String value &#x3D; request.getParameter(“请求参数名”);<br>out.write(value);</p>
+<li><p>在EL表达式中，jsp四大域对象都有相应的别名<br>application         applicationScope<br>session             sessionScope<br>request             requestScope<br>pageContext         pageScope</p>
 </li>
-<li><p>paramValues<br>使用：${paramValues.请求参数名}<br>作用：读取请求协议包中关联多个值的请求参数，将参数内容保存到数组<br>代替：String[] array &#x3D; request.getParameterValues(“hobby”);</p>
-<p>表单提交的数据会被自动封装到request对象中，request对象中有map集合存储这些数据<br>map集合的key是name，字符串类型，value是一个字符串类型的一维数组<br>通过map集合的key获取value，适合取复选框数据<br>例如：${paramValues.hobby[0]}  &#x2F;&#x2F;取爱好数组中第一个值</p>
+<li><p>EL表达式的作用：将作用域中的数据写到响应体中，即输出用的</p>
 </li>
-<li><p>initParam</p>
+<li><p>使用EL表达式的语法格式：${作用域.关键字}</p>
+</li>
+<li><p>输出高级对象中的数据：<br>${作用域.user.name}，前提，user类中一定要提供get，set方法</p>
+</li>
+<li><p>简化版EL表达式：<br>${作用域.关键字}中的作用域可以省略，EL表达式会自己去域对象中挨个找数据<br>查找顺序是从小到大的范围，先从pageScope中找，最后到applicationContext中查找</p>
+</li>
+<li><p>EL表达式中除了以上四种内置对象，还有以下内置对象</p>
+<ul>
+<li><p>param<br>使用：${param.请求参数名}<br>作用：读取请求协议包参数内容，即读取表单数据<br>代替：String value = request.getParameter(“请求参数名”);<br>out.write(value);</p>
+</li>
+<li><p>paramValues<br>使用：${paramValues.请求参数名}<br>作用：读取请求协议包中关联多个值的请求参数，将参数内容保存到数组<br>代替：String[] array = request.getParameterValues(“hobby”);</p>
+<p>表单提交的数据会被自动封装到request对象中，request对象中有map集合存储这些数据<br>map集合的key是name，字符串类型，value是一个字符串类型的一维数组<br>通过map集合的key获取value，适合取复选框数据<br>例如：${paramValues.hobby[0]}  //取爱好数组中第一个值</p>
+</li>
+<li><p>initParam<br>使用：${initParam.共享数据名}<br>代替：String value = application.getInitParameter(“driver”);<br>out.write(value);</p>
 </li>
 </ul>
 </li>
 </ul>
-<p>使用：${initParam.共享数据名}<br>代替：String value &#x3D; application.getInitParameter(“driver”);<br>  out.write(value);</p>
 <blockquote>
 <h4 id="JSTL"><a href="#JSTL" class="headerlink" title="JSTL"></a>JSTL</h4><p>标签的使用</p>
 </blockquote>
 <ul>
-<li><p>&lt;c:set&gt;:<br>作用：在jsp文件上设置域对象中共享的数据<br>使用：&lt;c:set scope&#x3D;”session” var&#x3D;”key” value&#x3D;”10”&#x2F;&gt;<br>代替：&lt;% session.setAttribute(“key”,”10”); %&gt;</p>
+<li><p>&lt;c:set&gt;:<br>作用：在jsp文件上设置域对象中共享的数据<br>使用：&lt;c:set scope=”session” var=”key” value=”10”/&gt;<br>代替：&lt;% session.setAttribute(“key”,”10”); %&gt;</p>
 <ul>
 <li>属性：scope:指定操作的域对象别名</li>
 <li>var :指定域对象中的key</li>
@@ -192,7 +196,11 @@ end&#x3D;&quot;循环变量可以接收的最大值&quot; step&#x3D;&quot;循环
 	var变量代表Map集合的键值对，EntrySet
 	$&#123;var.key&#125;,代表map集合一个键值对的key值
 	$&#123;var.value.属性名&#125;   代表map集合一个键值对的value值的属性值
-&lt;&#x2F;c:foreach&gt;</code></pre></li>
+&lt;&#x2F;c:foreach&gt;</code></pre>
+
+
+
+</li>
 </ul>
 </li>
 </ul>
@@ -222,7 +230,7 @@ end&#x3D;&quot;循环变量可以接收的最大值&quot; step&#x3D;&quot;循环
 </li>
 <li><p>过滤器配置：</p>
 <ul>
-<li>拦截路径配置<br>1，具体资源路径：&#x2F;index.jsp     只有访问index.jsp资源时，过滤器才会被执行<br>2，拦截目录：&#x2F;user&#x2F;*            访问&#x2F;user下所有资源时，过滤器都会被执行<br>3，后缀名拦截：<code>*.jsp</code>         访问所有后缀名为jsp资源时，过滤器都会被执行<br>4，<code>/*</code>                         访问项目所有资源都会执行拦截器</li>
+<li>拦截路径配置<br>1，具体资源路径：/index.jsp     只有访问index.jsp资源时，过滤器才会被执行<br>2，拦截目录：/user/*            访问/user下所有资源时，过滤器都会被执行<br>3，后缀名拦截：<code>*.jsp</code>         访问所有后缀名为jsp资源时，过滤器都会被执行<br>4，<code>/*</code>                         访问项目所有资源都会执行拦截器</li>
 <li>拦截方式配置：资源被访问的方式：普通的请求或者服务器内部servlet之间的转发<ul>
 <li>注解配置：<br>@WebFiler中设置dispatcherTypes属性<br>REQUEST，默认值，浏览器直接请求资源<br>FORWARD，转发访问资源<br>INCLUDE，包含访问资源<br>ERROR，错误跳转资源<br>ASYNC，异步访问资源</li>
 <li>web.xml:<br>filter-mapping标签中有dispatcher标签</li>

@@ -1,4 +1,4 @@
-.highlight-wrap[data-rel] {
+<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://fastly.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://fastly.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://fastly.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script>.highlight-wrap[data-rel] {
   position: relative;
   overflow: hidden;
   border-radius: 5px;

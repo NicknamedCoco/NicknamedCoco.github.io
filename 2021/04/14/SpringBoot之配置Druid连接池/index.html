@@ -49,7 +49,11 @@ document.addEventListener("pjax:success", initScrollReveal);
     前提是引入了Hikari依赖且容器中没有配置其他的数据源。
 4)因为场景依赖中默认引入了JdbcTemplate依赖，所以也有JdbcTemplate的自动配置类
     叫JdbcTemplateAutoConfiguration,所以我们可以在dao层中直接自动引用JdbcTemplate
-    JdbcTemplate的属性设置可以通过修改boot的配置文件spring.jdbc进行设置</code></pre></li>
+    JdbcTemplate的属性设置可以通过修改boot的配置文件spring.jdbc进行设置</code></pre>
+
+
+
+</li>
 </ul>
 <blockquote>
 <p>配置Druid连接池</p>
@@ -127,7 +131,8 @@ dataSource<span class="token punctuation">.</span><span class="token function">s
     servletRegistrationBean<span class="token punctuation">.</span><span class="token function">addInitParameter</span><span class="token punctuation">(</span><span class="token string">"loginPassword"</span><span class="token punctuation">,</span><span class="token string">"123765"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> servletRegistrationBean<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token comment">//以上就是手动向容器中注册druid的各个功能组件</span></code></pre></li>
+<span class="token comment">//以上就是手动向容器中注册druid的各个功能组件</span></code></pre>
+</li>
 </ul>
 </li>
 <li><p>使用官方的starter场景依赖</p>
@@ -199,7 +204,11 @@ dataSource<span class="token punctuation">.</span><span class="token function">s
         <span class="token key atrule">exclusions</span><span class="token punctuation">:</span> <span class="token string">'*.js,*.jpg,*.css,/druid/*'</span>
 
 <span class="token comment">#      开启监控页中的spring监控功能，监控spring这个包下的所有组件</span>
-      <span class="token key atrule">aop-patterns</span><span class="token punctuation">:</span> world.keyi.boot.*</code></pre></li>
+      <span class="token key atrule">aop-patterns</span><span class="token punctuation">:</span> world.keyi.boot.*</code></pre>
+
+
+
+</li>
 </ul>
 </li>
 </ul>

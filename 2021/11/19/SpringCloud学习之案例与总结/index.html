@@ -15,23 +15,23 @@ document.addEventListener("pjax:success", initScrollReveal);
 <meta property="og:site_name" content="CocoBlog">
 <meta property="og:description" content="近况  8,9月份学习了ES6，webpack，Vue的内容，10,11月份在学微服务的内容，不能说学的有多好，但大致都了解了一下，很多名词也不再陌生，当然，很多技术仅仅学习了使用，具体原理什么的我暂时没有深入，因为现在的时间不允许，我还有很多其他要紧的事，现在的学习是为以后学习做个铺垫。 在未来，我会弥补自身基础不足，这是道心上的坎，操作系统，计算机网络，计算机组成，数据结构和算法这些我都不会">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/summary/1.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/summary/2.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/summary/3.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/summary/4.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/summary/5.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/summary/6.png">
+<meta property="og:image" content="https://github.com/NicknamedCoco/cdn/blob/cfb952173e08c606cbf63ceb83f56bfee690512c/blog/springcloud/summary/1.png">
+<meta property="og:image" content="https://github.com/NicknamedCoco/cdn/blob/cfb952173e08c606cbf63ceb83f56bfee690512c/blog/springcloud/summary/2.png">
+<meta property="og:image" content="https://github.com/NicknamedCoco/cdn/blob/cfb952173e08c606cbf63ceb83f56bfee690512c/blog/springcloud/summary/3.png">
+<meta property="og:image" content="https://github.com/NicknamedCoco/cdn/blob/cfb952173e08c606cbf63ceb83f56bfee690512c/blog/springcloud/summary/4.png">
+<meta property="og:image" content="https://github.com/NicknamedCoco/cdn/blob/cfb952173e08c606cbf63ceb83f56bfee690512c/blog/springcloud/summary/5.png">
+<meta property="og:image" content="https://github.com/NicknamedCoco/cdn/blob/cfb952173e08c606cbf63ceb83f56bfee690512c/blog/springcloud/summary/6.png">
 <meta property="article:published_time" content="2021-11-19T05:02:43.000Z">
-<meta property="article:modified_time" content="2021-11-22T14:11:21.335Z">
+<meta property="article:modified_time" content="2022-05-24T10:32:55.726Z">
 <meta property="article:author" content="NicknamedCoco">
 <meta property="article:tag" content="SpringCloud">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/summary/1.png"><script>(function() {
+<meta name="twitter:image" content="https://github.com/NicknamedCoco/cdn/blob/cfb952173e08c606cbf63ceb83f56bfee690512c/blog/springcloud/summary/1.png"><script>(function() {
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
   const setting = localStorage.getItem('darken-mode') || 'auto'
   if (setting === 'dark' || (prefersDark && setting !== 'light'))
     document.documentElement.classList.toggle('dark', true)
-})()</script></head><body><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button sidebar-nav-active" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel sidebar-panel-active" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="NicknamedCoco"><img width="96" loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/images/keyi.jpg" alt="NicknamedCoco"></a><div class="site-author-name"><a href="/about/">NicknamedCoco</a></div><a class="site-name" href="/about/site.html">CocoBlog</a><sub class="site-subtitle">OneForAll</sub><div class="site-description">寻找自己的价值，才是生命的意义</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="我的主页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">113</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">8</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">66</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://wpa.qq.com/msgrd?v=3&amp;uin=506579631&amp;site=qq&amp;menu=yes" title="QQ" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/NicknamedCoco" title="GitHub" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://www.zhihu.com/people/NicknamedCoco/" title="知乎" target="_blank" style="color:#0084FF"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhihu-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://twitter.com/OneDayInAug" title="Twitter" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-twitter-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content">此文章未包含目录</div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://www.keyi.world/2021/11/19/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%A1%88%E4%BE%8B%E4%B8%8E%E6%80%BB%E7%BB%93/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="NicknamedCoco"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="CocoBlog"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">SpringCloud学习之案例与总结</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2021-11-19 13:02:43" itemprop="dateCreated datePublished" datetime="2021-11-19T13:02:43+08:00">2021-11-19</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-2-line"></use></svg></span> <time title="修改时间：2021-11-22 22:11:21" itemprop="dateModified" datetime="2021-11-22T22:11:21+08:00">2021-11-22</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">8.6k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">41m</span></span></span><span class="leancloud_visitors" id="/2021/11/19/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%A1%88%E4%BE%8B%E4%B8%8E%E6%80%BB%E7%BB%93/" data-flag-title="SpringCloud学习之案例与总结"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-tag"><a class="tag-item" href="/tags/SpringCloud/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">SpringCloud</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><blockquote>
+})()</script></head><body><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button sidebar-nav-active" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel sidebar-panel-active" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="NicknamedCoco"><img width="96" loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/images/keyi.jpg" alt="NicknamedCoco"></a><div class="site-author-name"><a href="/about/">NicknamedCoco</a></div><a class="site-name" href="/about/site.html">CocoBlog</a><sub class="site-subtitle">OneForAll</sub><div class="site-description">寻找自己的价值，才是生命的意义</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="我的主页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">113</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">8</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">66</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://wpa.qq.com/msgrd?v=3&amp;uin=506579631&amp;site=qq&amp;menu=yes" title="QQ" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/NicknamedCoco" title="GitHub" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://www.zhihu.com/people/NicknamedCoco/" title="知乎" target="_blank" style="color:#0084FF"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhihu-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://twitter.com/OneDayInAug" title="Twitter" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-twitter-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content">此文章未包含目录</div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://www.keyi.world/2021/11/19/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%A1%88%E4%BE%8B%E4%B8%8E%E6%80%BB%E7%BB%93/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="NicknamedCoco"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="CocoBlog"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">SpringCloud学习之案例与总结</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2021-11-19 13:02:43" itemprop="dateCreated datePublished" datetime="2021-11-19T13:02:43+08:00">2021-11-19</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-2-line"></use></svg></span> <time title="修改时间：2022-05-24 18:32:55" itemprop="dateModified" datetime="2022-05-24T18:32:55+08:00">2022-05-24</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">8.6k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">41m</span></span></span><span class="leancloud_visitors" id="/2021/11/19/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%A1%88%E4%BE%8B%E4%B8%8E%E6%80%BB%E7%BB%93/" data-flag-title="SpringCloud学习之案例与总结"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-tag"><a class="tag-item" href="/tags/SpringCloud/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">SpringCloud</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><blockquote>
 <p>近况</p>
 </blockquote>
 <p>8,9月份学习了ES6，webpack，Vue的内容，10,11月份在学微服务的内容，不能说学的有多好，<br>但大致都了解了一下，很多名词也不再陌生，当然，很多技术仅仅学习了使用，具体原理什么的<br>我暂时没有深入，因为现在的时间不允许，我还有很多其他要紧的事，现在的学习是为以后学习做个铺垫。</p>
@@ -56,9 +56,9 @@ document.addEventListener("pjax:success", initScrollReveal);
 <li><p>创建父子模块</p>
 <ul>
 <li><p>父子模块</p>
-<img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/summary/1.png" style="zoom:80%;" / loading="lazy">
-<img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/summary/2.png" style="zoom:80%;" / loading="lazy">
-<img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/summary/3.png"  / loading="lazy">
+<img src="https://github.com/NicknamedCoco/cdn/blob/cfb952173e08c606cbf63ceb83f56bfee690512c/blog/springcloud/summary/1.png" style="zoom:80%;" / loading="lazy">
+<img src="https://github.com/NicknamedCoco/cdn/blob/cfb952173e08c606cbf63ceb83f56bfee690512c/blog/springcloud/summary/2.png" style="zoom:80%;" / loading="lazy">
+<img src="https://github.com/NicknamedCoco/cdn/blob/cfb952173e08c606cbf63ceb83f56bfee690512c/blog/springcloud/summary/3.png"  / loading="lazy">
 </li>
 <li><p><strong>父模块的POM文件</strong></p>
 <pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
@@ -335,7 +335,8 @@ document.addEventListener("pjax:success", initScrollReveal);
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-alibaba-nacos-discovery<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span></code></pre></li>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p>搭建三个业务数据库<br>OrderServie，AccountService，StorageService三个模块分别对应三个数据库，下面是建库建表语句</p>
@@ -432,7 +433,7 @@ document.addEventListener("pjax:success", initScrollReveal);
 <p>上面我们创建了父子模块，增加了依赖，配置了基本的配置文件，下面我们编写基本业务</p>
 <ul>
 <li><p>OrderService微服务</p>
-<img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/summary/4.png" style="zoom:80%;" / loading="lazy">
+<img src="https://github.com/NicknamedCoco/cdn/blob/cfb952173e08c606cbf63ceb83f56bfee690512c/blog/springcloud/summary/4.png" style="zoom:80%;" / loading="lazy">
 
 <ul>
 <li><p>Order</p>
@@ -507,7 +508,8 @@ document.addEventListener("pjax:success", initScrollReveal);
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>update</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>updateOrderStatus<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
         update t_order set status=$&#123;status&#125; where user_id=$&#123;userId&#125;
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>update</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span></code></pre></li>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p>AccountService微服务</p>
@@ -587,7 +589,8 @@ document.addEventListener("pjax:success", initScrollReveal);
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>update</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>reduceAccount<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
         update t_account set residue=residue-$&#123;money&#125;,used=used+$&#123;money&#125; where user_id=$&#123;userId&#125;
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>update</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span></code></pre></li>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p>StorageService微服务</p>
@@ -648,7 +651,11 @@ document.addEventListener("pjax:success", initScrollReveal);
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>update</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>reduceStorage<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
         update t_storage set used=used+$&#123;count&#125;,residue=residue-$&#123;count&#125; where product_id=$&#123;productId&#125;
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>update</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span></code></pre></li>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span></code></pre>
+
+
+
+</li>
 </ul>
 </li>
 </ul>
@@ -862,7 +869,7 @@ document.addEventListener("pjax:success", initScrollReveal);
 
 <p>上述就是sentinel的配置，暴露微服务端点，配置sentinel控制台地址，开启feign对sentinel的支持<br>之前已经展示的配置已省略</p>
 </li>
-<li><p>为OrderController接口配置限流和降级方法<br><img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/summary/5.png" loading="lazy"></p>
+<li><p>为OrderController接口配置限流和降级方法<br><img src="https://github.com/NicknamedCoco/cdn/blob/cfb952173e08c606cbf63ceb83f56bfee690512c/blog/springcloud/summary/5.png" loading="lazy"></p>
 <ul>
 <li><p>OrderController更新后</p>
 <pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
@@ -924,20 +931,17 @@ document.addEventListener("pjax:success", initScrollReveal);
         log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"OrderController--create方法出现异常："</span><span class="token operator">+</span>throwable<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">CommonResult</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">,</span><span class="token string">"error:"</span><span class="token operator">+</span>throwable<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span></code></pre></li>
+<span class="token punctuation">&#125;</span></code></pre>
+
+</li>
 </ul>
 <p>注意：随着后来的认识，blockHandler指定的方法本以为专门处理限流，降级，<br>fallback指定的方法本以为是专门处理接口处理异常的情况，其实并不对，<br>@SentinelResource注解中blockHandler指定的方法处理的是限流，而fallback指定的方法处理异常，<br>熔断降级的方法，接口熔断后或发生异常后，执行fallback方法，接口被限流后，执行blockHandler方法</p>
 </li>
-<li><p>为feign接口配置降级方法<br><img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/summary/6.png" loading="lazy"><br>ps:interceptor中是seata的配置</p>
+<li><p>为feign接口配置降级方法<br><img src="https://github.com/NicknamedCoco/cdn/blob/cfb952173e08c606cbf63ceb83f56bfee690512c/blog/springcloud/summary/6.png" loading="lazy"><br>ps:interceptor中是seata的配置</p>
 <ul>
-<li>AccountServiceFeign更新后</li>
-</ul>
+<li><p>AccountServiceFeign更新后<br><code>@FeignClient(value=&quot;AccountService&quot;,fallbackFactory=AccountServiceFallback.class)</code></p>
+<p>增加fallbackFactory配置项</p>
 </li>
-</ul>
-<p><code>@FeignClient(value=&quot;AccountService&quot;,fallbackFactory=AccountServiceFallback.class)</code></p>
-<pre><code>增加fallbackFactory配置项
-</code></pre>
-<ul>
 <li><p>AccountServiceFallback</p>
 <pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
 <span class="token annotation punctuation">@Slf4j</span>
@@ -952,9 +956,13 @@ document.addEventListener("pjax:success", initScrollReveal);
       <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
   <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span></code></pre></li>
+<span class="token punctuation">&#125;</span></code></pre>
+
+</li>
 </ul>
-<p>  StorageServiceFeign也是同样的配置，注意，使用seata时，不能为feign配置降级方法，<br>  不然seata认为feign接口并没有报错，导致另外两个微服务数据库不回滚！！！</p>
+<p>StorageServiceFeign也是同样的配置，注意，使用seata时，不能为feign配置降级方法，<br>不然seata认为feign接口并没有报错，导致另外两个微服务数据库不回滚！！！</p>
+</li>
+</ul>
 <blockquote>
 <p><span id="f">增加gateway</span></p>
 </blockquote>
@@ -1013,58 +1021,58 @@ document.addEventListener("pjax:success", initScrollReveal);
 <li><p>创建seata-server需要使用的数据库(数据库名任意，本案例数据库名是springcloud_seata，之后在配置文件中要指定)，<br>下面是建表sql语句，ps：seata-server有不同的数据存储模式，如果模式是db，则需要建数据库，当然大多都是建数据库</p>
 <pre class="language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- ---------------------- The script used when storeMode is 'db' ----------------------</span>
 <span class="token comment">-- the table to store GlobalSession data</span>
-<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> <span class="token identifier"><span class="token punctuation">`</span>global_table<span class="token punctuation">`</span></span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> <span class="token punctuation">`</span>global_table<span class="token punctuation">`</span>
 <span class="token punctuation">(</span>
-    <span class="token identifier"><span class="token punctuation">`</span>xid<span class="token punctuation">`</span></span>                       <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>transaction_id<span class="token punctuation">`</span></span>            <span class="token keyword">BIGINT</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>status<span class="token punctuation">`</span></span>                    <span class="token keyword">TINYINT</span>      <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>application_id<span class="token punctuation">`</span></span>            <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>transaction_service_group<span class="token punctuation">`</span></span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>transaction_name<span class="token punctuation">`</span></span>          <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>timeout<span class="token punctuation">`</span></span>                   <span class="token keyword">INT</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>begin_time<span class="token punctuation">`</span></span>                <span class="token keyword">BIGINT</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>application_data<span class="token punctuation">`</span></span>          <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>gmt_create<span class="token punctuation">`</span></span>                <span class="token keyword">DATETIME</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>gmt_modified<span class="token punctuation">`</span></span>              <span class="token keyword">DATETIME</span><span class="token punctuation">,</span>
-    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>xid<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token keyword">KEY</span> <span class="token identifier"><span class="token punctuation">`</span>idx_gmt_modified_status<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>gmt_modified<span class="token punctuation">`</span></span><span class="token punctuation">,</span> <span class="token identifier"><span class="token punctuation">`</span>status<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token keyword">KEY</span> <span class="token identifier"><span class="token punctuation">`</span>idx_transaction_id<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>transaction_id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">`</span>xid<span class="token punctuation">`</span>                       <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>transaction_id<span class="token punctuation">`</span>            <span class="token keyword">BIGINT</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span><span class="token keyword">status</span><span class="token punctuation">`</span>                    <span class="token keyword">TINYINT</span>      <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>application_id<span class="token punctuation">`</span>            <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>transaction_service_group<span class="token punctuation">`</span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>transaction_name<span class="token punctuation">`</span>          <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>timeout<span class="token punctuation">`</span>                   <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>begin_time<span class="token punctuation">`</span>                <span class="token keyword">BIGINT</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>application_data<span class="token punctuation">`</span>          <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>gmt_create<span class="token punctuation">`</span>                <span class="token keyword">DATETIME</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>gmt_modified<span class="token punctuation">`</span>              <span class="token keyword">DATETIME</span><span class="token punctuation">,</span>
+    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>xid<span class="token punctuation">`</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">KEY</span> <span class="token punctuation">`</span>idx_gmt_modified_status<span class="token punctuation">`</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>gmt_modified<span class="token punctuation">`</span><span class="token punctuation">,</span> <span class="token punctuation">`</span><span class="token keyword">status</span><span class="token punctuation">`</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">KEY</span> <span class="token punctuation">`</span>idx_transaction_id<span class="token punctuation">`</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>transaction_id<span class="token punctuation">`</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span> <span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">InnoDB</span>
   <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span> <span class="token operator">=</span> utf8<span class="token punctuation">;</span>
 
 <span class="token comment">-- the table to store BranchSession data</span>
-<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> <span class="token identifier"><span class="token punctuation">`</span>branch_table<span class="token punctuation">`</span></span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> <span class="token punctuation">`</span>branch_table<span class="token punctuation">`</span>
 <span class="token punctuation">(</span>
-    <span class="token identifier"><span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span></span>         <span class="token keyword">BIGINT</span>       <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>xid<span class="token punctuation">`</span></span>               <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>transaction_id<span class="token punctuation">`</span></span>    <span class="token keyword">BIGINT</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>resource_group_id<span class="token punctuation">`</span></span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>resource_id<span class="token punctuation">`</span></span>       <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>branch_type<span class="token punctuation">`</span></span>       <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>status<span class="token punctuation">`</span></span>            <span class="token keyword">TINYINT</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>client_id<span class="token punctuation">`</span></span>         <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>application_data<span class="token punctuation">`</span></span>  <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>gmt_create<span class="token punctuation">`</span></span>        <span class="token keyword">DATETIME</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>gmt_modified<span class="token punctuation">`</span></span>      <span class="token keyword">DATETIME</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token keyword">KEY</span> <span class="token identifier"><span class="token punctuation">`</span>idx_xid<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>xid<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span>         <span class="token keyword">BIGINT</span>       <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>xid<span class="token punctuation">`</span>               <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>transaction_id<span class="token punctuation">`</span>    <span class="token keyword">BIGINT</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>resource_group_id<span class="token punctuation">`</span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>resource_id<span class="token punctuation">`</span>       <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>branch_type<span class="token punctuation">`</span>       <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span><span class="token keyword">status</span><span class="token punctuation">`</span>            <span class="token keyword">TINYINT</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>client_id<span class="token punctuation">`</span>         <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>application_data<span class="token punctuation">`</span>  <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>gmt_create<span class="token punctuation">`</span>        <span class="token keyword">DATETIME</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>gmt_modified<span class="token punctuation">`</span>      <span class="token keyword">DATETIME</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">KEY</span> <span class="token punctuation">`</span>idx_xid<span class="token punctuation">`</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>xid<span class="token punctuation">`</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span> <span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">InnoDB</span>
   <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span> <span class="token operator">=</span> utf8<span class="token punctuation">;</span>
 
 <span class="token comment">-- the table to store lock data</span>
-<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> <span class="token identifier"><span class="token punctuation">`</span>lock_table<span class="token punctuation">`</span></span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> <span class="token punctuation">`</span>lock_table<span class="token punctuation">`</span>
 <span class="token punctuation">(</span>
-    <span class="token identifier"><span class="token punctuation">`</span>row_key<span class="token punctuation">`</span></span>        <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>xid<span class="token punctuation">`</span></span>            <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">96</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>transaction_id<span class="token punctuation">`</span></span> <span class="token keyword">BIGINT</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span></span>      <span class="token keyword">BIGINT</span>       <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>resource_id<span class="token punctuation">`</span></span>    <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>table_name<span class="token punctuation">`</span></span>     <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>pk<span class="token punctuation">`</span></span>             <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">36</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>gmt_create<span class="token punctuation">`</span></span>     <span class="token keyword">DATETIME</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>gmt_modified<span class="token punctuation">`</span></span>   <span class="token keyword">DATETIME</span><span class="token punctuation">,</span>
-    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>row_key<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    <span class="token keyword">KEY</span> <span class="token identifier"><span class="token punctuation">`</span>idx_branch_id<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">`</span>row_key<span class="token punctuation">`</span>        <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>xid<span class="token punctuation">`</span>            <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">96</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>transaction_id<span class="token punctuation">`</span> <span class="token keyword">BIGINT</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span>      <span class="token keyword">BIGINT</span>       <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>resource_id<span class="token punctuation">`</span>    <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>table_name<span class="token punctuation">`</span>     <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>pk<span class="token punctuation">`</span>             <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">36</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>gmt_create<span class="token punctuation">`</span>     <span class="token keyword">DATETIME</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>gmt_modified<span class="token punctuation">`</span>   <span class="token keyword">DATETIME</span><span class="token punctuation">,</span>
+    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>row_key<span class="token punctuation">`</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">KEY</span> <span class="token punctuation">`</span>idx_branch_id<span class="token punctuation">`</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span> <span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">InnoDB</span>
   <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span> <span class="token operator">=</span> utf8<span class="token punctuation">;</span></code></pre>
 </li>
@@ -1138,39 +1146,39 @@ config <span class="token punctuation">&#123;</span>		#TC服务的配置文件�
 </li>
 <li><p>上面配置中，我们将seata-server需要的信息，本来是放在file.conf的信息放在了nacos配置文件上<br>配置文件名为：seataServer.properties，所以我们现在需要在nacos上创建该配置文件<br>并添加seata-server需要的内容，该文件内容如下：</p>
 <pre class="language-properties" data-language="properties"><code class="language-properties"><span class="token comment"># 数据存储方式，db代表数据库</span>
-<span class="token key attr-name">store.mode</span><span class="token punctuation">=</span><span class="token value attr-value">db</span>
-<span class="token key attr-name">store.db.datasource</span><span class="token punctuation">=</span><span class="token value attr-value">druid</span>
-<span class="token key attr-name">store.db.dbType</span><span class="token punctuation">=</span><span class="token value attr-value">mysql</span>
-<span class="token key attr-name">store.db.driverClassName</span><span class="token punctuation">=</span><span class="token value attr-value">com.mysql.cj.jdbc.Driver</span>
-<span class="token key attr-name">store.db.url</span><span class="token punctuation">=</span><span class="token value attr-value">jdbc:mysql://localhost:3306/springcloud_seata?serverTimezone=GMT&amp;useSSL=false&amp;characterEncoding=utf-8</span>
-<span class="token key attr-name">store.db.user</span><span class="token punctuation">=</span><span class="token value attr-value">root</span>
-<span class="token key attr-name">store.db.password</span><span class="token punctuation">=</span><span class="token value attr-value">123765</span>
-<span class="token key attr-name">store.db.minConn</span><span class="token punctuation">=</span><span class="token value attr-value">5</span>
-<span class="token key attr-name">store.db.maxConn</span><span class="token punctuation">=</span><span class="token value attr-value">30</span>
-<span class="token key attr-name">store.db.globalTable</span><span class="token punctuation">=</span><span class="token value attr-value">global_table</span>
-<span class="token key attr-name">store.db.branchTable</span><span class="token punctuation">=</span><span class="token value attr-value">branch_table</span>
-<span class="token key attr-name">store.db.queryLimit</span><span class="token punctuation">=</span><span class="token value attr-value">100</span>
-<span class="token key attr-name">store.db.lockTable</span><span class="token punctuation">=</span><span class="token value attr-value">lock_table</span>
-<span class="token key attr-name">store.db.maxWait</span><span class="token punctuation">=</span><span class="token value attr-value">5000</span>
+<span class="token attr-name">store.mode</span><span class="token punctuation">=</span><span class="token attr-value">db</span>
+<span class="token attr-name">store.db.datasource</span><span class="token punctuation">=</span><span class="token attr-value">druid</span>
+<span class="token attr-name">store.db.dbType</span><span class="token punctuation">=</span><span class="token attr-value">mysql</span>
+<span class="token attr-name">store.db.driverClassName</span><span class="token punctuation">=</span><span class="token attr-value">com.mysql.cj.jdbc.Driver</span>
+<span class="token attr-name">store.db.url</span><span class="token punctuation">=</span><span class="token attr-value">jdbc:mysql://localhost:3306/springcloud_seata?serverTimezone=GMT&amp;useSSL=false&amp;characterEncoding=utf-8</span>
+<span class="token attr-name">store.db.user</span><span class="token punctuation">=</span><span class="token attr-value">root</span>
+<span class="token attr-name">store.db.password</span><span class="token punctuation">=</span><span class="token attr-value">123765</span>
+<span class="token attr-name">store.db.minConn</span><span class="token punctuation">=</span><span class="token attr-value">5</span>
+<span class="token attr-name">store.db.maxConn</span><span class="token punctuation">=</span><span class="token attr-value">30</span>
+<span class="token attr-name">store.db.globalTable</span><span class="token punctuation">=</span><span class="token attr-value">global_table</span>
+<span class="token attr-name">store.db.branchTable</span><span class="token punctuation">=</span><span class="token attr-value">branch_table</span>
+<span class="token attr-name">store.db.queryLimit</span><span class="token punctuation">=</span><span class="token attr-value">100</span>
+<span class="token attr-name">store.db.lockTable</span><span class="token punctuation">=</span><span class="token attr-value">lock_table</span>
+<span class="token attr-name">store.db.maxWait</span><span class="token punctuation">=</span><span class="token attr-value">5000</span>
 <span class="token comment"># 事务、日志等配置</span>
-<span class="token key attr-name">server.recovery.committingRetryPeriod</span><span class="token punctuation">=</span><span class="token value attr-value">1000</span>
-<span class="token key attr-name">server.recovery.asynCommittingRetryPeriod</span><span class="token punctuation">=</span><span class="token value attr-value">1000</span>
-<span class="token key attr-name">server.recovery.rollbackingRetryPeriod</span><span class="token punctuation">=</span><span class="token value attr-value">1000</span>
-<span class="token key attr-name">server.recovery.timeoutRetryPeriod</span><span class="token punctuation">=</span><span class="token value attr-value">1000</span>
-<span class="token key attr-name">server.maxCommitRetryTimeout</span><span class="token punctuation">=</span><span class="token value attr-value">-1</span>
-<span class="token key attr-name">server.maxRollbackRetryTimeout</span><span class="token punctuation">=</span><span class="token value attr-value">-1</span>
-<span class="token key attr-name">server.rollbackRetryTimeoutUnlockEnable</span><span class="token punctuation">=</span><span class="token value attr-value">false</span>
-<span class="token key attr-name">server.undo.logSaveDays</span><span class="token punctuation">=</span><span class="token value attr-value">7</span>
-<span class="token key attr-name">server.undo.logDeletePeriod</span><span class="token punctuation">=</span><span class="token value attr-value">86400000</span>
+<span class="token attr-name">server.recovery.committingRetryPeriod</span><span class="token punctuation">=</span><span class="token attr-value">1000</span>
+<span class="token attr-name">server.recovery.asynCommittingRetryPeriod</span><span class="token punctuation">=</span><span class="token attr-value">1000</span>
+<span class="token attr-name">server.recovery.rollbackingRetryPeriod</span><span class="token punctuation">=</span><span class="token attr-value">1000</span>
+<span class="token attr-name">server.recovery.timeoutRetryPeriod</span><span class="token punctuation">=</span><span class="token attr-value">1000</span>
+<span class="token attr-name">server.maxCommitRetryTimeout</span><span class="token punctuation">=</span><span class="token attr-value">-1</span>
+<span class="token attr-name">server.maxRollbackRetryTimeout</span><span class="token punctuation">=</span><span class="token attr-value">-1</span>
+<span class="token attr-name">server.rollbackRetryTimeoutUnlockEnable</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">server.undo.logSaveDays</span><span class="token punctuation">=</span><span class="token attr-value">7</span>
+<span class="token attr-name">server.undo.logDeletePeriod</span><span class="token punctuation">=</span><span class="token attr-value">86400000</span>
 
 <span class="token comment"># 客户端与服务端传输方式</span>
-<span class="token key attr-name">transport.serialization</span><span class="token punctuation">=</span><span class="token value attr-value">seata</span>
-<span class="token key attr-name">transport.compressor</span><span class="token punctuation">=</span><span class="token value attr-value">none</span>
+<span class="token attr-name">transport.serialization</span><span class="token punctuation">=</span><span class="token attr-value">seata</span>
+<span class="token attr-name">transport.compressor</span><span class="token punctuation">=</span><span class="token attr-value">none</span>
 <span class="token comment"># 关闭metrics功能，提高性能</span>
-<span class="token key attr-name">metrics.enabled</span><span class="token punctuation">=</span><span class="token value attr-value">false</span>
-<span class="token key attr-name">metrics.registryType</span><span class="token punctuation">=</span><span class="token value attr-value">compact</span>
-<span class="token key attr-name">metrics.exporterList</span><span class="token punctuation">=</span><span class="token value attr-value">prometheus</span>
-<span class="token key attr-name">metrics.exporterPrometheusPort</span><span class="token punctuation">=</span><span class="token value attr-value">9898</span></code></pre>
+<span class="token attr-name">metrics.enabled</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">metrics.registryType</span><span class="token punctuation">=</span><span class="token attr-value">compact</span>
+<span class="token attr-name">metrics.exporterList</span><span class="token punctuation">=</span><span class="token attr-value">prometheus</span>
+<span class="token attr-name">metrics.exporterPrometheusPort</span><span class="token punctuation">=</span><span class="token attr-value">9898</span></code></pre>
 <p>之后只需双击<code>seata-server-1.4.2/bin/seata-server.bat</code>即可启动seata-server<br>以上就是seata服务端配置的全部过程</p>
 </li>
 </ul>
@@ -1200,16 +1208,16 @@ config <span class="token punctuation">&#123;</span>		#TC服务的配置文件�
 <li><p>在微服务的入口类上添加@EnableAutoDataSourceProxy注解，该注解用于代理druid的数据库连接池<br>注意，因为seata版本不同，会有不同的配置，使用1.4.2最新版本，或者比较新版本需要这个注解<br>使用版本比较低的seata，需要使用<code>@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)</code></p>
 </li>
 <li><p>因为seata默认使用AT模式，需要我们在各个微服务的数据库中增加undo_log表，用于存储seataAt模式下的前后镜像<br>创建表的sql语句如下：</p>
-<pre class="language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> <span class="token identifier"><span class="token punctuation">`</span>undo_log<span class="token punctuation">`</span></span>
+<pre class="language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> <span class="token punctuation">`</span>undo_log<span class="token punctuation">`</span>
 <span class="token punctuation">(</span>
-    <span class="token identifier"><span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span></span>     <span class="token keyword">BIGINT</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>   <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'branch transaction id'</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>xid<span class="token punctuation">`</span></span>           <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'global transaction id'</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>context<span class="token punctuation">`</span></span>       <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'undo_log context,such as serialization'</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>rollback_info<span class="token punctuation">`</span></span> <span class="token keyword">LONGBLOB</span>     <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'rollback info'</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>log_status<span class="token punctuation">`</span></span>    <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>      <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'0:normal status,1:defense status'</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>log_created<span class="token punctuation">`</span></span>   <span class="token keyword">DATETIME</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>  <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'create datetime'</span><span class="token punctuation">,</span>
-    <span class="token identifier"><span class="token punctuation">`</span>log_modified<span class="token punctuation">`</span></span>  <span class="token keyword">DATETIME</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>  <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'modify datetime'</span><span class="token punctuation">,</span>
-    <span class="token keyword">UNIQUE</span> <span class="token keyword">KEY</span> <span class="token identifier"><span class="token punctuation">`</span>ux_undo_log<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>xid<span class="token punctuation">`</span></span><span class="token punctuation">,</span> <span class="token identifier"><span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span>     <span class="token keyword">BIGINT</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>   <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'branch transaction id'</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>xid<span class="token punctuation">`</span>           <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'global transaction id'</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>context<span class="token punctuation">`</span>       <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'undo_log context,such as serialization'</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>rollback_info<span class="token punctuation">`</span> <span class="token keyword">LONGBLOB</span>     <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'rollback info'</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>log_status<span class="token punctuation">`</span>    <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>      <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'0:normal status,1:defense status'</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>log_created<span class="token punctuation">`</span>   <span class="token keyword">DATETIME</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>  <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'create datetime'</span><span class="token punctuation">,</span>
+    <span class="token punctuation">`</span>log_modified<span class="token punctuation">`</span>  <span class="token keyword">DATETIME</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>  <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'modify datetime'</span><span class="token punctuation">,</span>
+    <span class="token keyword">UNIQUE</span> <span class="token keyword">KEY</span> <span class="token punctuation">`</span>ux_undo_log<span class="token punctuation">`</span> <span class="token punctuation">(</span><span class="token punctuation">`</span>xid<span class="token punctuation">`</span><span class="token punctuation">,</span> <span class="token punctuation">`</span>branch_id<span class="token punctuation">`</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span> <span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">InnoDB</span>
   <span class="token keyword">AUTO_INCREMENT</span> <span class="token operator">=</span> <span class="token number">1</span>
   <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span> <span class="token operator">=</span> utf8 <span class="token keyword">COMMENT</span> <span class="token operator">=</span><span class="token string">'AT transaction mode undo table'</span><span class="token punctuation">;</span></code></pre>
@@ -1247,55 +1255,55 @@ config <span class="token punctuation">&#123;</span>		#TC服务的配置文件�
 </li>
 <li><p>上面提到了client.properties，这个文件中的内容可以放在之前配置的seataServer.properties文件中<br>这里做了一个拆分，下面是client.properties中的内容</p>
 <pre class="language-properties" data-language="properties"><code class="language-properties"><span class="token comment"># 事务组映射关系</span>
-<span class="token key attr-name">service.vgroupMapping.seata-demo</span><span class="token punctuation">=</span><span class="token value attr-value">HZ		</span>
+<span class="token attr-name">service.vgroupMapping.seata-demo</span><span class="token punctuation">=</span><span class="token attr-value">HZ		</span>
     
-<span class="token key attr-name">service.enableDegrade</span><span class="token punctuation">=</span><span class="token value attr-value">false</span>
-<span class="token key attr-name">service.disableGlobalTransaction</span><span class="token punctuation">=</span><span class="token value attr-value">false</span>
+<span class="token attr-name">service.enableDegrade</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">service.disableGlobalTransaction</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
 <span class="token comment"># 与TC服务的通信配置</span>
-<span class="token key attr-name">transport.type</span><span class="token punctuation">=</span><span class="token value attr-value">TCP</span>
-<span class="token key attr-name">transport.server</span><span class="token punctuation">=</span><span class="token value attr-value">NIO</span>
-<span class="token key attr-name">transport.heartbeat</span><span class="token punctuation">=</span><span class="token value attr-value">true</span>
-<span class="token key attr-name">transport.enableClientBatchSendRequest</span><span class="token punctuation">=</span><span class="token value attr-value">false</span>
-<span class="token key attr-name">transport.threadFactory.bossThreadPrefix</span><span class="token punctuation">=</span><span class="token value attr-value">NettyBoss</span>
-<span class="token key attr-name">transport.threadFactory.workerThreadPrefix</span><span class="token punctuation">=</span><span class="token value attr-value">NettyServerNIOWorker</span>
-<span class="token key attr-name">transport.threadFactory.serverExecutorThreadPrefix</span><span class="token punctuation">=</span><span class="token value attr-value">NettyServerBizHandler</span>
-<span class="token key attr-name">transport.threadFactory.shareBossWorker</span><span class="token punctuation">=</span><span class="token value attr-value">false</span>
-<span class="token key attr-name">transport.threadFactory.clientSelectorThreadPrefix</span><span class="token punctuation">=</span><span class="token value attr-value">NettyClientSelector</span>
-<span class="token key attr-name">transport.threadFactory.clientSelectorThreadSize</span><span class="token punctuation">=</span><span class="token value attr-value">1</span>
-<span class="token key attr-name">transport.threadFactory.clientWorkerThreadPrefix</span><span class="token punctuation">=</span><span class="token value attr-value">NettyClientWorkerThread</span>
-<span class="token key attr-name">transport.threadFactory.bossThreadSize</span><span class="token punctuation">=</span><span class="token value attr-value">1</span>
-<span class="token key attr-name">transport.threadFactory.workerThreadSize</span><span class="token punctuation">=</span><span class="token value attr-value">default</span>
-<span class="token key attr-name">transport.shutdown.wait</span><span class="token punctuation">=</span><span class="token value attr-value">3</span>
+<span class="token attr-name">transport.type</span><span class="token punctuation">=</span><span class="token attr-value">TCP</span>
+<span class="token attr-name">transport.server</span><span class="token punctuation">=</span><span class="token attr-value">NIO</span>
+<span class="token attr-name">transport.heartbeat</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">transport.enableClientBatchSendRequest</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">transport.threadFactory.bossThreadPrefix</span><span class="token punctuation">=</span><span class="token attr-value">NettyBoss</span>
+<span class="token attr-name">transport.threadFactory.workerThreadPrefix</span><span class="token punctuation">=</span><span class="token attr-value">NettyServerNIOWorker</span>
+<span class="token attr-name">transport.threadFactory.serverExecutorThreadPrefix</span><span class="token punctuation">=</span><span class="token attr-value">NettyServerBizHandler</span>
+<span class="token attr-name">transport.threadFactory.shareBossWorker</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">transport.threadFactory.clientSelectorThreadPrefix</span><span class="token punctuation">=</span><span class="token attr-value">NettyClientSelector</span>
+<span class="token attr-name">transport.threadFactory.clientSelectorThreadSize</span><span class="token punctuation">=</span><span class="token attr-value">1</span>
+<span class="token attr-name">transport.threadFactory.clientWorkerThreadPrefix</span><span class="token punctuation">=</span><span class="token attr-value">NettyClientWorkerThread</span>
+<span class="token attr-name">transport.threadFactory.bossThreadSize</span><span class="token punctuation">=</span><span class="token attr-value">1</span>
+<span class="token attr-name">transport.threadFactory.workerThreadSize</span><span class="token punctuation">=</span><span class="token attr-value">default</span>
+<span class="token attr-name">transport.shutdown.wait</span><span class="token punctuation">=</span><span class="token attr-value">3</span>
 <span class="token comment"># RM配置</span>
-<span class="token key attr-name">client.rm.asyncCommitBufferLimit</span><span class="token punctuation">=</span><span class="token value attr-value">10000</span>
-<span class="token key attr-name">client.rm.lock.retryInterval</span><span class="token punctuation">=</span><span class="token value attr-value">10</span>
-<span class="token key attr-name">client.rm.lock.retryTimes</span><span class="token punctuation">=</span><span class="token value attr-value">30</span>
-<span class="token key attr-name">client.rm.lock.retryPolicyBranchRollbackOnConflict</span><span class="token punctuation">=</span><span class="token value attr-value">true</span>
-<span class="token key attr-name">client.rm.reportRetryCount</span><span class="token punctuation">=</span><span class="token value attr-value">5</span>
-<span class="token key attr-name">client.rm.tableMetaCheckEnable</span><span class="token punctuation">=</span><span class="token value attr-value">false</span>
-<span class="token key attr-name">client.rm.tableMetaCheckerInterval</span><span class="token punctuation">=</span><span class="token value attr-value">60000</span>
-<span class="token key attr-name">client.rm.sqlParserType</span><span class="token punctuation">=</span><span class="token value attr-value">druid</span>
-<span class="token key attr-name">client.rm.reportSuccessEnable</span><span class="token punctuation">=</span><span class="token value attr-value">false</span>
-<span class="token key attr-name">client.rm.sagaBranchRegisterEnable</span><span class="token punctuation">=</span><span class="token value attr-value">false</span>
+<span class="token attr-name">client.rm.asyncCommitBufferLimit</span><span class="token punctuation">=</span><span class="token attr-value">10000</span>
+<span class="token attr-name">client.rm.lock.retryInterval</span><span class="token punctuation">=</span><span class="token attr-value">10</span>
+<span class="token attr-name">client.rm.lock.retryTimes</span><span class="token punctuation">=</span><span class="token attr-value">30</span>
+<span class="token attr-name">client.rm.lock.retryPolicyBranchRollbackOnConflict</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">client.rm.reportRetryCount</span><span class="token punctuation">=</span><span class="token attr-value">5</span>
+<span class="token attr-name">client.rm.tableMetaCheckEnable</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">client.rm.tableMetaCheckerInterval</span><span class="token punctuation">=</span><span class="token attr-value">60000</span>
+<span class="token attr-name">client.rm.sqlParserType</span><span class="token punctuation">=</span><span class="token attr-value">druid</span>
+<span class="token attr-name">client.rm.reportSuccessEnable</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">client.rm.sagaBranchRegisterEnable</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
 <span class="token comment"># TM配置</span>
-<span class="token key attr-name">client.tm.commitRetryCount</span><span class="token punctuation">=</span><span class="token value attr-value">5</span>
-<span class="token key attr-name">client.tm.rollbackRetryCount</span><span class="token punctuation">=</span><span class="token value attr-value">5</span>
-<span class="token key attr-name">client.tm.defaultGlobalTransactionTimeout</span><span class="token punctuation">=</span><span class="token value attr-value">60000</span>
-<span class="token key attr-name">client.tm.degradeCheck</span><span class="token punctuation">=</span><span class="token value attr-value">false</span>
-<span class="token key attr-name">client.tm.degradeCheckAllowTimes</span><span class="token punctuation">=</span><span class="token value attr-value">10</span>
-<span class="token key attr-name">client.tm.degradeCheckPeriod</span><span class="token punctuation">=</span><span class="token value attr-value">2000</span>
+<span class="token attr-name">client.tm.commitRetryCount</span><span class="token punctuation">=</span><span class="token attr-value">5</span>
+<span class="token attr-name">client.tm.rollbackRetryCount</span><span class="token punctuation">=</span><span class="token attr-value">5</span>
+<span class="token attr-name">client.tm.defaultGlobalTransactionTimeout</span><span class="token punctuation">=</span><span class="token attr-value">60000</span>
+<span class="token attr-name">client.tm.degradeCheck</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+<span class="token attr-name">client.tm.degradeCheckAllowTimes</span><span class="token punctuation">=</span><span class="token attr-value">10</span>
+<span class="token attr-name">client.tm.degradeCheckPeriod</span><span class="token punctuation">=</span><span class="token attr-value">2000</span>
     
 <span class="token comment"># undo日志配置</span>
-<span class="token key attr-name">client.undo.dataValidation</span><span class="token punctuation">=</span><span class="token value attr-value">true</span>
-<span class="token key attr-name">client.undo.logSerialization</span><span class="token punctuation">=</span><span class="token value attr-value">jackson</span>
-<span class="token key attr-name">client.undo.onlyCareUpdateColumns</span><span class="token punctuation">=</span><span class="token value attr-value">true</span>
-<span class="token key attr-name">client.undo.logTable</span><span class="token punctuation">=</span><span class="token value attr-value">undo_log</span>
-<span class="token key attr-name">client.undo.compress.enable</span><span class="token punctuation">=</span><span class="token value attr-value">true</span>
-<span class="token key attr-name">client.undo.compress.type</span><span class="token punctuation">=</span><span class="token value attr-value">zip</span>
-<span class="token key attr-name">client.undo.compress.threshold</span><span class="token punctuation">=</span><span class="token value attr-value">64k</span>
-<span class="token key attr-name">client.log.exceptionRate</span><span class="token punctuation">=</span><span class="token value attr-value">100</span></code></pre>
+<span class="token attr-name">client.undo.dataValidation</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">client.undo.logSerialization</span><span class="token punctuation">=</span><span class="token attr-value">jackson</span>
+<span class="token attr-name">client.undo.onlyCareUpdateColumns</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">client.undo.logTable</span><span class="token punctuation">=</span><span class="token attr-value">undo_log</span>
+<span class="token attr-name">client.undo.compress.enable</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">client.undo.compress.type</span><span class="token punctuation">=</span><span class="token attr-value">zip</span>
+<span class="token attr-name">client.undo.compress.threshold</span><span class="token punctuation">=</span><span class="token attr-value">64k</span>
+<span class="token attr-name">client.log.exceptionRate</span><span class="token punctuation">=</span><span class="token attr-value">100</span></code></pre>
 
-<p>这里有个特别重要的配置：service.vgroupMapping.seata-demo&#x3D;HZ<br>seata-demo是随意取的TC的事务组名，HZ则表示TC服务在nacos上的集群名称<br>我们不仅要在nacos配置文件上配置事务组与TC服务集群名称的映射，还要在我们微服务上，也就是seata客户端上配置映射</p>
+<p>这里有个特别重要的配置：service.vgroupMapping.seata-demo=HZ<br>seata-demo是随意取的TC的事务组名，HZ则表示TC服务在nacos上的集群名称<br>我们不仅要在nacos配置文件上配置事务组与TC服务集群名称的映射，还要在我们微服务上，也就是seata客户端上配置映射</p>
 <pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">tx-service-group</span><span class="token punctuation">:</span> seata<span class="token punctuation">-</span>demo
 <span class="token key atrule">service</span><span class="token punctuation">:</span>
     <span class="token key atrule">vgroup-mapping</span><span class="token punctuation">:</span>
@@ -1338,14 +1346,15 @@ config <span class="token punctuation">&#123;</span>		#TC服务的配置文件�
       <span class="token annotation punctuation">@RequestParam</span><span class="token punctuation">(</span><span class="token string">"userId"</span><span class="token punctuation">)</span> <span class="token class-name">String</span> userId<span class="token punctuation">,</span> 
       <span class="token annotation punctuation">@RequestParam</span><span class="token punctuation">(</span><span class="token string">"money"</span><span class="token punctuation">)</span> <span class="token class-name">String</span> money
   <span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span></code></pre></li>
-</ul>
+<span class="token punctuation">&#125;</span></code></pre>
 <pre class="language-none"><code class="language-none">  
   因为本案例中并没有出现xid不传递现象，所以无需配置feign拦截器
   
 - 有些人说seata事务不回滚是因为mybatis使用了数据库主键自增导致的，我们执行sql语句时
   需要自己设置数据的id，不能使用数据库自增，但是我的案例没有这样的问题，可能还是某个版本的缘故
   我也不清楚，或者是别人自己本身的原因，或者是seata模式不同的原因。</code></pre>
+</li>
+</ul>
 </li>
 <li><p>一些博客</p>
 <ul>

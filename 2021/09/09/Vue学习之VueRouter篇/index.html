@@ -73,7 +73,11 @@ document.addEventListener("pjax:success", initScrollReveal);
 		而如果是history模式，则一旦页面刷新，浏览器错把路由跳转的路径当成后端服务器接口请求，
 		结果服务器没这接口，直接404，项目上线时要想使用history模式，需要后端的配合，进行相应的处理
 		或者配置nginx
-*/</span></code></pre></li>
+*/</span></code></pre>
+
+
+
+</li>
 </ul>
 <blockquote>
 <p><span id="b">vue-router的基本使用</span></p>
@@ -91,8 +95,8 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
 
 <span class="token punctuation">]</span>
 <span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">VueRouter</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>	<span class="token comment">//创建router实例，并导出该实例</span>
-    <span class="token literal-property property">mode</span><span class="token operator">:</span> <span class="token string">'history'</span><span class="token punctuation">,</span>		<span class="token comment">//使用history模式更改url，路径中就不会有#</span>
-    <span class="token literal-property property">base</span><span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">BASE_URL</span><span class="token punctuation">,</span>
+    mode<span class="token operator">:</span> <span class="token string">'history'</span><span class="token punctuation">,</span>		<span class="token comment">//使用history模式更改url，路径中就不会有#</span>
+    base<span class="token operator">:</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">BASE_URL</span><span class="token punctuation">,</span>
     routes		<span class="token comment">//将映射关系装载到router中，es6属性的增强写法，等同于routers:routers</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> router</code></pre>
@@ -105,11 +109,13 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
 <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
     router<span class="token punctuation">,</span>		<span class="token comment">//装载路由对象</span>
     <span class="token function-variable function">render</span><span class="token operator">:</span> <span class="token parameter">h</span> <span class="token operator">=></span> <span class="token function">h</span><span class="token punctuation">(</span>App<span class="token punctuation">)</span>	<span class="token comment">//组件篇讲过，代替template+components，就是生成一个&lt;App/>标签</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">$mount</span><span class="token punctuation">(</span><span class="token string">'#app'</span><span class="token punctuation">)</span>	<span class="token comment">//绑定页面中id为app的div标签</span></code></pre></li>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">$mount</span><span class="token punctuation">(</span><span class="token string">'#app'</span><span class="token punctuation">)</span>	<span class="token comment">//绑定页面中id为app的div标签</span></code></pre>
+
+</li>
 </ul>
 <p>总结下来，不过是安装插件，注册插件，在路由配置文件index.js中配置路由映射信息，再在main.js中导入router<br>上面这些是基本配置，下面我们创建一个HelloVueRouter组件，并为其配置路由映射关系</p>
 <ul>
-<li><p>首先在src&#x2F;components目录下创建一个HelloVueRouter.vue文件，具体内容如下：</p>
+<li><p>首先在src/components目录下创建一个HelloVueRouter.vue文件，具体内容如下：</p>
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//组件中就显示Hello VueRouter</span>
 <span class="token operator">&lt;</span>template<span class="token operator">></span>
   Hello VueRouter
@@ -117,21 +123,21 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
 
 <span class="token operator">&lt;</span>script<span class="token operator">></span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span>	<span class="token comment">//导出组件对象</span>
-<span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">"HelloVueRouter"</span>
+name<span class="token operator">:</span> <span class="token string">"HelloVueRouter"</span>
 <span class="token punctuation">&#125;</span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span>
 
 <span class="token operator">&lt;</span>style scoped<span class="token operator">></span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>style<span class="token operator">></span></code></pre>
 </li>
-<li><p>在router&#x2F;index.js中配置路由信息</p>
+<li><p>在router/index.js中配置路由信息</p>
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//只需要在这里添加映射信息，其余不变</span>
 <span class="token keyword">import</span> helloVueRouter <span class="token keyword">from</span> <span class="token string">'../components/HelloVueRouter.vue'</span>
 <span class="token keyword">const</span> routes <span class="token operator">=</span> <span class="token punctuation">[</span>		
 	<span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'/helloVueRouter'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">name</span> <span class="token operator">:</span> <span class="token string">'helloVueRouter'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">component</span><span class="token operator">:</span> helloVueRouter
+        path<span class="token operator">:</span> <span class="token string">'/helloVueRouter'</span><span class="token punctuation">,</span>
+        name <span class="token operator">:</span> <span class="token string">'helloVueRouter'</span><span class="token punctuation">,</span>
+        component<span class="token operator">:</span> helloVueRouter
   	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">]</span></code></pre>
 </li>
@@ -145,7 +151,7 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
 
 <span class="token operator">&lt;</span>script<span class="token operator">></span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span>
-  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'App'</span>
+  name<span class="token operator">:</span> <span class="token string">'App'</span>
 <span class="token punctuation">&#125;</span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span>
 <span class="token operator">&lt;</span>style<span class="token operator">></span>
@@ -155,7 +161,11 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
 	在app.vue的template中，使用router-link标签的to属性，去找到到该路径下对应的组件，也就是helloVueRouter组件
 	这在router/index.js路由配置文件中配置好的，找到该组件后，将组件加载到router-view所在的地方
 	从而可以在页面中显示helloVueRouter组件的template中的内容
-*/</span></code></pre></li>
+*/</span></code></pre>
+
+
+
+</li>
 </ul>
 <blockquote>
 <p><span id="c">vue-router的详解</span></p>
@@ -166,13 +176,13 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//通过在router/index.js的routes中配置默认路由</span>
 <span class="token keyword">const</span> routes <span class="token operator">=</span> <span class="token punctuation">[</span>
     <span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">redirect</span><span class="token operator">:</span> <span class="token string">'/helloVueRouter'</span>	<span class="token comment">//重定向</span>
+        path<span class="token operator">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
+        redirect<span class="token operator">:</span> <span class="token string">'/helloVueRouter'</span>	<span class="token comment">//重定向</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
 	<span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'/helloVueRouter'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">name</span> <span class="token operator">:</span> <span class="token string">'helloVueRouter'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">component</span><span class="token operator">:</span> helloVueRouter
+        path<span class="token operator">:</span> <span class="token string">'/helloVueRouter'</span><span class="token punctuation">,</span>
+        name <span class="token operator">:</span> <span class="token string">'helloVueRouter'</span><span class="token punctuation">,</span>
+        component<span class="token operator">:</span> helloVueRouter
   	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">]</span>
 <span class="token comment">/*
@@ -199,10 +209,11 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
 	<span class="token operator">&lt;</span>router<span class="token operator">-</span>link to<span class="token operator">=</span><span class="token string">"/wanyi"</span> active<span class="token operator">-</span><span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"wanyi"</span><span class="token operator">></span>科一<span class="token operator">&lt;</span><span class="token operator">/</span>router<span class="token operator">-</span>link<span class="token operator">></span>
 <span class="token comment">//2,通过在路由文件中增加linkActiveClass属性，使用该属性，当组件被点击后，会增加对应的样式名</span>
 	<span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token function">createRouter</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">history</span><span class="token operator">:</span> <span class="token function">createWebHashHistory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>	<span class="token comment">//设置history模式，有很多方式</span>
+        history<span class="token operator">:</span> <span class="token function">createWebHashHistory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>	<span class="token comment">//设置history模式，有很多方式</span>
         routes<span class="token punctuation">,</span>		<span class="token comment">//路由表</span>
-        <span class="token literal-property property">linkActiveClass</span><span class="token operator">:</span> <span class="token string">'wanyi'</span>	<span class="token comment">//将router-link-active样式名改成wanyi</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre></li>
+        linkActiveClass<span class="token operator">:</span> <span class="token string">'wanyi'</span>	<span class="token comment">//将router-link-active样式名改成wanyi</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
+</li>
 </ul>
 </li>
 <li><p>通过代码跳转路由<br>上面例子都是通过to属性，使得我们的url跳转其他地址，从而替换组件，我们也可以通过代码实现同样的效果<br>下面让我们来看看如何通过代码方式改变url路径吧</p>
@@ -211,8 +222,8 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
 <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"toWanyi()"</span><span class="token operator">></span>科一<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
 <span class="token operator">&lt;</span>script<span class="token operator">></span>
     <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'App'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">methods</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        name<span class="token operator">:</span> <span class="token string">'App'</span><span class="token punctuation">,</span>
+        methods<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
             <span class="token function">toWanyi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
                 <span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'/wanyi'</span><span class="token punctuation">)</span>
             <span class="token punctuation">&#125;</span>
@@ -232,9 +243,9 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript">原来的：
     <span class="token comment">//路由配置文件中,router/index.js</span>
     <span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'/wanyi'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'Wanyi'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">component</span><span class="token operator">:</span> Wanyi
+        path<span class="token operator">:</span> <span class="token string">'/wanyi'</span><span class="token punctuation">,</span>
+        name<span class="token operator">:</span> <span class="token string">'Wanyi'</span><span class="token punctuation">,</span>
+        component<span class="token operator">:</span> Wanyi
     <span class="token punctuation">&#125;</span>
     <span class="token comment">//App.vue</span>
     <span class="token operator">&lt;</span>router<span class="token operator">-</span>link to<span class="token operator">=</span><span class="token string">"/wanyi"</span><span class="token operator">></span>科一<span class="token operator">&lt;</span><span class="token operator">/</span>router<span class="token operator">-</span>link<span class="token operator">></span>
@@ -245,18 +256,18 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
 现在的：
 <span class="token comment">//路由配置文件中</span>
 <span class="token punctuation">&#123;</span>
-    <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'/wanyi/:id'</span><span class="token punctuation">,</span>	<span class="token comment">//这里的:id是变量，接收传递的id值，本例中id=keyi</span>
-    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'Wanyi'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">component</span><span class="token operator">:</span> Wanyi	<span class="token comment">//只要路径匹配，就加载Wanyi组件，我们还可以在Wanyi组件中拿到id值</span>
+    path<span class="token operator">:</span> <span class="token string">'/wanyi/:id'</span><span class="token punctuation">,</span>	<span class="token comment">//这里的:id是变量，接收传递的id值，本例中id=keyi</span>
+    name<span class="token operator">:</span> <span class="token string">'Wanyi'</span><span class="token punctuation">,</span>
+    component<span class="token operator">:</span> Wanyi	<span class="token comment">//只要路径匹配，就加载Wanyi组件，我们还可以在Wanyi组件中拿到id值</span>
 <span class="token punctuation">&#125;</span>
 <span class="token comment">//App.vue</span>
 <span class="token operator">&lt;</span>router<span class="token operator">-</span>link <span class="token operator">:</span>to<span class="token operator">=</span><span class="token string">"'/wanyi/'+id"</span> active<span class="token operator">-</span><span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"yiwan"</span><span class="token operator">></span>科一<span class="token operator">&lt;</span><span class="token operator">/</span>router<span class="token operator">-</span>link<span class="token operator">></span>
 <span class="token operator">&lt;</span>script<span class="token operator">></span>
     <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'App'</span><span class="token punctuation">,</span>
+        name<span class="token operator">:</span> <span class="token string">'App'</span><span class="token punctuation">,</span>
             <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
             <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
-                <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token string">'keyi'</span>    <span class="token comment">//到时候去数据库查出来的数据</span>
+                id<span class="token operator">:</span> <span class="token string">'keyi'</span>    <span class="token comment">//到时候去数据库查出来的数据</span>
             <span class="token punctuation">&#125;</span>
         <span class="token punctuation">&#125;</span>
 	<span class="token punctuation">&#125;</span>
@@ -266,18 +277,18 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//修改Wanyi.vue</span>
 <span class="token operator">&lt;</span>h3<span class="token operator">></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>userId<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>h3<span class="token operator">></span>     <span class="token comment">//你也可以直接&#123;&#123;$route.params.id&#125;&#125;</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span>
-    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">"Wanyi"</span><span class="token punctuation">,</span>
+    name<span class="token operator">:</span> <span class="token string">"Wanyi"</span><span class="token punctuation">,</span>
     <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
         <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
-            <span class="token literal-property property">message</span><span class="token operator">:</span> <span class="token string">'万一'</span>
+            message<span class="token operator">:</span> <span class="token string">'万一'</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">methods</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    methods<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
         <span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
             console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"测试vue-router"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">computed</span><span class="token operator">:</span><span class="token punctuation">&#123;</span>    <span class="token comment">//计算属性</span>
+    computed<span class="token operator">:</span><span class="token punctuation">&#123;</span>    <span class="token comment">//计算属性</span>
         <span class="token function">userId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
             <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$route<span class="token punctuation">.</span>params<span class="token punctuation">.</span>id <span class="token comment">//关键</span>
         <span class="token punctuation">&#125;</span>
@@ -307,12 +318,16 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
         &#x2F;&#x2F;懒加载
         component: () &#x3D;&gt; import(&#39;..&#x2F;views&#x2F;About.vue&#39;)
      &#125;
-当需要的时候才去导入相应的组件，在打包过程中，这种方式会将组件文件独立成JS文件，等需要的时候再加载。</code></pre></li>
+当需要的时候才去导入相应的组件，在打包过程中，这种方式会将组件文件独立成JS文件，等需要的时候再加载。</code></pre>
+
+
+
+</li>
 </ul>
 <blockquote>
 <p><span id="d">vue-router嵌套路由</span></p>
 </blockquote>
-<p>嵌套路由指的是，在路由映射时，一个路径下有多个组件，例如，有两个组件都要在&#x2F;my路径下，<br>当我访问&#x2F;my&#x2F;news时加载news组件，当我访问&#x2F;my&#x2F;message时加载message组件，如果像以前我们得<br>配置两个路径，通过嵌套路由可以将这两个组件都配置在同一路径下，下面是简单的案例：</p>
+<p>嵌套路由指的是，在路由映射时，一个路径下有多个组件，例如，有两个组件都要在/my路径下，<br>当我访问/my/news时加载news组件，当我访问/my/message时加载message组件，如果像以前我们得<br>配置两个路径，通过嵌套路由可以将这两个组件都配置在同一路径下，下面是简单的案例：</p>
 <pre class="language-java" data-language="java"><code class="language-java">使用嵌套路由的步骤<span class="token operator">:</span>
 	<span class="token number">1</span><span class="token punctuation">)</span>创建对应的子组件，并且在路由映射中配置对应的子路由
         <span class="token comment">//创建MyNews.vue,创建MyMessages.vue</span>
@@ -340,21 +355,21 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
         <span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span>
         <span class="token comment">//1.3在路由表中的父组件中配置子路由</span>
         <span class="token punctuation">&#123;</span>
-            path<span class="token operator">:</span> <span class="token char">'/my'</span><span class="token punctuation">,</span>
-            name<span class="token operator">:</span> <span class="token char">'My'</span><span class="token punctuation">,</span>
+            path<span class="token operator">:</span> <span class="token string">'/my'</span><span class="token punctuation">,</span>
+            name<span class="token operator">:</span> <span class="token string">'My'</span><span class="token punctuation">,</span>
             component<span class="token operator">:</span> <span class="token class-name">My</span><span class="token punctuation">,</span>
             children<span class="token operator">:</span> <span class="token punctuation">[</span>
                 <span class="token punctuation">&#123;</span>
-                    path<span class="token operator">:</span> ''<span class="token punctuation">,</span>   <span class="token comment">//默认路由,这里不需要</span>
-                    component<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">import</span><span class="token punctuation">(</span>'<span class="token punctuation">.</span><span class="token punctuation">.</span>/views<span class="token operator">/</span><span class="token class-name">MyNews</span><span class="token punctuation">.</span>vue'<span class="token punctuation">)</span>
+                    path<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>   <span class="token comment">//默认路由,这里不需要</span>
+                    component<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">'../views/MyNews.vue'</span><span class="token punctuation">)</span>
                 <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
                 <span class="token punctuation">&#123;</span>
-                    path<span class="token operator">:</span> <span class="token char">'news'</span><span class="token punctuation">,</span>
-                    component<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">import</span><span class="token punctuation">(</span>'<span class="token punctuation">.</span><span class="token punctuation">.</span>/views<span class="token operator">/</span><span class="token class-name">MyNews</span><span class="token punctuation">.</span>vue'<span class="token punctuation">)</span>
+                    path<span class="token operator">:</span> <span class="token string">'news'</span><span class="token punctuation">,</span>
+                    component<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">'../views/MyNews.vue'</span><span class="token punctuation">)</span>
                 <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
                 <span class="token punctuation">&#123;</span>
-                    path<span class="token operator">:</span> 'messages'<span class="token punctuation">,</span>
-                    component<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">import</span><span class="token punctuation">(</span>'<span class="token punctuation">.</span><span class="token punctuation">.</span>/views<span class="token operator">/</span><span class="token class-name">MyMessages</span><span class="token punctuation">.</span>vue'<span class="token punctuation">)</span>
+                    path<span class="token operator">:</span> <span class="token string">'messages'</span><span class="token punctuation">,</span>
+                    component<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token operator">></span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">'../views/MyMessages.vue'</span><span class="token punctuation">)</span>
                 <span class="token punctuation">&#125;</span>
             <span class="token punctuation">]</span>
         <span class="token punctuation">&#125;</span>
@@ -417,7 +432,7 @@ export default &#123;
 	值得注意的是：通过router-link标签传递数据时，to属性需要加上:引号，不然报错
 *&#x2F;</code></pre>
 </li>
-<li><p>还有一种传递数据的方式，动态路由<br>动态路由是在路由表的路径中使用:xxx，进行路径的占位，形成xxx&#x2F;xxx&#x2F;123<br>这种方式就像rest风格传递数据，上面已经有动态路由的方式，这种方式和params，query并没有关系。<br>使用动态路由的方式，我们也可以在目标组件中获取传递的参数，通过<code>this.$route.params.xxx</code>.</p>
+<li><p>还有一种传递数据的方式，动态路由<br>动态路由是在路由表的路径中使用:xxx，进行路径的占位，形成xxx/xxx/123<br>这种方式就像rest风格传递数据，上面已经有动态路由的方式，这种方式和params，query并没有关系。<br>使用动态路由的方式，我们也可以在目标组件中获取传递的参数，通过<code>this.$route.params.xxx</code>.</p>
 </li>
 </ul>
 <blockquote>
@@ -435,36 +450,36 @@ export default &#123;
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//路由表index.js</span>
 <span class="token keyword">const</span> routes <span class="token operator">=</span> <span class="token punctuation">[</span>
     <span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'Home'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">component</span><span class="token operator">:</span> Home
+        path<span class="token operator">:</span> <span class="token string">'/'</span><span class="token punctuation">,</span>
+        name<span class="token operator">:</span> <span class="token string">'Home'</span><span class="token punctuation">,</span>
+        component<span class="token operator">:</span> Home
     <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
     <span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'/about'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'About'</span><span class="token punctuation">,</span>
+        path<span class="token operator">:</span> <span class="token string">'/about'</span><span class="token punctuation">,</span>
+        name<span class="token operator">:</span> <span class="token string">'About'</span><span class="token punctuation">,</span>
         <span class="token comment">//懒加载</span>
         <span class="token function-variable function">component</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">'../views/About.vue'</span><span class="token punctuation">)</span>
     <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
     <span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'/wanyi/:id'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'Wanyi'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">component</span><span class="token operator">:</span> Wanyi
+        path<span class="token operator">:</span> <span class="token string">'/wanyi/:id'</span><span class="token punctuation">,</span>
+        name<span class="token operator">:</span> <span class="token string">'Wanyi'</span><span class="token punctuation">,</span>
+        component<span class="token operator">:</span> Wanyi
     <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
     <span class="token punctuation">&#123;</span>
-        <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'/my'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'My'</span><span class="token punctuation">,</span>
-        <span class="token literal-property property">component</span><span class="token operator">:</span> My<span class="token punctuation">,</span>
-        <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        path<span class="token operator">:</span> <span class="token string">'/my'</span><span class="token punctuation">,</span>
+        name<span class="token operator">:</span> <span class="token string">'My'</span><span class="token punctuation">,</span>
+        component<span class="token operator">:</span> My<span class="token punctuation">,</span>
+        children<span class="token operator">:</span> <span class="token punctuation">[</span>
             <span class="token punctuation">&#123;</span>
-                <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+                path<span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
                 <span class="token function-variable function">component</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">'../views/MyNews.vue'</span><span class="token punctuation">)</span>
             <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
             <span class="token punctuation">&#123;</span>
-                <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'/my/news'</span><span class="token punctuation">,</span>	<span class="token comment">//嵌套路径中，这两种子路径写法都可以</span>
+                path<span class="token operator">:</span> <span class="token string">'/my/news'</span><span class="token punctuation">,</span>	<span class="token comment">//嵌套路径中，这两种子路径写法都可以</span>
                 <span class="token function-variable function">component</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">'../views/MyNews.vue'</span><span class="token punctuation">)</span>
             <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
             <span class="token punctuation">&#123;</span>
-                <span class="token literal-property property">path</span><span class="token operator">:</span> <span class="token string">'messages'</span><span class="token punctuation">,</span>
+                path<span class="token operator">:</span> <span class="token string">'messages'</span><span class="token punctuation">,</span>
                 <span class="token function-variable function">component</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">'../views/MyMessages.vue'</span><span class="token punctuation">)</span>
             <span class="token punctuation">&#125;</span>
         <span class="token punctuation">]</span>
@@ -472,12 +487,12 @@ export default &#123;
 <span class="token punctuation">]</span>
 <span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token function">createRouter</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
     routes<span class="token punctuation">,</span>
-    <span class="token literal-property property">history</span><span class="token operator">:</span> <span class="token function">createWebHashHistory</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    history<span class="token operator">:</span> <span class="token function">createWebHashHistory</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token comment">// linkActiveClass: 'wanyi'</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 
 <span class="token comment">//在路由跳转之前，执行该函数</span>
-router<span class="token punctuation">.</span><span class="token function">beforeEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">to<span class="token punctuation">,</span>from<span class="token punctuation">,</span>next</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>     <span class="token comment">//这个to,和from都是一个个route对象，即路由表中的对象</span>
+router<span class="token punctuation">.</span><span class="token function">beforeEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">to<span class="token punctuation">,</span><span class="token keyword">from</span><span class="token punctuation">,</span>next</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>     <span class="token comment">//这个to,和from都是一个个route对象，即路由表中的对象</span>
     document<span class="token punctuation">.</span>title<span class="token operator">=</span>to<span class="token punctuation">.</span>matched<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>name<span class="token punctuation">;</span>  <span class="token comment">//使用matched解决路由嵌套问题</span>
     <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
@@ -488,7 +503,11 @@ router<span class="token punctuation">.</span><span class="token function">befor
 	上面这两个函数都是全局守卫，还有路由独享的守卫(路由的beforeEnter等属性)，组件内的守卫(在组件中beforeRouteEnter等属性)
 	全局守卫，顾名思义，全局的路由表中只要发生跳转，就会执行拦截函数，而组件内的守卫则时，
 	切换到这个组件前后才会执行拦截函数，路由独享守卫则是只在该路由中，对该路由下的组件有用。
-*/</span></code></pre></li>
+*/</span></code></pre>
+
+
+
+</li>
 </ul>
 <blockquote>
 <p><span id="g">keep-alive的使用</span></p>
