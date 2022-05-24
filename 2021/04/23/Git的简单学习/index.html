@@ -1,0 +1,270 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="NicknamedCoco"><meta name="copyright" content="NicknamedCoco"><meta name="generator" content="Hexo 6.2.0"><meta name="theme" content="hexo-theme-yun"><title>Git的简单学习 | CocoBlog</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.3.3/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="//at.alicdn.com/t/font_1140697_dxory92pb0h.js" async></script><script src="https://fastly.jsdelivr.net/npm/@unocss/runtime/mini.global.js"></script><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/png" href="/images/keyi.ico"><link rel="mask-icon" href="/images/keyi.ico" color="#0078E7"><link rel="preload" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"www.keyi.world","root":"/","title":["Coco","Coding"],"version":"1.9.3","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"local_search":{"path":"/search.xml"},"fireworks":{"colors":null},"vendors":{"darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="Git-分布式版本控制工具  git基础命令 git init	初始化，让git管理当前文件夹 git status	检测当前文件夹中的文件状态  git add . 	管理文件夹中的所有文件 git add xxx.html	管理文件夹中的指定文件，将文件添加到暂存区 git config --global user.email &quot;你的邮箱&quot;	配置邮箱 git config">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git的简单学习">
+<meta property="og:url" content="http://www.keyi.world/2021/04/23/Git%E7%9A%84%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="CocoBlog">
+<meta property="og:description" content="Git-分布式版本控制工具  git基础命令 git init	初始化，让git管理当前文件夹 git status	检测当前文件夹中的文件状态  git add . 	管理文件夹中的所有文件 git add xxx.html	管理文件夹中的指定文件，将文件添加到暂存区 git config --global user.email &quot;你的邮箱&quot;	配置邮箱 git config">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-23T05:54:31.000Z">
+<meta property="article:modified_time" content="2021-04-23T06:03:08.488Z">
+<meta property="article:author" content="NicknamedCoco">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary"><script>(function() {
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script></head><body><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="NicknamedCoco"><img width="96" loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/images/keyi.jpg" alt="NicknamedCoco"></a><div class="site-author-name"><a href="/about/">NicknamedCoco</a></div><a class="site-name" href="/about/site.html">CocoBlog</a><sub class="site-subtitle">OneForAll</sub><div class="site-description">寻找自己的价值，才是生命的意义</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="我的主页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">113</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">8</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">66</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://wpa.qq.com/msgrd?v=3&amp;uin=506579631&amp;site=qq&amp;menu=yes" title="QQ" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/NicknamedCoco" title="GitHub" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://www.zhihu.com/people/NicknamedCoco/" title="知乎" target="_blank" style="color:#0084FF"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhihu-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://twitter.com/OneDayInAug" title="Twitter" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-twitter-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Git-%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7"><span class="toc-number">1.</span> <span class="toc-text">Git-分布式版本控制工具</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#git%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-number">1.1.</span> <span class="toc-text">git基础命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9B%9E%E6%BB%9A"><span class="toc-number">1.2.</span> <span class="toc-text">回滚</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%86%E6%94%AF"><span class="toc-number">1.3.</span> <span class="toc-text">分支</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-number">1.4.</span> <span class="toc-text">远程仓库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%98%E5%9F%BArebase"><span class="toc-number">1.5.</span> <span class="toc-text">变基rebase</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%8F%E5%90%8C%E5%BC%80%E5%8F%91"><span class="toc-number">1.6.</span> <span class="toc-text">协同开发</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%99%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E8%B4%A1%E7%8C%AE%E4%BB%A3%E7%A0%81"><span class="toc-number">1.7.</span> <span class="toc-text">给开源项目贡献代码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.8.</span> <span class="toc-text">三个配置文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95"><span class="toc-number">1.9.</span> <span class="toc-text">免密登录</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#git%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6"><span class="toc-number">1.10.</span> <span class="toc-text">git忽略文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#github%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86%E7%9B%B8%E5%85%B3"><span class="toc-number">1.11.</span> <span class="toc-text">github任务管理相关</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://www.keyi.world/2021/04/23/Git%E7%9A%84%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="NicknamedCoco"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="CocoBlog"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Git的简单学习</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2021-04-23 13:54:31" itemprop="dateCreated datePublished" datetime="2021-04-23T13:54:31+08:00">2021-04-23</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">2.5k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">9m</span></span></span><span class="leancloud_visitors" id="/2021/04/23/Git%E7%9A%84%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/" data-flag-title="Git的简单学习"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-tag"><a class="tag-item" href="/tags/Git/" style="--text-color:#F14E32"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">Git</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><blockquote>
+<h4 id="Git-分布式版本控制工具"><a href="#Git-分布式版本控制工具" class="headerlink" title="Git-分布式版本控制工具"></a>Git-分布式版本控制工具</h4></blockquote>
+<blockquote>
+<h5 id="git基础命令"><a href="#git基础命令" class="headerlink" title="git基础命令"></a>git基础命令</h5></blockquote>
+<pre class="language-none"><code class="language-none">git init	初始化，让git管理当前文件夹
+git status	检测当前文件夹中的文件状态
+
+git add . 	管理文件夹中的所有文件
+git add xxx.html	管理文件夹中的指定文件，将文件添加到暂存区
+git config --global user.email &quot;你的邮箱&quot;	配置邮箱
+git config --global user.name &quot;你的姓名&quot;	配置姓名
+git commit -m &quot;描述信息&quot;	生成一个版本，将文件提交到版本库
+
+git log	查看版本日志
+git log --pretty&#x3D;oneline	查看简化版的日志
+当版本较多时，git log 会进入编辑模式，按q退出编辑模式</code></pre>
+
+
+
+<blockquote>
+<h5 id="回滚"><a href="#回滚" class="headerlink" title="回滚"></a>回滚</h5></blockquote>
+<pre class="language-none"><code class="language-none">1)git reset --hard 版本号	&#x2F;&#x2F;回滚到指定的版本
+
+2)回滚到旧版本后再回去怎么办呢？
+git reflog 	&#x2F;&#x2F;查看版本详细变更，这里的版本号只有7位
+再使用git reset --hard 7位的版本号，即可回到最开始的版本。
+
+3)git reset --hard HEAD^	回退到上一个版本
+git reset --hard HEAD~100	回退到上100个版本</code></pre>
+
+
+
+<blockquote>
+<h5 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h5></blockquote>
+<pre class="language-none"><code class="language-none">起到环境隔离的作用，用来解决线上bug
+	&#x2F;&#x2F;查看分支
+	git branch
+	
+	&#x2F;&#x2F;创建分支
+	git branch 分支名	
+	
+	&#x2F;&#x2F;切换到指定分支
+	git checkout 分支名
+    
+    &#x2F;&#x2F;创建并切换分支,相当于上面两条命令
+	git checkout -b 分支名
+	
+	&#x2F;&#x2F;将指定分支与master合并
+	切换到master分支，再git merge 分支名
+	
+	&#x2F;&#x2F;禁用Fast forward模式合并dev分支
+    git merge --no-ff -m &quot;merge with no-ff&quot; 分支名	
+    
+    &#x2F;&#x2F;删除指定分支名
+	git branch -d 分支名	
+	
+	&#x2F;&#x2F;分支合并可能会产生冲突，产生冲突的原因
+	* master当前版本是C3,现在有两个分支，bug分支，dev分支，这两个分支都是从C3版本分出来的
+	* bug分支用来解决bug，解决完毕后，与master的版本合并，产生C4版本，即master最新版本是C4
+	* dev分支用来开发新功能，开发好后，产生的版本是C5，当与master合并时就会产生冲突，因为
+		dev分支是在master的C3版本基础上开发的，而合并时master是C4，此时需要手动解决冲突
+		只有当bug分支，dev分支修改的是同一个文件时，才会产生冲突。</code></pre>
+
+
+
+<blockquote>
+<h5 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h5></blockquote>
+<pre class="language-none"><code class="language-none">1)在github上创建好仓库后，如果你没点击创建README.md文件，那么你本地仓库第一件事就是创建一个
+	README.md文件，文件中写# 项目名，并生成一个本地版本使用下面命令推送到远程仓库。
+2)本地仓库与远程仓库建立联系
+	git remote add origin 远程仓库的https地址
+	相当于使用origin指代远程仓库的地址
+3)本地仓库推送到远程仓库
+	git push -u origin master,将本地仓库的master分支推送到远程仓库的master分支
+	git push -u origin dev,将本地仓库的dev分支推送到远程仓库
+4)本地分支与远程分支建立联系
+	4.1)远程已有remote_branch分支并且已经关联本地分支local_branch且本地已经切换到local_branch
+		git push
+	4.2)远程已有remote_branch分支但未关联本地分支local_branch且本地已经切换到local_branch
+		git push -u origin&#x2F;remote_branch
+	4.3)远程没有remote_branch分支并，本地已经切换到local_branch
+		git push origin local_branch:remote_branch
+5)克隆远程仓库
+	git clone 远程仓库的https地址
+6)本地分支与远程分支保持更新，拉取远程仓库的分支，直接拉取到工作区中
+   	git pull origin 分支名
+	这个命令相当于两个命令：
+	git fetch origin dev	表示从远程仓库拉取到本地仓库中
+	git merge origin&#x2F;dev	表示把版本库中的代码合并到工作区中
+7)查看本地仓库关联的远程仓库
+	git remote -v，如果什么都不显示，表示本地仓库没有与远程仓库建立联系，使用2)步骤，即可建立联系</code></pre>
+
+
+
+<blockquote>
+<h5 id="变基rebase"><a href="#变基rebase" class="headerlink" title="变基rebase"></a>变基rebase</h5></blockquote>
+<pre class="language-none"><code class="language-none">使得git提交记录简洁
+1)第一种使用场景
+	使git log中的多个版本记录整合成一个记录
+	git rebase -i 以往的版本号	表示使以往的版本号与最新的版本号进行合并
+	git rebase -i HEAD~3		和上个命令一样，HEAD~3表示合并最近的三个版本
+	注意：最好不要合并那些已经提交到远程仓库的版本号
+2)第二种使用场景
+	将分支的上的版本拼接到master版本上，注意和合并不一样，
+	合并的步骤是切换到master，使用git merge 分支名，使得分支上的代码与master一致，
+	在master上使用git log --graph可以查看明显是两条版本线，
+	
+	而拼接是将分支上的版本插入到master版本线上，使用git log --graph可以看到是只有一条版本线
+	&quot;拼接&quot;的步骤是：切换到分支上，git checkout 本地分支名，再执行git rebase master,
+	将master的版本与分支&quot;拼接&quot;，最后再回到master主分支，执行git merge 本地分支名，合并分支
+	简而言之，这种&quot;拼接&quot;的方式和合并类似，只不过在版本线上看上去不同，更加简洁了
+3)第三种使用场景
+	假如我在公司开发一个版本C1放在本地仓库，没有提交到远程仓库，回到家后，在家中开发版本C2，
+	并提交到远程仓库，回到公司后，执行git pull origin 远程分支名，把远程仓库中的C2拉到本地中，
+	其中就会产生冲突，并且这里会产生合并，导致版本线是2条合并成一条，我们可以不使用pull命令
+	执行git pull --rebase origin 远程分支名，即可使得远程仓库C1版本与本地C2版本拼接，使得只有
+	一条版本线。
+	git pull --rebase origin 远程分支名
+	该命令等于git fetch origin 远程分支名，和，git rebase origin&#x2F;远程分支名
+注意：如果执行git rebase命令产生冲突了，解决方法是：先手动解决冲突，并将冲突的文件添加到暂存区
+	最后再执行命令git rebase --continue</code></pre>
+
+
+
+<blockquote>
+<h5 id="协同开发"><a href="#协同开发" class="headerlink" title="协同开发"></a>协同开发</h5></blockquote>
+<pre class="language-none"><code class="language-none">tag命令：用于给当前本地仓库的版本号打上一个标签，相当于版本号的简写，这个标签就代表这个版本的本地仓库
+&#x2F;&#x2F;给当前的本地仓库版本打上标签，标签名是v1，标签描述是&quot;第一版&quot;
+git tag -a v1 -m &quot;第一版&quot;
+&#x2F;&#x2F;然后再将该带有标签的本地仓库版本推送到远程仓库中去
+git push origin --tags
+
+好像现在协作开发是，创建一个组织，组织中除了ownner，其他成员默认只有read的权限
+邀请他人进组织后，再邀请该人去组织中的某一个项目，这个人只在该项目下有write的权限，
+在其他项目中只有read的权限。
+
+代码review，使用github上的pull request功能，具体步骤如下：
+	代码review指的是，当程序员开发完一个功能后，需要与总分支(之前从这里分开，现在要合并回去)
+	进行合并，在合并之前需要经过team leader经过检查(review)后才能review，所以我们需要在
+	仓库的settings中的Branches中设置规则(rule),指定哪条分支需要进行review，这样当程序员
+	开发完功能后，与总分支合并时，team leader会收到对该分支的合并请求，对程序员的代码进行检查
+	判断是否同意合并分支。</code></pre>
+
+
+
+<blockquote>
+<h5 id="给开源项目贡献代码"><a href="#给开源项目贡献代码" class="headerlink" title="给开源项目贡献代码"></a>给开源项目贡献代码</h5></blockquote>
+<pre class="language-none"><code class="language-none">1)将开源项目fork到自己的github上
+2)在自己的仓库中对该项目进行修改
+3)给源代码的作者提交pull request申请</code></pre>
+
+
+
+<blockquote>
+<h5 id="三个配置文件"><a href="#三个配置文件" class="headerlink" title="三个配置文件"></a>三个配置文件</h5></blockquote>
+<pre class="language-none"><code class="language-none">1)项目配置文件,本地级别，是仓库中.git文件夹下的config文件，只在本项目中生效
+	git config --local user.name &quot;万一&quot;
+	git config --local user.email &quot;wanyi@gmail.com&quot;
+2)全局配置文件，用户级别，当前用户&#x2F;.gitconfig文件
+	git config --global user.name &quot;万一&quot;
+	git config --global user.email &quot;wanyi@gmail.com&quot;
+3)系统配置文件，系统级别，最高级别,需要有root权限，&#x2F;etc&#x2F;.gitconfig,一般不用
+	git config --system user.name &quot;万一&quot;
+	git config --system user.email &quot;wanyi@gmail.com&quot;</code></pre>
+
+
+
+<blockquote>
+<h5 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h5></blockquote>
+<pre class="language-none"><code class="language-none">没有免密登录，每次push&#x2F;Pull时都需要登录github账号,免密登录有三种方式：
+1)url的方式
+	原来的地址：https:&#x2F;&#x2F;github.com&#x2F;NicknamedCoco&#x2F;Git-Test.git
+	免密登录的地址：https:&#x2F;&#x2F;用户名:密码@github.com&#x2F;NicknamedCoco&#x2F;Git-Test.git
+2)SSH的方式
+	2.1)在生成公钥私钥(默认放在用户名&#x2F;.ssh目录下，id_rsa私钥，id_rsa.pub公钥)
+		ssh-keygen -r rsa 
+	2.2)拷贝公钥的内容，设置到github上
+	2.3)在git本地仓库中配置ssh地址
+		git remote add origin 远程仓库的ssh地址
+3)git自动管理凭证</code></pre>
+
+
+
+<blockquote>
+<h5 id="git忽略文件"><a href="#git忽略文件" class="headerlink" title="git忽略文件"></a>git忽略文件</h5></blockquote>
+<pre class="language-none"><code class="language-none">在仓库中创建一个.gitignore文件，可以指定某些文件不受git的管理，也就不用把这些文件提交到远程仓库中去
+*.h，表示让git不管理*.h的文件
+!a.h，表示让git管理a.h文件
+files&#x2F;，表示不管理files&#x2F;下的文件
+.gitignore，表示不管理.gitignore文件
+我们可以在github上搜索.gitignore，找到java类型的.gitignore文件，覆盖我们的.gitignore即可</code></pre>
+
+
+
+<blockquote>
+<h5 id="github任务管理相关"><a href="#github任务管理相关" class="headerlink" title="github任务管理相关"></a>github任务管理相关</h5></blockquote>
+<pre class="language-none"><code class="language-none">Issues，文档以及任务管理
+Wiki，项目文档</code></pre>
+
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">一分也是爱~~</div><div id="qr" style="display:none;"><div style="display:inline-block"><a target="_blank" rel="noopener" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/alipay.jpg"><img loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/alipay.jpg" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-alipay-line"></use></svg></span></div></div><div style="display:inline-block"><a target="_blank" rel="noopener" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/wechatpay.jpg"><img loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/wechatpay.jpg" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-wechat-pay-line"></use></svg></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>NicknamedCoco</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://www.keyi.world/2021/04/23/Git%E7%9A%84%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/" title="Git的简单学习">http://www.keyi.world/2021/04/23/Git%E7%9A%84%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2021/04/28/Mysql%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/" rel="prev" title="Mysql基础内容笔记"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">Mysql基础内容笔记</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2021/04/21/SpringBoot%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/" rel="next" title="SpringBoot基础笔记"><span class="post-nav-text">SpringBoot基础笔记</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>欢迎留下你的脚印~</span><br></div><div id="valine-container"></div><script type="module">import { getScript } from '/js/utils.js'
+getScript("https://fastly.jsdelivr.net/npm/valine@latest/dist/Valine.min.js", () => {
+  const valineConfig = {"enable":true,"appId":"zA6Qu4BTu9vaBgJ7esJjdzLz-gzGzoHsz","appKey":"gK7g8TcCnAg4X8fJ3pYHr7Yw","placeholder":"大佬求指教&nbsp_(:з」∠)_ （填写邮箱可以收到回复通知～）","avatar":null,"pageSize":10,"visitor":true,"highlight":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"emojiCDN":"//i0.hdslb.com/bfs/emote/","emojiMaps":{"tv_doge":"6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png","tv_亲亲":"a8111ad55953ef5e3be3327ef94eb4a39d535d06.png","tv_偷笑":"bb690d4107620f1c15cff29509db529a73aee261.png","tv_再见":"180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png","tv_冷漠":"b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png","tv_发怒":"34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png","tv_发财":"34db290afd2963723c6eb3c4560667db7253a21a.png","tv_可爱":"9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png","tv_吐血":"09dd16a7aa59b77baa1155d47484409624470c77.png","tv_呆":"fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png","tv_呕吐":"9f996894a39e282ccf5e66856af49483f81870f3.png","tv_困":"241ee304e44c0af029adceb294399391e4737ef2.png","tv_坏笑":"1f0b87f731a671079842116e0991c91c2c88645a.png","tv_大佬":"093c1e2c490161aca397afc45573c877cdead616.png","tv_大哭":"23269aeb35f99daee28dda129676f6e9ea87934f.png","tv_委屈":"d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png","tv_害羞":"a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png","tv_尴尬":"7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png","tv_微笑":"70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png","tv_思考":"90cf159733e558137ed20aa04d09964436f618a1.png","tv_惊吓":"0d15c7e2ee58e935adc6a7193ee042388adc22af.png","tv_打脸":"56ab10b624063e966bfcb76ea5dc4794d87dfd47.png","tv_抓狂":"fe31c08edad661d63762b04e17b8d5ae3c71a757.png","tv_抠鼻":"c666f55e88d471e51bbd9fab9bb308110824a6eb.png","tv_斜眼笑":"911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png","tv_无奈":"ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png","tv_晕":"5443c22b4d07fb1907ccc610c8e6db254f2461b7.png","tv_流汗":"cead1c351ab8d79e9f369605beb90148db0fbed3.png","tv_流泪":"7e71cde7858f0cd50d74b0264aa26db612a8a167.png","tv_流鼻血":"c32d39db2737f89b904ca32700d140a9241b0767.png","tv_点赞":"f85c354995bd99e28fc76c869bfe42ba6438eff4.png","tv_生气":"26702dcafdab5e8225b43ffd23c94ac1ff932654.png","tv_生病":"8b0ec90e6b86771092a498c54f09fc94621c1900.png","tv_疑问":"0793d949b18d7be716078349c202c15ff166f314.png","tv_白眼":"c1d59f439e379ee50eef488bcb5e5378e5044ea4.png","tv_皱眉":"72ccad6679fea0d14cce648b4d818e09b8ffea2d.png","tv_目瞪口呆":"0b8cb81a68de5d5365212c99375e7ace3e7891b7.png","tv_睡着":"8b196675b53af58264f383c50ad0945048290b33.png","tv_笑哭":"1abc628f6d4f4caf9d0e7800878f4697abbc8273.png","tv_腼腆":"89712c0d4af73e67f89e35cbc518420380a7f6f4.png","tv_色":"61822c7e9aae5da76475e7892534545336b23a6f.png","tv_调侃":"4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png","tv_调皮":"b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png","tv_鄙视":"6e72339f346a692a495b123174b49e4e8e781303.png","tv_闭嘴":"c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png","tv_难过":"87f46748d3f142ebc6586ff58860d0e2fc8263ba.png","tv_馋":"fc7e829b845c43c623c8b490ee3602b7f0e76a31.png","tv_鬼脸":"0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png","tv_黑人问号":"45821a01f51bc867da9edbaa2e070410819a95b2.png","tv_鼓掌":"1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"},"el":"#valine-container","lang":"zh-cn"}
+  valineConfig.path = "/2021/04/23/Git%E7%9A%84%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/"
+  new Valine(valineConfig)
+}, window.Valine);</script></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2022 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> NicknamedCoco</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.9.3</span></div><div class="live-time"><span>本博客已萌萌哒地运行</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
+  setTimeout(blog_live_time, 1000);
+  const start = new Date('2020-09-22T00:00:00');
+  const now = new Date();
+  const timeDiff = (now.getTime() - start.getTime());
+  const msPerMinute = 60 * 1000;
+  const msPerHour = 60 * msPerMinute;
+  const msPerDay = 24 * msPerHour;
+  const passDay = Math.floor(timeDiff / msPerDay);
+  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
+  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
+  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
+  display_live_time.innerHTML = ` ${passDay} 天 ${passHour} 小时 ${passMinute} 分 ${passSecond} 秒`;
+}
+blog_live_time();
+</script></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><a class="popup-trigger hty-icon-button icon-search" id="search" href="javascript:;" title="搜索"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-search-line"></use></svg></span></a><script>window.addEventListener("DOMContentLoaded", () => {
+  // Handle and trigger popup window
+  document.querySelector(".popup-trigger").addEventListener("click", () => {
+    document.querySelector(".popup").classList.add("show");
+    setTimeout(() => {
+      document.querySelector(".search-input").focus();
+    }, 100);
+  });
+
+  // Monitor main search box
+  const onPopupClose = () => {
+    document.querySelector(".popup").classList.remove("show");
+  };
+
+  document.querySelector(".popup-btn-close").addEventListener("click", () => {
+    onPopupClose();
+  });
+
+  window.addEventListener("keyup", event => {
+    if (event.key === "Escape") {
+      onPopupClose();
+    }
+  });
+});
+</script><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/search/local-search.js" defer type="module"></script><div class="popup search-popup"><div class="search-header"><span class="popup-btn-close close-icon hty-icon-button"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close-line"></use></svg></span></div><div class="search-input-container"><input class="search-input" id="local-search-input" type="text" placeholder="搜索..." value=""></div><div id="local-search-result"></div></div></div></body></html>

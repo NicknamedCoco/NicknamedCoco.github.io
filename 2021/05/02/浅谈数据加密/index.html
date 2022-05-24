@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="NicknamedCoco"><meta name="copyright" content="NicknamedCoco"><meta name="generator" content="Hexo 6.2.0"><meta name="theme" content="hexo-theme-yun"><title>浅谈数据加密 | CocoBlog</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.3.3/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="//at.alicdn.com/t/font_1140697_dxory92pb0h.js" async></script><script src="https://fastly.jsdelivr.net/npm/@unocss/runtime/mini.global.js"></script><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/png" href="/images/keyi.ico"><link rel="mask-icon" href="/images/keyi.ico" color="#0078E7"><link rel="preload" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"www.keyi.world","root":"/","title":["Coco","Coding"],"version":"1.9.3","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"local_search":{"path":"/search.xml"},"fireworks":{"colors":null},"vendors":{"darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="数据加密的几种方式    对称加密算法(AES，DES，3DES) 对称加密指的是加密和解密时，使用的是同一秘钥，其中最优秀的对称加密算法是AES。不过对称加密也有不好的地方，即对秘钥的保存问题。  非对称加密算法(RSA，ECC)  非对称加密指的是加密和解密的双方使用不同的秘钥，通过非对称加密算法生成一对秘钥一个公钥，一个私钥，公钥可对外暴露，私钥只对自己可见，任何想向我发信息的人，通过公钥">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈数据加密">
+<meta property="og:url" content="http://www.keyi.world/2021/05/02/%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86/index.html">
+<meta property="og:site_name" content="CocoBlog">
+<meta property="og:description" content="数据加密的几种方式    对称加密算法(AES，DES，3DES) 对称加密指的是加密和解密时，使用的是同一秘钥，其中最优秀的对称加密算法是AES。不过对称加密也有不好的地方，即对秘钥的保存问题。  非对称加密算法(RSA，ECC)  非对称加密指的是加密和解密的双方使用不同的秘钥，通过非对称加密算法生成一对秘钥一个公钥，一个私钥，公钥可对外暴露，私钥只对自己可见，任何想向我发信息的人，通过公钥">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/security/images/2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/security/images/1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/security/images/3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/security/images/4.png">
+<meta property="article:published_time" content="2021-05-02T10:32:58.000Z">
+<meta property="article:modified_time" content="2021-05-02T14:01:13.550Z">
+<meta property="article:author" content="NicknamedCoco">
+<meta property="article:tag" content="数据加密">
+<meta property="article:tag" content="BCrypt">
+<meta property="article:tag" content="Argon2">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/security/images/2.png"><script>(function() {
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script></head><body><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="NicknamedCoco"><img width="96" loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/images/keyi.jpg" alt="NicknamedCoco"></a><div class="site-author-name"><a href="/about/">NicknamedCoco</a></div><a class="site-name" href="/about/site.html">CocoBlog</a><sub class="site-subtitle">OneForAll</sub><div class="site-description">寻找自己的价值，才是生命的意义</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="我的主页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">113</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">8</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">66</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://wpa.qq.com/msgrd?v=3&amp;uin=506579631&amp;site=qq&amp;menu=yes" title="QQ" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/NicknamedCoco" title="GitHub" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://www.zhihu.com/people/NicknamedCoco/" title="知乎" target="_blank" style="color:#0084FF"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhihu-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://twitter.com/OneDayInAug" title="Twitter" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-twitter-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">数据加密的几种方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95-AES%EF%BC%8CDES%EF%BC%8C3DES"><span class="toc-number">1.1.</span> <span class="toc-text">对称加密算法(AES，DES，3DES)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95-RSA%EF%BC%8CECC"><span class="toc-number">1.2.</span> <span class="toc-text">非对称加密算法(RSA，ECC)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E5%90%91Hash%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">单向Hash算法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PasswordEncoder%E6%8E%A5%E5%8F%A3%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">PasswordEncoder接口的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8BCryptPasswordEncoder%E5%8A%A0%E5%AF%86"><span class="toc-number">2.1.</span> <span class="toc-text">使用BCryptPasswordEncoder加密</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Argon2PasswordEncoder%E5%8A%A0%E5%AF%86"><span class="toc-number">2.2.</span> <span class="toc-text">使用Argon2PasswordEncoder加密</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://www.keyi.world/2021/05/02/%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="NicknamedCoco"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="CocoBlog"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">浅谈数据加密</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2021-05-02 18:32:58" itemprop="dateCreated datePublished" datetime="2021-05-02T18:32:58+08:00">2021-05-02</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">1.3k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">4m</span></span></span><span class="leancloud_visitors" id="/2021/05/02/%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86/" data-flag-title="浅谈数据加密"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-tag"><a class="tag-item" href="/tags/%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">数据加密</span></a><a class="tag-item" href="/tags/BCrypt/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">BCrypt</span></a><a class="tag-item" href="/tags/Argon2/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">Argon2</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><blockquote>
+<h4 id="数据加密的几种方式"><a href="#数据加密的几种方式" class="headerlink" title="数据加密的几种方式"></a>数据加密的几种方式</h4></blockquote>
+<img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/security/images/2.png" alt="数据加密" style="zoom:80%;" / loading="lazy">
+
+<ul>
+<li><h5 id="对称加密算法-AES，DES，3DES"><a href="#对称加密算法-AES，DES，3DES" class="headerlink" title="对称加密算法(AES，DES，3DES)"></a>对称加密算法(AES，DES，3DES)</h5><p><img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/security/images/1.png" alt="对称加密" loading="lazy"></p>
+<p>对称加密指的是加密和解密时，使用的是同一秘钥，其中最优秀的对称加密算法是AES。<br>不过对称加密也有不好的地方，即对秘钥的保存问题。</p>
+</li>
+<li><h5 id="非对称加密算法-RSA，ECC"><a href="#非对称加密算法-RSA，ECC" class="headerlink" title="非对称加密算法(RSA，ECC)"></a>非对称加密算法(RSA，ECC)</h5><img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/security/images/3.png" alt="非对称加密" style="zoom:80%;" / loading="lazy">
+
+<p>非对称加密指的是加密和解密的双方使用不同的秘钥，通过非对称加密算法生成一对秘钥<br>一个公钥，一个私钥，公钥可对外暴露，私钥只对自己可见，任何想向我发信息的人，通过公钥对数据加密<br>我收到后，使用私钥对密文进行解密。最优秀的非对称加密算法是RSA。</p>
+</li>
+<li><h5 id="单向Hash算法"><a href="#单向Hash算法" class="headerlink" title="单向Hash算法"></a>单向Hash算法</h5><p>单向Hash算法也叫散列算法，单向指的是经过加密后的hash值并不能反向推算出明文，即不可逆</p>
+</li>
+</ul>
+<p>目前对数据库的敏感信息的加密大多数使用这种方式</p>
+<ul>
+<li><p>MD5&#x2F;SHA-1加密<br>通过对明文密码字段进行MD5加密，将计算出的16字节hash值保存在数据库中，但这种方式并不安全，因为单向hash算法有两个特点，<br>1，从同一个密码进行单向哈希，得到的总是唯一确定的hash值<br>2，计算速度快。随着技术进步，一秒钟能够完成数十亿次单向哈希计算<br>攻击者可以将所有密码的常见组合进行单向哈希，使用hash值作为key，密码作为value，组成查询表<br>  拿到你的数据库中的hash值在表中查询，就能找出对应的明文密码了。</p>
+</li>
+<li><p>SHA2(SHA256，SHA512)<br>也是和MD5差不多，只不过生成的hash字节长度更大而已，还是可以通过查询表，或者更高效的彩虹表<br>  找到对应的明文密码</p>
+</li>
+<li><p>SHA2+盐<br>这是一种有效能避免查询表或彩虹表攻击的方式之一，盐指的是随机的字符串，在每一个用户的明文后<br>加上随机生成的盐，再对该字符串进行哈希计算，将计算后的hash值保存在数据库中，<br>  这种方式也叫加盐，随机字符串盐也有要求</p>
+<ol>
+<li>使用CSPRNG算法生成盐，而不是普通的随机数算法。<br>CSPRNG是加密安全的，这意味着用它产生的随机数更加随机，且不可预测。</li>
+<li>盐不能太短<br>如果盐很短，那意味着密码+盐组成的字符串的长度和取值空间都有限。<br>黑客完全可以为密码+盐的所有组合建立彩虹表。</li>
+<li>盐不能重复使用<br>如果所有用户的密码都使用同一个盐进行加密。那么不管盐有多复杂、多大的长度，<br> 黑客都可以很容易的使用这个固定盐重新建立彩虹表，破解你的所有用户的密码。</li>
+</ol>
+<p>但这种方式现在也不适用了，因为为了验证用户的明文是否正确，通常会在表中设置一个salt<br>的字段用于存放盐，这就会导致一个问题，如果数据库被脱库，意味着明文+盐的hash值，和盐</p>
+</li>
+</ul>
+<p>  一起被泄露，攻击者还是可以以此建立彩虹表，依靠如今显卡恐怖的并行计算能力，依然能找出明文</p>
+<ul>
+<li>Password Hash(PBKDF2、BCRYPT、SCRYPT，Argon2)<br>也叫密码哈希，专业加密密码的hash算法，这类加密算法有个共同的特点，算法中都有个因子，<br>用于指明计算密码摘要所需要的资源和时间，也就是计算强度。计算强度越大，<br>攻击者建立彩虹表越困难，以至于不可继续。<br>其中最优秀的当属Argon2算法，在2015年7月，Argon2算法被NIST认定为最好的密码hash算法。</li>
+</ul>
+<blockquote>
+<h4 id="PasswordEncoder接口的使用"><a href="#PasswordEncoder接口的使用" class="headerlink" title="PasswordEncoder接口的使用"></a>PasswordEncoder接口的使用</h4></blockquote>
+<p>PasswordEncoder是Spring Security提供的密码加密方式的接口定义，其实现类如下图：<br><img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/security/images/4.png" style="zoom:80%;" / loading="lazy"></p>
+<ul>
+<li><h5 id="使用BCryptPasswordEncoder加密"><a href="#使用BCryptPasswordEncoder加密" class="headerlink" title="使用BCryptPasswordEncoder加密"></a>使用BCryptPasswordEncoder加密</h5><ul>
+<li><p>导入Spring Security依赖</p>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-security<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></code></pre>
+</li>
+<li><p>注册BCryptPasswordEncoder组件</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Bean</span>
+<span class="token keyword">public</span> <span class="token class-name">PasswordEncoder</span> <span class="token function">passwordEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">BCryptPasswordEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+</li>
+<li><p>加密解密</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token comment">//对password字段加密保存在数据库中</span>
+user<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span>passwordEncoder<span class="token punctuation">.</span><span class="token function">encode</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span><span class="token function">getPassword</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+userServiceImpl<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//通过前端传递过来的id获取数据库中对象</span>
+<span class="token class-name">User</span> userDataBase <span class="token operator">=</span> userServiceImpl<span class="token punctuation">.</span><span class="token function">getById</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">boolean</span> matches <span class="token operator">=</span> passwordEncoder<span class="token punctuation">.</span><span class="token function">matches</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span><span class="token function">getPassword</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>userDataBase<span class="token punctuation">.</span><span class="token function">getPassword</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/*
+	PasswordEncoder接口的encode方法将明文通过哈希计算成密文，
+	其中使用了加盐和慢哈希的方式增加攻击者破解难度
+	PasswordEncoder接口的matches方法，第一个参数是用户传递的密码明文，第二个参数是数据库
+	存储的hash值，两者进行比对，如果比对成功说明用户密码正确。
+*/</span></code></pre></li>
+</ul>
+</li>
+<li><h5 id="使用Argon2PasswordEncoder加密"><a href="#使用Argon2PasswordEncoder加密" class="headerlink" title="使用Argon2PasswordEncoder加密"></a>使用Argon2PasswordEncoder加密</h5><ul>
+<li><p>除了Security，导入Argon2所需的依赖</p>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.bouncycastle<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>bcprov-jdk15on<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.64<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></code></pre>
+</li>
+<li><p>注册Argon2PasswordEncoder组件</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Bean</span>
+<span class="token keyword">public</span> <span class="token class-name">PasswordEncoder</span> <span class="token function">passwordEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Argon2PasswordEncoder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+</li>
+<li><p>加密解密同BCryptPasswordEncoder</p>
+</li>
+</ul>
+</li>
+</ul>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">一分也是爱~~</div><div id="qr" style="display:none;"><div style="display:inline-block"><a target="_blank" rel="noopener" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/alipay.jpg"><img loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/alipay.jpg" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-alipay-line"></use></svg></span></div></div><div style="display:inline-block"><a target="_blank" rel="noopener" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/wechatpay.jpg"><img loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/wechatpay.jpg" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-wechat-pay-line"></use></svg></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>NicknamedCoco</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://www.keyi.world/2021/05/02/%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86/" title="浅谈数据加密">http://www.keyi.world/2021/05/02/%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2021/05/03/RedirectAttribute%E9%87%8D%E5%AE%9A%E5%90%91%E4%BC%A0%E5%8F%82/" rel="prev" title="RedirectAttribute重定向传参"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">RedirectAttribute重定向传参</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2021/04/28/Mysql%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E7%AC%94%E8%AE%B0/" rel="next" title="Mysql基础内容笔记"><span class="post-nav-text">Mysql基础内容笔记</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>欢迎留下你的脚印~</span><br></div><div id="valine-container"></div><script type="module">import { getScript } from '/js/utils.js'
+getScript("https://fastly.jsdelivr.net/npm/valine@latest/dist/Valine.min.js", () => {
+  const valineConfig = {"enable":true,"appId":"zA6Qu4BTu9vaBgJ7esJjdzLz-gzGzoHsz","appKey":"gK7g8TcCnAg4X8fJ3pYHr7Yw","placeholder":"大佬求指教&nbsp_(:з」∠)_ （填写邮箱可以收到回复通知～）","avatar":null,"pageSize":10,"visitor":true,"highlight":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"emojiCDN":"//i0.hdslb.com/bfs/emote/","emojiMaps":{"tv_doge":"6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png","tv_亲亲":"a8111ad55953ef5e3be3327ef94eb4a39d535d06.png","tv_偷笑":"bb690d4107620f1c15cff29509db529a73aee261.png","tv_再见":"180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png","tv_冷漠":"b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png","tv_发怒":"34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png","tv_发财":"34db290afd2963723c6eb3c4560667db7253a21a.png","tv_可爱":"9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png","tv_吐血":"09dd16a7aa59b77baa1155d47484409624470c77.png","tv_呆":"fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png","tv_呕吐":"9f996894a39e282ccf5e66856af49483f81870f3.png","tv_困":"241ee304e44c0af029adceb294399391e4737ef2.png","tv_坏笑":"1f0b87f731a671079842116e0991c91c2c88645a.png","tv_大佬":"093c1e2c490161aca397afc45573c877cdead616.png","tv_大哭":"23269aeb35f99daee28dda129676f6e9ea87934f.png","tv_委屈":"d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png","tv_害羞":"a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png","tv_尴尬":"7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png","tv_微笑":"70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png","tv_思考":"90cf159733e558137ed20aa04d09964436f618a1.png","tv_惊吓":"0d15c7e2ee58e935adc6a7193ee042388adc22af.png","tv_打脸":"56ab10b624063e966bfcb76ea5dc4794d87dfd47.png","tv_抓狂":"fe31c08edad661d63762b04e17b8d5ae3c71a757.png","tv_抠鼻":"c666f55e88d471e51bbd9fab9bb308110824a6eb.png","tv_斜眼笑":"911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png","tv_无奈":"ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png","tv_晕":"5443c22b4d07fb1907ccc610c8e6db254f2461b7.png","tv_流汗":"cead1c351ab8d79e9f369605beb90148db0fbed3.png","tv_流泪":"7e71cde7858f0cd50d74b0264aa26db612a8a167.png","tv_流鼻血":"c32d39db2737f89b904ca32700d140a9241b0767.png","tv_点赞":"f85c354995bd99e28fc76c869bfe42ba6438eff4.png","tv_生气":"26702dcafdab5e8225b43ffd23c94ac1ff932654.png","tv_生病":"8b0ec90e6b86771092a498c54f09fc94621c1900.png","tv_疑问":"0793d949b18d7be716078349c202c15ff166f314.png","tv_白眼":"c1d59f439e379ee50eef488bcb5e5378e5044ea4.png","tv_皱眉":"72ccad6679fea0d14cce648b4d818e09b8ffea2d.png","tv_目瞪口呆":"0b8cb81a68de5d5365212c99375e7ace3e7891b7.png","tv_睡着":"8b196675b53af58264f383c50ad0945048290b33.png","tv_笑哭":"1abc628f6d4f4caf9d0e7800878f4697abbc8273.png","tv_腼腆":"89712c0d4af73e67f89e35cbc518420380a7f6f4.png","tv_色":"61822c7e9aae5da76475e7892534545336b23a6f.png","tv_调侃":"4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png","tv_调皮":"b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png","tv_鄙视":"6e72339f346a692a495b123174b49e4e8e781303.png","tv_闭嘴":"c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png","tv_难过":"87f46748d3f142ebc6586ff58860d0e2fc8263ba.png","tv_馋":"fc7e829b845c43c623c8b490ee3602b7f0e76a31.png","tv_鬼脸":"0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png","tv_黑人问号":"45821a01f51bc867da9edbaa2e070410819a95b2.png","tv_鼓掌":"1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"},"el":"#valine-container","lang":"zh-cn"}
+  valineConfig.path = "/2021/05/02/%E6%B5%85%E8%B0%88%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86/"
+  new Valine(valineConfig)
+}, window.Valine);</script></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2022 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> NicknamedCoco</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.9.3</span></div><div class="live-time"><span>本博客已萌萌哒地运行</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
+  setTimeout(blog_live_time, 1000);
+  const start = new Date('2020-09-22T00:00:00');
+  const now = new Date();
+  const timeDiff = (now.getTime() - start.getTime());
+  const msPerMinute = 60 * 1000;
+  const msPerHour = 60 * msPerMinute;
+  const msPerDay = 24 * msPerHour;
+  const passDay = Math.floor(timeDiff / msPerDay);
+  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
+  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
+  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
+  display_live_time.innerHTML = ` ${passDay} 天 ${passHour} 小时 ${passMinute} 分 ${passSecond} 秒`;
+}
+blog_live_time();
+</script></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><a class="popup-trigger hty-icon-button icon-search" id="search" href="javascript:;" title="搜索"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-search-line"></use></svg></span></a><script>window.addEventListener("DOMContentLoaded", () => {
+  // Handle and trigger popup window
+  document.querySelector(".popup-trigger").addEventListener("click", () => {
+    document.querySelector(".popup").classList.add("show");
+    setTimeout(() => {
+      document.querySelector(".search-input").focus();
+    }, 100);
+  });
+
+  // Monitor main search box
+  const onPopupClose = () => {
+    document.querySelector(".popup").classList.remove("show");
+  };
+
+  document.querySelector(".popup-btn-close").addEventListener("click", () => {
+    onPopupClose();
+  });
+
+  window.addEventListener("keyup", event => {
+    if (event.key === "Escape") {
+      onPopupClose();
+    }
+  });
+});
+</script><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/search/local-search.js" defer type="module"></script><div class="popup search-popup"><div class="search-header"><span class="popup-btn-close close-icon hty-icon-button"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close-line"></use></svg></span></div><div class="search-input-container"><input class="search-input" id="local-search-input" type="text" placeholder="搜索..." value=""></div><div id="local-search-result"></div></div></div></body></html>

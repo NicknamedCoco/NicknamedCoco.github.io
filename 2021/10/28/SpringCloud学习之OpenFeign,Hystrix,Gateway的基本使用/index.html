@@ -1,0 +1,473 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="NicknamedCoco"><meta name="copyright" content="NicknamedCoco"><meta name="generator" content="Hexo 6.2.0"><meta name="theme" content="hexo-theme-yun"><title>SpringCloud学习之OpenFeign,Hystrix,Gateway的基本使用 | CocoBlog</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.3.3/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="//at.alicdn.com/t/font_1140697_dxory92pb0h.js" async></script><script src="https://fastly.jsdelivr.net/npm/@unocss/runtime/mini.global.js"></script><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/png" href="/images/keyi.ico"><link rel="mask-icon" href="/images/keyi.ico" color="#0078E7"><link rel="preload" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"www.keyi.world","root":"/","title":["Coco","Coding"],"version":"1.9.3","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"local_search":{"path":"/search.xml"},"fireworks":{"colors":null},"vendors":{"darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="简述  写博客记笔记违背了我的初心：记录学到的技术的使用，以免以后使用的时候忘记，现在的情况是，自己记录的笔记并不完整，很多地方写的不好，而随手百度就能比我写的更完善更好，写博客还需要大量时间，于此对比，自己写博客就显示很不值得，但是我并不想放弃写博客，不然学的东西没有产出，打击学习积极性，所以我决定在自己的博客中使用别人写的优质博客，做知识的整理者，归纳者而不生产创造优质文章(我这实力也创造不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud学习之OpenFeign,Hystrix,Gateway的基本使用">
+<meta property="og:url" content="http://www.keyi.world/2021/10/28/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BOpenFeign,Hystrix,Gateway%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="CocoBlog">
+<meta property="og:description" content="简述  写博客记笔记违背了我的初心：记录学到的技术的使用，以免以后使用的时候忘记，现在的情况是，自己记录的笔记并不完整，很多地方写的不好，而随手百度就能比我写的更完善更好，写博客还需要大量时间，于此对比，自己写博客就显示很不值得，但是我并不想放弃写博客，不然学的东西没有产出，打击学习积极性，所以我决定在自己的博客中使用别人写的优质博客，做知识的整理者，归纳者而不生产创造优质文章(我这实力也创造不">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/feign%E4%B8%8EopenFeign%E7%9A%84%E5%8C%BA%E5%88%AB.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/%E6%B5%81%E9%87%8F%E7%BD%91%E5%85%B3%E5%92%8C%E4%B8%9A%E5%8A%A1%E7%BD%91%E5%85%B3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/gateway1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/gateway2.png">
+<meta property="article:published_time" content="2021-10-28T02:01:07.000Z">
+<meta property="article:modified_time" content="2021-11-01T02:26:53.122Z">
+<meta property="article:author" content="NicknamedCoco">
+<meta property="article:tag" content="SpringCloud">
+<meta property="article:tag" content="OpenFeign">
+<meta property="article:tag" content="Hystrix">
+<meta property="article:tag" content="Gateway">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/feign%E4%B8%8EopenFeign%E7%9A%84%E5%8C%BA%E5%88%AB.png"><script>(function() {
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script></head><body><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button sidebar-nav-active" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel sidebar-panel-active" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="NicknamedCoco"><img width="96" loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/images/keyi.jpg" alt="NicknamedCoco"></a><div class="site-author-name"><a href="/about/">NicknamedCoco</a></div><a class="site-name" href="/about/site.html">CocoBlog</a><sub class="site-subtitle">OneForAll</sub><div class="site-description">寻找自己的价值，才是生命的意义</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="我的主页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">113</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">8</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">66</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://wpa.qq.com/msgrd?v=3&amp;uin=506579631&amp;site=qq&amp;menu=yes" title="QQ" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/NicknamedCoco" title="GitHub" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://www.zhihu.com/people/NicknamedCoco/" title="知乎" target="_blank" style="color:#0084FF"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhihu-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://twitter.com/OneDayInAug" title="Twitter" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-twitter-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content">此文章未包含目录</div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://www.keyi.world/2021/10/28/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BOpenFeign,Hystrix,Gateway%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="NicknamedCoco"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="CocoBlog"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">SpringCloud学习之OpenFeign,Hystrix,Gateway的基本使用</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2021-10-28 10:01:07" itemprop="dateCreated datePublished" datetime="2021-10-28T10:01:07+08:00">2021-10-28</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-2-line"></use></svg></span> <time title="修改时间：2021-11-01 10:26:53" itemprop="dateModified" datetime="2021-11-01T10:26:53+08:00">2021-11-01</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">4.4k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">17m</span></span></span><span class="leancloud_visitors" id="/2021/10/28/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BOpenFeign,Hystrix,Gateway%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" data-flag-title="SpringCloud学习之OpenFeign,Hystrix,Gateway的基本使用"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-tag"><a class="tag-item" href="/tags/SpringCloud/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">SpringCloud</span></a><a class="tag-item" href="/tags/OpenFeign/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">OpenFeign</span></a><a class="tag-item" href="/tags/Hystrix/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">Hystrix</span></a><a class="tag-item" href="/tags/Gateway/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">Gateway</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><blockquote>
+<p>简述</p>
+</blockquote>
+<p>写博客记笔记违背了我的初心：记录学到的技术的使用，以免以后使用的时候忘记，<br>现在的情况是，自己记录的笔记并不完整，很多地方写的不好，而随手百度就能比我写的更完善更好，<br>写博客还需要大量时间，于此对比，自己写博客就显示很不值得，但是我并不想放弃写博客，不然学的东西<br>没有产出，打击学习积极性，所以我决定在自己的博客中使用别人写的优质博客，做知识的整理者，归纳者<br>而不生产创造优质文章(我这实力也创造不了)，OK，通过看别人写的优质文章，不仅提升自己，<br>而且节约时间，以后某个技术不记得怎么使用了来查查就行，最后还算是产出不打击学习积极性，完美~</p>
+<p>本章内容</p>
+<ul>
+<li><a href="#a">OpenFeign</a></li>
+<li><a href="#b">Hystrix</a></li>
+<li><a href="#c">Gateway</a></li>
+</ul>
+<blockquote>
+<p><span id="a">OpenFeign</span></p>
+</blockquote>
+<p>使用注解方式发送服务调用的HTTP客户端，内置了ribbon负载均衡工具，hystrix熔断器<br>OpenFeign与Feign的区别见下图：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/feign%E4%B8%8EopenFeign%E7%9A%84%E5%8C%BA%E5%88%AB.png" loading="lazy"></p>
+<ul>
+<li><p>基本使用</p>
+<ul>
+<li><p>声明式<br>假设场景：消费者调用生产者的controller接口，那么openFeign就需要配置在消费者端，以提供服务调用，来看下使用步骤：</p>
+<p>1，导入依赖</p>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-openfeign<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!--服务注册中心用eureka还是nacos随意--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-alibaba-nacos-discovery<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></code></pre>
+
+<p>2，在消费者主类上标记注解</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token annotation punctuation">@EnableDiscoveryClient</span>	<span class="token comment">//注册中心</span>
+<span class="token annotation punctuation">@EnableFeignClients</span>		<span class="token comment">//openfeign注解，该注解的basePackages属性可以指定扫描包路径</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ProviderApplication</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">SpringApplication</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">ProviderApplication</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p>3，消费者端增加一个接口，ProviderClient接口</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token comment">//会根据服务名，从注册中心找到对应的IP地址，name值表示生产者的服务名称</span>
+<span class="token annotation punctuation">@FeignClient</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"provider"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ProviderClient</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//这里跟服务生产者controller接口的URL一致，调用生产者的/provider/list</span>
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/provider/list"</span><span class="token punctuation">)</span>
+    <span class="token class-name">String</span> <span class="token function">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p>4，定义好上述的接口，然后消费者的controller处调用上面接口的方法</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConsumerController</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//引入Feign客户端</span>
+    <span class="token annotation punctuation">@Resource</span>
+    <span class="token keyword">private</span> <span class="token class-name">ProviderClient</span> providerClient<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/consumer/callProvider"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">callProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//使用Feign客户端调用其他服务的接口，底层自动调用生产者的controller，拿到数据</span>
+        <span class="token keyword">return</span> providerClient<span class="token punctuation">.</span><span class="token function">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+</li>
+<li><p>继承式<br>上面就是声明式使用openfeign，我们会发现消费者定义的ProviderClient接口，下面的方法其实和<br>生产者的controller方法一样，使用同样的注解，那么我们可以定义一个模块，把ProviderClient接口<br>写在那个模块中，然后生产者的controller类实现该模块的ProviderClient接口，消费者的接口继承<br>ProviderClient接口，这样，我们只需在ProviderClient接口定义方法和注解，生产者实现细节，<br>消费者继承接口后，消费者自己的接口也拥有了ProviderClient接口的方法</p>
+<p>但是这样做让这三个模块耦合在一起了，感觉非常不好，具体代码，请在最下面链接处查看</p>
+</li>
+</ul>
+</li>
+<li><p>超时控制<br>feign内部包含了ribbon和hystrix，所以我们需要设置ribbon的超时时间和hystrix的熔断超时时间。<br>所以feign的超时控制指的是配置这两个工具的超时时间，下面是一个样例：</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">feign</span><span class="token punctuation">:</span>
+  <span class="token key atrule">client</span><span class="token punctuation">:</span>
+    <span class="token key atrule">config</span><span class="token punctuation">:</span>
+      <span class="token key atrule">default</span><span class="token punctuation">:</span>  <span class="token comment">#全局设置，</span>
+        <span class="token comment"># ribbon的超时时间，默认等待1秒，得不到爆错</span>
+        <span class="token key atrule">connectTimeout</span><span class="token punctuation">:</span> <span class="token number">5000</span>  <span class="token comment"># 指的是建立连接所用的时间，适用于网路状况正常情况下，两端连接所用的时间</span>
+        <span class="token key atrule">readTimeout</span><span class="token punctuation">:</span> <span class="token number">5000</span>   <span class="token comment"># 指的是建立连接后从服务器读取到可用资源所用的时间</span>
+  <span class="token key atrule">hystrix</span><span class="token punctuation">:</span>
+    <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span> <span class="token comment"># 开启熔断器，默认包装请求接口的所有方法，并将这些方法过期时间设置为1秒，需要进行下面的配置</span>
+
+<span class="token key atrule">hystrix</span><span class="token punctuation">:</span>
+  <span class="token key atrule">command</span><span class="token punctuation">:</span>
+    <span class="token key atrule">default</span><span class="token punctuation">:</span>
+      <span class="token key atrule">execution</span><span class="token punctuation">:</span>
+        <span class="token key atrule">isolation</span><span class="token punctuation">:</span>
+          <span class="token key atrule">thread</span><span class="token punctuation">:</span>
+            <span class="token key atrule">timeoutInMilliseconds</span><span class="token punctuation">:</span> <span class="token number">10000</span> <span class="token comment"># 设置hystrix的超时时间为10000ms</span></code></pre>
+
+<p>如何配置好Hystrix和Ribbon的超时时间呢？</p>
+<p>因为Feign的请求：其实是Hystrix+Ribbon。Hystrix在最外层，然后再到Ribbon，最后里面的是http请求<br>所以说。Hystrix的熔断时间必须大于Ribbon的 ( ConnectTimeout + ReadTimeout )。而如果Ribbon开启了重试机制<br>还需要乘以对应的重试次数，保证在Ribbon里的请求还没结束时，Hystrix的熔断时间不会超时。</p>
+<p>关于更多超时控制，请看最下面的链接</p>
+</li>
+<li><p>日志增强<br>日志配置分为全局配置和局部配置，分为代码实现和配置实现，这里都是配置实现，代码查看下面链接</p>
+<ul>
+<li><p>局部配置日志级别<br>局部配置指的是针对请求某个微服务时，设置特定的日志级别，而其他的日志级别使用默认</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">feign</span><span class="token punctuation">:</span>
+  <span class="token key atrule">client</span><span class="token punctuation">:</span>
+    <span class="token key atrule">config</span><span class="token punctuation">:</span>
+      <span class="token comment">#想要调用的微服务名称，server1指的是其他微服务的服务名称</span>
+      <span class="token key atrule">server-1</span><span class="token punctuation">:</span>
+        <span class="token key atrule">loggerLevel</span><span class="token punctuation">:</span> FULL</code></pre>
+</li>
+<li><p>全局配置日志级别<br>全局配置日志级别顾名思义，对所有微服务请求时，都使用该日志级别</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">feign</span><span class="token punctuation">:</span>
+  <span class="token key atrule">client</span><span class="token punctuation">:</span>
+    <span class="token key atrule">config</span><span class="token punctuation">:</span>
+      <span class="token comment">#将调用的微服务名称改成default就配置成全局的了</span>
+      <span class="token key atrule">default</span><span class="token punctuation">:</span>
+        <span class="token key atrule">loggerLevel</span><span class="token punctuation">:</span> FULL</code></pre></li>
+</ul>
+</li>
+<li><p>负载均衡配置<br>openfeign中的负载均衡配置，就是ribbon的负载均衡的配置</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">服务名称</span><span class="token punctuation">:</span>		<span class="token comment">#这里填微服务的服务名称</span>
+  <span class="token key atrule">ribbon</span><span class="token punctuation">:</span>
+    <span class="token key atrule">NFLoadBalancerRuleClassName</span><span class="token punctuation">:</span> com.netflix.loadbalancer.RandomRule
+<span class="token comment">#NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #配置规则 随机</span>
+<span class="token comment">#NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule #配置规则 轮询</span>
+<span class="token comment">#NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RetryRule #配置规则 重试</span>
+<span class="token comment">#NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule #配置规则 响应时间权重</span>
+<span class="token comment">#NFLoadBalancerRuleClassName: com.netflix.loadbalancer.BestAvailableRule #配置规则 最空闲连接策略</span></code></pre>
+</li>
+<li><p>更多文章</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/hhj13978064496/article/details/104653297">openFeign超时控制</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/879d39d1e5c7">openFeign的使用</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/775626">详细讲解OpenFeign，有继承式实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/FlyGoldfish/articles/14223063.html">openFeign博客园</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/409184804">openFeign知乎</a></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><span id="b">Hystrix</span></p>
+</blockquote>
+<p>在微服务架构下，服务调用的链路可能会非常长，服务A调用服务B，服务B调用服务C，，，<br>一次请求调用的链路越长，那么一旦链路中某个服务不可用，或者该服务执行时间太久，<br>则会造成整个请求时间变长，即一粒老鼠屎坏了一锅粥，我调用你的服务，你服务不能用或者你服务处理太慢<br>你得告诉我一声，总之，我不管你服务是好是坏，我就要及时得到反馈。</p>
+<p>此时Hystrix，豪猪哥出现了，专门解决一旦某个服务接口不可用或延迟高，仍然能给对方一个反馈<br>一般出现在并发量比较大的场景，当一个接口并发量特别大，会导致tomcat的工作线程全都处理该接口下的请求<br>使得其他接口响应也会变慢，一句话，我提供的接口如果其中一个接口非常多请求，我的其他接口响应速度下降<br>那我就要降低这个接口的请求量，怎么降低？接口并发量大的具体表现是该接口响应变慢，我设定，只要该接口<br>响应延迟特别慢或者该接口内报错，我直接响应一个后备接口，这就是<strong>服务降级</strong>，这就是上面所说的反馈。<br>后备方法里面，一般写该服务不可用，你一直请求别人，接收到的都是服务不可用，自然请求量就降下来了<br>请求量降下来，接口处理速度就上来了，处理接口速度上来了，自然就不走后备方法，转成去执行正常的接口了</p>
+<p>除了服务降级，你还可能听说过服务熔断，它指的是：我根据请求量进行统计，一旦执行后备方法多了，<br>我直接让所有请求全部走后备方法，啥也不处理了，直接躺平，这就是<strong>服务熔断</strong>，等一段时间后，<br>我放一个请求进来，看接口正不正常(延迟小，不报错)，如果正常，我就关闭服务熔断，让接口正常处理请求，否则继续走我的后备方法。<br>hystrix服务熔断的状态可以用一个断路器表示，如果服务被熔断了，则处于断路器打开状态，<br>此时服务正常业务接口不可用，走后备方法，过了一段时间，熔断器自动变成半开状态，这一状态下，<br>hystrix会监测服务接口是否正常，如果正常，则断路器关闭，服务熔断状态关闭，服务业务接口正常处理请求。</p>
+<p>下面介绍简单的使用方式，更多的内容看最下方的链接</p>
+<ul>
+<li><p>导入依赖</p>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!--新增hystrix，不过openfeign包含了hystrix依赖，可以不用引入--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-netflix-hystrix<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+
+<span class="token comment">&lt;!--本次实验openfeign和hystrix一起使用--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-openfeign<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></code></pre>
+</li>
+<li><p>添加hystrix注解在模块主类上</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@EnableFeignClients</span>
+<span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token annotation punctuation">@EnableDiscoveryClient</span>
+@<span class="token annotation punctuation">@EnableCircuitBreaker</span>	<span class="token comment">//用于hystrix服务熔断注解，如果只使用服务降级，不需要该注解		</span>
+<span class="token comment">//友情提示：@SpringCloudApplication可代替下面三个注解</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyConsumerFeignWithHystrixOrder80</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">SpringApplication</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">MyConsumerFeignWithHystrixOrder80</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+</li>
+<li><p>实验是openfeign配合hystrix使用，则我们也需要配置ribbon的超时时间</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">feign</span><span class="token punctuation">:</span>
+  <span class="token key atrule">client</span><span class="token punctuation">:</span>
+    <span class="token key atrule">config</span><span class="token punctuation">:</span>
+      <span class="token key atrule">default</span><span class="token punctuation">:</span>  <span class="token comment">#全局设置，</span>
+        <span class="token comment"># ribbon的超时时间，默认等待1秒，得不到爆错</span>
+        <span class="token key atrule">connectTimeout</span><span class="token punctuation">:</span> <span class="token number">5000</span>  <span class="token comment"># 指的是建立连接所用的时间，适用于网路状况正常情况下，两端连接所用的时间</span>
+        <span class="token key atrule">readTimeout</span><span class="token punctuation">:</span> <span class="token number">5000</span>   <span class="token comment"># 指的是建立连接后从服务器读取到可用资源所用的时间</span></code></pre>
+</li>
+<li><p>服务降级的配置可以配置在消费方也可以配置在生产方，因为消费者也可能是生产者，<br>下面服务降级的配置，配置在消费方的controller中</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token comment">//消费方的controller</span>
+<span class="token annotation punctuation">@RestController</span>
+<span class="token annotation punctuation">@Slf4j</span>
+<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/order/feign/hystrix"</span><span class="token punctuation">)</span>
+<span class="token comment">//@DefaultProperties(defaultFallback = "globalFallback")	//配置全局的降级方法/后备方法</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyFeignController</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@Resource</span>
+    <span class="token keyword">private</span> <span class="token class-name">MyFeignWithPayment</span> myFeignWithPayment<span class="token punctuation">;</span> <span class="token comment">//消费方的接口，直接使用即可拿到其他服务数据</span>
+
+    <span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"/ok/&#123;id&#125;"</span><span class="token punctuation">)</span>
+<span class="token comment">//    @HystrixCommand //如果没有指定fallback，则走全局降级方法，这样就无需每个业务方法都写个fallback方法</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getPaymentInfo_OKTest</span><span class="token punctuation">(</span><span class="token annotation punctuation">@PathVariable</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">)</span><span class="token class-name">String</span> id<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"执行order模块中的okTest方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> myFeignWithPayment<span class="token punctuation">.</span><span class="token function">getPaymentInfo_OKTest</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"/timeout/&#123;id&#125;"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@HystrixCommand</span><span class="token punctuation">(</span>fallbackMethod <span class="token operator">=</span> <span class="token string">"order_timeoutOrError"</span><span class="token punctuation">,</span>commandProperties <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+        <span class="token annotation punctuation">@HystrixProperty</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"execution.isolation.thread.timeoutInMilliseconds"</span><span class="token punctuation">,</span>value <span class="token operator">=</span><span class="token string">"3000"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>	<span class="token comment">//3秒内，该注解的方法没有执行完毕，则走降级方法，表示消费者不等生产方提供数据了</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getPaymentInfo_NotOKTest</span><span class="token punctuation">(</span><span class="token annotation punctuation">@PathVariable</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">)</span><span class="token class-name">String</span> id<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"执行order模块中的notOKTest方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> result <span class="token operator">=</span> myFeignWithPayment<span class="token punctuation">.</span><span class="token function">getPaymentInfo_NotOKTest</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//调用其他服务</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"你是啥？"</span><span class="token operator">+</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">/*当上面服务处理失败后(运行异常，超时异常)，回调下面的方法，进行兜底操作，即指定的降级方法*/</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">order_timeoutOrError</span><span class="token punctuation">(</span><span class="token class-name">String</span> id<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token string">"订单接口异常，当前线程名："</span><span class="token operator">+</span><span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">/*全局降级方法，只要标注了@HystrixCommand注解，但没有指定fallback，就执行全局的降级方法*/</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">globalFallback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"进入全局的熔断方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token string">"方法执行异常。。。。"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">/*
+	你可以指定fallback降级方法，如果使用了@HystrixCommand注解，不指定fallback方法，则执行全局的降级方法
+*/</span></code></pre>
+</li>
+<li><p>默认情况下，使用@HystrixCommand注解会导致该接口hystrix的超时时间为1秒，你需要在配置文件中配置</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment">#在新版本的Springcloud中，Feign默认关闭了对Hystrix的支持</span>
+feign
+  <span class="token key atrule">hystrix</span><span class="token punctuation">:</span>
+    <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span> <span class="token comment"># 开启hyxtrix，默认包装请求接口的所有方法，并将这些方法过期时间设置为1秒，需要进行下面的配置</span>
+<span class="token key atrule">hystrix</span><span class="token punctuation">:</span>
+  <span class="token key atrule">command</span><span class="token punctuation">:</span>
+    <span class="token key atrule">default</span><span class="token punctuation">:</span>
+      <span class="token key atrule">execution</span><span class="token punctuation">:</span>
+        <span class="token key atrule">isolation</span><span class="token punctuation">:</span>
+          <span class="token key atrule">thread</span><span class="token punctuation">:</span>
+            <span class="token key atrule">timeoutInMilliseconds</span><span class="token punctuation">:</span> <span class="token number">6000</span> <span class="token comment"># 设置hystrix的超时时间为6000ms</span></code></pre>
+</li>
+<li><p>上面是服务降级的配置，下面来看看服务熔断的配置，本案例将服务熔断配置在生产方的service中</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token comment">//服务熔断指的是，如果短时间内有较多的方法被服务降级，则触发器状态，使得之后一定时间内，任何请求访问的都是降级方法</span>
+    <span class="token annotation punctuation">@HystrixCommand</span><span class="token punctuation">(</span>fallbackMethod <span class="token operator">=</span> <span class="token string">"paymentCircuitBreaker_fallback"</span><span class="token punctuation">,</span>commandProperties <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">//是否开启断路器</span>
+            <span class="token annotation punctuation">@HystrixProperty</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"circuitBreaker.enabled"</span><span class="token punctuation">,</span>value <span class="token operator">=</span> <span class="token string">"true"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>  
+            <span class="token comment">//请求次数，默认10秒内大于20次请求则进行统计</span>
+            <span class="token annotation punctuation">@HystrixProperty</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"circuitBreaker.requestVolumeThreshold"</span><span class="token punctuation">,</span>value <span class="token operator">=</span> <span class="token string">"10"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>   		
+            <span class="token comment">//统计的时间范围</span>
+            <span class="token annotation punctuation">@HystrixProperty</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"circuitBreaker.sleepWindowInMilliseconds"</span><span class="token punctuation">,</span>value <span class="token operator">=</span> <span class="token string">"10000"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>  
+            <span class="token comment">//失败率达到多少后跳闸，10秒内fallback到60%</span>
+            <span class="token annotation punctuation">@HystrixProperty</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"circuitBreaker.errorThresholdPercentage"</span><span class="token punctuation">,</span>value <span class="token operator">=</span> <span class="token string">"60"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">paymentCircuitBreaker</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> id<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>id <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"*****id 不能负数"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token class-name">String</span> serialNumber <span class="token operator">=</span> <span class="token class-name">IdUtil</span><span class="token punctuation">.</span><span class="token function">simpleUUID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"\t"</span><span class="token operator">+</span><span class="token string">"调用成功,流水号："</span><span class="token operator">+</span>serialNumber<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">//降级方法</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">paymentCircuitBreaker_fallback</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> id<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token string">"id 不能负数，请稍候再试,(┬＿┬)/~~     id: "</span> <span class="token operator">+</span>id<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span></code></pre></li>
+</ul>
+<p>hystrix还有很多内容，请看：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e07661b9bae8">hystrix原理</a></p>
+<blockquote>
+<p><span id="c">Gateway</span></p>
+</blockquote>
+<p>spring cloud Gateway，服务网关，内外系统的中间门户，用户发出请求，到达nginx集群，然后nginx将请求负载到Gateway网关集群<br>网关再对请求做一些认证，鉴权，监控，负载均衡，流量管控等等，最后将请求转发给各个微服务中。<br>网关分为流量网关和业务网关，nginx就是流量网关，而springCloud Gateway就是业务网关，至于其具体区别<br>大概可以看下下图：然后他们各自做的事，看下大佬写的博客，在最下面<br><img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/%E6%B5%81%E9%87%8F%E7%BD%91%E5%85%B3%E5%92%8C%E4%B8%9A%E5%8A%A1%E7%BD%91%E5%85%B3.png" loading="lazy"></p>
+<p>再来看看几张关于网关的图，了解一下它在微服务中扮演的角色：<br><img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/gateway1.png" loading="lazy"><br><img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/springcloud/gateway2.png" loading="lazy"></p>
+<p>大佬的博客写的太好，我这里就简单写写配置吧：</p>
+<ul>
+<li><p>导入依赖，菜狗是这样的，导依赖，写配置，加注解三板斧~~</p>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!--gateway当然也是需要注册进服务注册中心的，eureka/nacos/...--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-gateway<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-netflix-eureka-client<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></code></pre>
+</li>
+<li><p>配置网关，gateway中路由，断言，过滤器是基本操作</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">server</span><span class="token punctuation">:</span>
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">9527</span>
+<span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">application</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> MyGateway
+  <span class="token key atrule">cloud</span><span class="token punctuation">:</span>
+    <span class="token key atrule">gateway</span><span class="token punctuation">:</span>
+      <span class="token key atrule">routes</span><span class="token punctuation">:</span>	<span class="token comment">#下面是配置的一个个路由，即转发规则和转发微服务地址，满足断言规则，则转发请求</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">id</span><span class="token punctuation">:</span> payment_routh <span class="token comment">#路由的ID，没有固定规则但要求唯一，建议配合服务名</span>
+<span class="token comment">#          uri: http://localhost:8001   #匹配后提供服务的路由地址</span>
+          <span class="token key atrule">uri</span><span class="token punctuation">:</span> lb<span class="token punctuation">:</span>//MyProviderPayment		<span class="token comment">#开启服务发现后，只用服务名称进行请求转发</span>
+          <span class="token key atrule">predicates</span><span class="token punctuation">:</span>	<span class="token comment"># 断言，满足下面的条件才转发请求</span>
+            <span class="token punctuation">-</span> Path=/payment/eureka/<span class="token important">**</span>   <span class="token comment">#断言,路径相匹配的进行路由</span>
+          <span class="token key atrule">filters</span><span class="token punctuation">:</span> 	<span class="token comment">#路由实例过滤器，仅对该路由有效</span>
+            <span class="token punctuation">-</span> AddRequestHeader=Truth<span class="token punctuation">,</span>zhangsan is freaking awesome<span class="token tag">!</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">id</span><span class="token punctuation">:</span> payment_routh2
+<span class="token comment">#          uri: http://localhost:8001</span>
+          <span class="token key atrule">uri</span><span class="token punctuation">:</span> lb<span class="token punctuation">:</span>//MyProviderPayment   <span class="token comment">#使用服务名进行路由，需要开启discovery.locator.enabled=true</span>
+          <span class="token key atrule">predicates</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> Path=/payment/eureka/lb   <span class="token comment">#断言,路径相匹配的进行路由</span>
+            <span class="token punctuation">-</span> After=2021<span class="token punctuation">-</span>10<span class="token punctuation">-</span>26T22<span class="token punctuation">:</span>48<span class="token punctuation">:</span>16.597+08<span class="token punctuation">:</span>00<span class="token punctuation">[</span>Asia/Shanghai<span class="token punctuation">]</span>
+      <span class="token key atrule">discovery</span><span class="token punctuation">:</span>
+        <span class="token key atrule">locator</span><span class="token punctuation">:</span>
+          <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>   <span class="token comment">#开启从注册中心动态创建路由的功能，利用微服务名进行路由</span>
+      <span class="token key atrule">default-filters</span><span class="token punctuation">:</span>	<span class="token comment">#默认过滤器，作用于每个路由</span>
+        <span class="token punctuation">-</span> After=2021<span class="token punctuation">-</span>10<span class="token punctuation">-</span>26T22<span class="token punctuation">:</span>48<span class="token punctuation">:</span>16.597+08<span class="token punctuation">:</span>00<span class="token punctuation">[</span>Asia/Shanghai<span class="token punctuation">]</span>  <span class="token comment"># 这里是默认路由作用每一个路由</span>
+
+      <span class="token comment"># 注意：路由实例过滤器(配置在路由里面),defaultFilter,globalFilter，这三个路由器是根据order排序的</span>
+      <span class="token comment"># 如果order值相同，则defaultFilter>路由实例过滤器>globalFilter</span></code></pre>
+</li>
+<li><p>上面是通过配置进行网关的路由功能，下面一个案例是使用编码的方式，设置路由规则，仅作了解，不太懂</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GatewayConfig</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">/*
+    * 网关的配置可以通过编码方式，也可以通过配置application.xml方式，这里是通过编码方式
+    * */</span>
+
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">RouteLocator</span> <span class="token function">toBlog</span><span class="token punctuation">(</span><span class="token class-name">RouteLocatorBuilder</span> routeLocatorBuilder<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">RouteLocatorBuilder<span class="token punctuation">.</span>Builder</span> routes <span class="token operator">=</span> routeLocatorBuilder<span class="token punctuation">.</span><span class="token function">routes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        routes<span class="token punctuation">.</span><span class="token function">route</span><span class="token punctuation">(</span><span class="token string">"keyi.world"</span><span class="token punctuation">,</span>r<span class="token operator">-></span><span class="token punctuation">&#123;</span>
+            <span class="token comment">//这里有问题，网关只是替换了域名和端口，但是后面路径不替换，因为我博客后没有/keyi路径，所以404</span>
+            <span class="token keyword">return</span> r<span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token string">"/keyi"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">uri</span><span class="token punctuation">(</span><span class="token string">"http://www.keyi.world"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> routes<span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+</li>
+<li><p>项目中往往需要自定义过滤器，而不是使用网关中提供给我们的过滤器，下面是一个案例实现全局过滤器接口</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token annotation punctuation">@Order</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>  <span class="token comment">//数字越小，优先级越高</span>
+<span class="token annotation punctuation">@Slf4j</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyLogGatewayGlobalFilter</span> <span class="token keyword">implements</span> <span class="token class-name">GlobalFilter</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">/**
+     * 自定义的网关过滤器
+     * @param exchange
+     * @param chain
+     * @return
+     */</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">Mono</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Void</span><span class="token punctuation">></span></span> <span class="token function">filter</span><span class="token punctuation">(</span><span class="token class-name">ServerWebExchange</span> exchange<span class="token punctuation">,</span> <span class="token class-name">GatewayFilterChain</span> chain<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"********************进入自定义网关全局过滤器，time:"</span><span class="token operator">+</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> wanyi <span class="token operator">=</span> exchange<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getQueryParams</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getFirst</span><span class="token punctuation">(</span><span class="token string">"wanyi"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">Objects</span><span class="token punctuation">.</span><span class="token function">isNull</span><span class="token punctuation">(</span>wanyi<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"wanyi为null，不允许进入系统"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            exchange<span class="token punctuation">.</span><span class="token function">getResponse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setStatusCode</span><span class="token punctuation">(</span><span class="token class-name">HttpStatus</span><span class="token punctuation">.</span>UNAUTHORIZED<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//返回状态码401，表示未登录</span>
+            <span class="token keyword">return</span> exchange<span class="token punctuation">.</span><span class="token function">getResponse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setComplete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> chain<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>exchange<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//请求放行，执行下一个过滤器</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+</li>
+<li><p>再来看看Gateway中是如何配置跨域的吧</p>
+<pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">cloud</span><span class="token punctuation">:</span>
+    <span class="token key atrule">gateway</span><span class="token punctuation">:</span>
+      <span class="token comment"># 。。。</span>
+      <span class="token key atrule">globalcors</span><span class="token punctuation">:</span> <span class="token comment"># 全局的跨域处理</span>
+        <span class="token key atrule">add-to-simple-url-handler-mapping</span><span class="token punctuation">:</span> <span class="token boolean important">true</span> <span class="token comment"># 解决options请求被拦截问题</span>
+        <span class="token key atrule">corsConfigurations</span><span class="token punctuation">:</span>
+          <span class="token key atrule">'[/**]'</span><span class="token punctuation">:</span>
+            <span class="token key atrule">allowedOrigins</span><span class="token punctuation">:</span> <span class="token comment"># 允许哪些网站的跨域请求 </span>
+              <span class="token punctuation">-</span> <span class="token string">"http://localhost:8090"</span>
+            <span class="token key atrule">allowedMethods</span><span class="token punctuation">:</span> <span class="token comment"># 允许的跨域ajax的请求方式</span>
+              <span class="token punctuation">-</span> <span class="token string">"GET"</span>
+              <span class="token punctuation">-</span> <span class="token string">"POST"</span>
+              <span class="token punctuation">-</span> <span class="token string">"DELETE"</span>
+              <span class="token punctuation">-</span> <span class="token string">"PUT"</span>
+              <span class="token punctuation">-</span> <span class="token string">"OPTIONS"</span>
+            <span class="token key atrule">allowedHeaders</span><span class="token punctuation">:</span> <span class="token string">"*"</span> <span class="token comment"># 允许在请求中携带的头信息</span>
+            <span class="token key atrule">allowCredentials</span><span class="token punctuation">:</span> <span class="token boolean important">true</span> <span class="token comment"># 是否允许携带cookie</span>
+            <span class="token key atrule">maxAge</span><span class="token punctuation">:</span> <span class="token number">360000</span> <span class="token comment"># 这次跨域检测的有效期</span></code></pre>
+
+<p>当然你也可以通过编码方式实现跨域，例如自定义过滤器解决跨域</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CorsConfig</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">CorsWebFilter</span> <span class="token function">corsFilter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">CorsConfiguration</span> config <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CorsConfiguration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        config<span class="token punctuation">.</span><span class="token function">addAllowedMethod</span><span class="token punctuation">(</span><span class="token string">"*"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        config<span class="token punctuation">.</span><span class="token function">addAllowedOrigin</span><span class="token punctuation">(</span><span class="token string">"*"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        config<span class="token punctuation">.</span><span class="token function">addAllowedHeader</span><span class="token punctuation">(</span><span class="token string">"*"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">UrlBasedCorsConfigurationSource</span> source <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UrlBasedCorsConfigurationSource</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PathPatternParser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        source<span class="token punctuation">.</span><span class="token function">registerCorsConfiguration</span><span class="token punctuation">(</span><span class="token string">"/**"</span><span class="token punctuation">,</span> config<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">CorsWebFilter</span><span class="token punctuation">(</span>source<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre></li>
+</ul>
+<p>最后是各个大佬的文章，网关还有很多限流，鉴权等等操作，没接触过，就不乱写了，看下大佬博客</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/98f7e61a2148">Gateway基本介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fb60a8c75892">Gateway内置的过滤器工厂</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/db0d6bbfdadc">Gateway内置的断言工厂</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/42fdb9bd6949">Gateway扩展</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Courage129/p/14446586.html">常见网关对比</a></li>
+</ul>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">一分也是爱~~</div><div id="qr" style="display:none;"><div style="display:inline-block"><a target="_blank" rel="noopener" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/alipay.jpg"><img loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/alipay.jpg" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-alipay-line"></use></svg></span></div></div><div style="display:inline-block"><a target="_blank" rel="noopener" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/wechatpay.jpg"><img loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/wechatpay.jpg" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-wechat-pay-line"></use></svg></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>NicknamedCoco</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://www.keyi.world/2021/10/28/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BOpenFeign,Hystrix,Gateway%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" title="SpringCloud学习之OpenFeign,Hystrix,Gateway的基本使用">http://www.keyi.world/2021/10/28/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BOpenFeign,Hystrix,Gateway%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2021/11/01/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BDocker,RabbitMQ%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" rel="prev" title="SpringCloud学习之Docker,RabbitMQ的基本使用"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">SpringCloud学习之Docker,RabbitMQ的基本使用</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2021/10/22/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/" rel="next" title="SpringCloud学习之服务注册中心"><span class="post-nav-text">SpringCloud学习之服务注册中心</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>欢迎留下你的脚印~</span><br></div><div id="valine-container"></div><script type="module">import { getScript } from '/js/utils.js'
+getScript("https://fastly.jsdelivr.net/npm/valine@latest/dist/Valine.min.js", () => {
+  const valineConfig = {"enable":true,"appId":"zA6Qu4BTu9vaBgJ7esJjdzLz-gzGzoHsz","appKey":"gK7g8TcCnAg4X8fJ3pYHr7Yw","placeholder":"大佬求指教&nbsp_(:з」∠)_ （填写邮箱可以收到回复通知～）","avatar":null,"pageSize":10,"visitor":true,"highlight":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"emojiCDN":"//i0.hdslb.com/bfs/emote/","emojiMaps":{"tv_doge":"6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png","tv_亲亲":"a8111ad55953ef5e3be3327ef94eb4a39d535d06.png","tv_偷笑":"bb690d4107620f1c15cff29509db529a73aee261.png","tv_再见":"180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png","tv_冷漠":"b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png","tv_发怒":"34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png","tv_发财":"34db290afd2963723c6eb3c4560667db7253a21a.png","tv_可爱":"9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png","tv_吐血":"09dd16a7aa59b77baa1155d47484409624470c77.png","tv_呆":"fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png","tv_呕吐":"9f996894a39e282ccf5e66856af49483f81870f3.png","tv_困":"241ee304e44c0af029adceb294399391e4737ef2.png","tv_坏笑":"1f0b87f731a671079842116e0991c91c2c88645a.png","tv_大佬":"093c1e2c490161aca397afc45573c877cdead616.png","tv_大哭":"23269aeb35f99daee28dda129676f6e9ea87934f.png","tv_委屈":"d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png","tv_害羞":"a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png","tv_尴尬":"7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png","tv_微笑":"70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png","tv_思考":"90cf159733e558137ed20aa04d09964436f618a1.png","tv_惊吓":"0d15c7e2ee58e935adc6a7193ee042388adc22af.png","tv_打脸":"56ab10b624063e966bfcb76ea5dc4794d87dfd47.png","tv_抓狂":"fe31c08edad661d63762b04e17b8d5ae3c71a757.png","tv_抠鼻":"c666f55e88d471e51bbd9fab9bb308110824a6eb.png","tv_斜眼笑":"911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png","tv_无奈":"ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png","tv_晕":"5443c22b4d07fb1907ccc610c8e6db254f2461b7.png","tv_流汗":"cead1c351ab8d79e9f369605beb90148db0fbed3.png","tv_流泪":"7e71cde7858f0cd50d74b0264aa26db612a8a167.png","tv_流鼻血":"c32d39db2737f89b904ca32700d140a9241b0767.png","tv_点赞":"f85c354995bd99e28fc76c869bfe42ba6438eff4.png","tv_生气":"26702dcafdab5e8225b43ffd23c94ac1ff932654.png","tv_生病":"8b0ec90e6b86771092a498c54f09fc94621c1900.png","tv_疑问":"0793d949b18d7be716078349c202c15ff166f314.png","tv_白眼":"c1d59f439e379ee50eef488bcb5e5378e5044ea4.png","tv_皱眉":"72ccad6679fea0d14cce648b4d818e09b8ffea2d.png","tv_目瞪口呆":"0b8cb81a68de5d5365212c99375e7ace3e7891b7.png","tv_睡着":"8b196675b53af58264f383c50ad0945048290b33.png","tv_笑哭":"1abc628f6d4f4caf9d0e7800878f4697abbc8273.png","tv_腼腆":"89712c0d4af73e67f89e35cbc518420380a7f6f4.png","tv_色":"61822c7e9aae5da76475e7892534545336b23a6f.png","tv_调侃":"4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png","tv_调皮":"b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png","tv_鄙视":"6e72339f346a692a495b123174b49e4e8e781303.png","tv_闭嘴":"c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png","tv_难过":"87f46748d3f142ebc6586ff58860d0e2fc8263ba.png","tv_馋":"fc7e829b845c43c623c8b490ee3602b7f0e76a31.png","tv_鬼脸":"0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png","tv_黑人问号":"45821a01f51bc867da9edbaa2e070410819a95b2.png","tv_鼓掌":"1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"},"el":"#valine-container","lang":"zh-cn"}
+  valineConfig.path = "/2021/10/28/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BOpenFeign,Hystrix,Gateway%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/"
+  new Valine(valineConfig)
+}, window.Valine);</script></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2022 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> NicknamedCoco</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.9.3</span></div><div class="live-time"><span>本博客已萌萌哒地运行</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
+  setTimeout(blog_live_time, 1000);
+  const start = new Date('2020-09-22T00:00:00');
+  const now = new Date();
+  const timeDiff = (now.getTime() - start.getTime());
+  const msPerMinute = 60 * 1000;
+  const msPerHour = 60 * msPerMinute;
+  const msPerDay = 24 * msPerHour;
+  const passDay = Math.floor(timeDiff / msPerDay);
+  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
+  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
+  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
+  display_live_time.innerHTML = ` ${passDay} 天 ${passHour} 小时 ${passMinute} 分 ${passSecond} 秒`;
+}
+blog_live_time();
+</script></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><a class="popup-trigger hty-icon-button icon-search" id="search" href="javascript:;" title="搜索"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-search-line"></use></svg></span></a><script>window.addEventListener("DOMContentLoaded", () => {
+  // Handle and trigger popup window
+  document.querySelector(".popup-trigger").addEventListener("click", () => {
+    document.querySelector(".popup").classList.add("show");
+    setTimeout(() => {
+      document.querySelector(".search-input").focus();
+    }, 100);
+  });
+
+  // Monitor main search box
+  const onPopupClose = () => {
+    document.querySelector(".popup").classList.remove("show");
+  };
+
+  document.querySelector(".popup-btn-close").addEventListener("click", () => {
+    onPopupClose();
+  });
+
+  window.addEventListener("keyup", event => {
+    if (event.key === "Escape") {
+      onPopupClose();
+    }
+  });
+});
+</script><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/search/local-search.js" defer type="module"></script><div class="popup search-popup"><div class="search-header"><span class="popup-btn-close close-icon hty-icon-button"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close-line"></use></svg></span></div><div class="search-input-container"><input class="search-input" id="local-search-input" type="text" placeholder="搜索..." value=""></div><div id="local-search-result"></div></div></div></body></html>

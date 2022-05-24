@@ -1,0 +1,632 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="NicknamedCoco"><meta name="copyright" content="NicknamedCoco"><meta name="generator" content="Hexo 6.2.0"><meta name="theme" content="hexo-theme-yun"><title>Vue学习之Vuex篇 | CocoBlog</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.3.3/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="//at.alicdn.com/t/font_1140697_dxory92pb0h.js" async></script><script src="https://fastly.jsdelivr.net/npm/@unocss/runtime/mini.global.js"></script><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/png" href="/images/keyi.ico"><link rel="mask-icon" href="/images/keyi.ico" color="#0078E7"><link rel="preload" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"www.keyi.world","root":"/","title":["Coco","Coding"],"version":"1.9.3","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"local_search":{"path":"/search.xml"},"fireworks":{"colors":null},"vendors":{"darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="简述  欢迎来到新的篇章，Vuex，Vuex是一个专为vue应用程序开发的状态管理工具，和vue-router一样是vue的插件看到状态管理，你可能会想到vue-router篇中的keep-alive，好像也是用来状态管理。这里解释一下两者的区别： keep-alive是组件对象本身的状态管理，是当我点击按钮，路径跳转，切换组件时，原有的组件对象仍然存在 我切换回去的时候，vue不会去重新创建新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue学习之Vuex篇">
+<meta property="og:url" content="http://www.keyi.world/2021/09/11/Vue%E5%AD%A6%E4%B9%A0%E4%B9%8BVuex%E7%AF%87/index.html">
+<meta property="og:site_name" content="CocoBlog">
+<meta property="og:description" content="简述  欢迎来到新的篇章，Vuex，Vuex是一个专为vue应用程序开发的状态管理工具，和vue-router一样是vue的插件看到状态管理，你可能会想到vue-router篇中的keep-alive，好像也是用来状态管理。这里解释一下两者的区别： keep-alive是组件对象本身的状态管理，是当我点击按钮，路径跳转，切换组件时，原有的组件对象仍然存在 我切换回去的时候，vue不会去重新创建新">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/vue/vuex.png">
+<meta property="article:published_time" content="2021-09-11T02:56:25.000Z">
+<meta property="article:modified_time" content="2021-10-08T02:46:01.207Z">
+<meta property="article:author" content="NicknamedCoco">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/vue/vuex.png"><script>(function() {
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script></head><body><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button sidebar-nav-active" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel sidebar-panel-active" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="NicknamedCoco"><img width="96" loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/images/keyi.jpg" alt="NicknamedCoco"></a><div class="site-author-name"><a href="/about/">NicknamedCoco</a></div><a class="site-name" href="/about/site.html">CocoBlog</a><sub class="site-subtitle">OneForAll</sub><div class="site-description">寻找自己的价值，才是生命的意义</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="我的主页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">113</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">8</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">66</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://wpa.qq.com/msgrd?v=3&amp;uin=506579631&amp;site=qq&amp;menu=yes" title="QQ" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/NicknamedCoco" title="GitHub" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://www.zhihu.com/people/NicknamedCoco/" title="知乎" target="_blank" style="color:#0084FF"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhihu-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://twitter.com/OneDayInAug" title="Twitter" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-twitter-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content">此文章未包含目录</div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://www.keyi.world/2021/09/11/Vue%E5%AD%A6%E4%B9%A0%E4%B9%8BVuex%E7%AF%87/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="NicknamedCoco"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="CocoBlog"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Vue学习之Vuex篇</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2021-09-11 10:56:25" itemprop="dateCreated datePublished" datetime="2021-09-11T10:56:25+08:00">2021-09-11</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-2-line"></use></svg></span> <time title="修改时间：2021-10-08 10:46:01" itemprop="dateModified" datetime="2021-10-08T10:46:01+08:00">2021-10-08</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">5.5k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">22m</span></span></span><span class="leancloud_visitors" id="/2021/09/11/Vue%E5%AD%A6%E4%B9%A0%E4%B9%8BVuex%E7%AF%87/" data-flag-title="Vue学习之Vuex篇"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-tag"><a class="tag-item" href="/tags/vue/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">vue</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><blockquote>
+<p>简述</p>
+</blockquote>
+<p>欢迎来到新的篇章，Vuex，Vuex是一个专为vue应用程序开发的状态管理工具，和vue-router一样是vue的插件<br>看到状态管理，你可能会想到vue-router篇中的keep-alive，好像也是用来状态管理。<br>这里解释一下两者的区别：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript">keep<span class="token operator">-</span>alive是组件对象本身的状态管理，是当我点击按钮，路径跳转，切换组件时，原有的组件对象仍然存在
+我切换回去的时候，vue不会去重新创建新的组件对象，而是使用原来的那个组件对象，这就是为什么当我使用了
+keep<span class="token operator">-</span>alive包裹住router<span class="token operator">-</span>view后，组件的created和destroy钩子函数失效，因为这两个钩子函数就表示vue组件
+创建和销毁，使用了keep<span class="token operator">-</span>alive后，切换组件执行的是activated和deactivated钩子函数。
+
+而Vuex的状态管理，我们可以简单的将其看成把需要多个组件共享的变量全部存储在一个对象里面，
+然后将这个对象放在顶层的vue实例中，让其他组件可以使用，那么多个组件就可以共享这个对象中的所有变量方法了。
+你可能想到了vue的原型对象，但是vue的原型对象虽然能做到组件间变量方法共享，但是我们还需要这些变量和方法
+是响应式的，当某个组件修改了共享变量或方法时，其他组件引用的共享变量或方法及时更新，但是使用vue原型对象
+却不能做到响应式，所以vuex就出现了，解决多个组件之间共享变量和方法，并且这些变量和方法是响应式的。</code></pre>
+
+<p>那么，有什么状态需要我们在多个组件间共享的呢？</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript">比如用户的登录状态，用户名称，头像，地理位置信息等等，比如商品的收藏，购物车中的物品等等，
+这些状态信息，我们都可以放在统一的地方<span class="token punctuation">,</span>对它进行保存和管理，而且它们还是响应式的</code></pre>
+
+<p>下面看看Vuex具体需要学习哪些内容：</p>
+<ul>
+<li><a href="#a">Vuex基本使用</a></li>
+<li><a href="#b">Vuex核心概念</a></li>
+<li><a href="#c">Vuex的文件组织</a></li>
+<li><a href="#d">mapState,mapGetter等的使用</a></li>
+</ul>
+<blockquote>
+<p><span id="a">Vuex基本使用</span></p>
+</blockquote>
+<ul>
+<li><p>安装Vuex，和router一样，安装好插件后，在项目的src目录下创建store目录，并在其中创建index.js作为<br>Vuex的配置文件，下面是该配置文件的具体内容：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript">npm install vuex <span class="token operator">-</span><span class="token constant">S</span>		<span class="token comment">//-S就等于--save,表示运行依赖，简写而已，同样的-D是--save-dev的简写</span>
+
+<span class="token comment">//store/index.js</span>
+<span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">import</span> Vuex <span class="token keyword">from</span> <span class="token string">'vuex'</span>
+
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Vuex<span class="token punctuation">)</span>	<span class="token comment">//注册插件</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  <span class="token literal-property property">state</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">mutations</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">actions</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">modules</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">getters</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
+</li>
+<li><p>然后在入口函数main.js中的vue实例中挂载即可，下面是main.js具体内容</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">import</span> App <span class="token keyword">from</span> <span class="token string">'./App.vue'</span>
+<span class="token keyword">import</span> router <span class="token keyword">from</span> <span class="token string">'./router'</span>
+<span class="token keyword">import</span> store <span class="token keyword">from</span> <span class="token string">'./store'</span>
+<span class="token comment">/*
+    阻止启动生产消息,没有这句，如果是开发时打包启动程序，会打印大量消息，
+    所以开发时关闭该选项，生成模式时再打开
+*/</span>
+Vue<span class="token punctuation">.</span>config<span class="token punctuation">.</span>productionTip <span class="token operator">=</span> <span class="token boolean">false</span>
+<span class="token comment">/*
+	把router，store传递到vue实例中，
+    则相当于Vue.prototype.$store=store
+    Vue.prototype.$router=router
+*/</span>
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    router<span class="token punctuation">,</span>
+    store<span class="token punctuation">,</span>
+    <span class="token function-variable function">render</span><span class="token operator">:</span> <span class="token parameter">h</span> <span class="token operator">=></span> <span class="token function">h</span><span class="token punctuation">(</span>App<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">$mount</span><span class="token punctuation">(</span><span class="token string">'#app'</span><span class="token punctuation">)</span>
+<span class="token comment">/*
+	上面相当于：createApp(App).use(store).use(router).$mount('#app')
+*/</span></code></pre>
+</li>
+<li><p>上面是Vuex的基本框架，我们把组件中共同的变量方法抽取到一个对象中，那么在Vuex中，<br>这个对象就是在index.js配置文件中导出Vuex实例的参数，这个参数是就是存放共同变量和方法的对象<br>这个对象中，有很多属性，state，mutations，modules，getters等等，其中state属性就是存放共享变量的<br>下面就举个栗子：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//假设现在，我的app.vue和helloVuex.vue有相同的变量，我们可以把共享变量放在store的state中</span>
+<span class="token comment">//只需要在state中增加变量即可</span>
+<span class="token literal-property property">state</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+	<span class="token literal-property property">count</span><span class="token operator">:</span> <span class="token number">999</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/*
+	那么在app.vue和helloVuex.vue中通过&#123;&#123;$store.state.count&#125;&#125;就可以访问到这个变量
+	如果是组件对象的方法访问，则需要加上this，发现是不是跟vue-router取值$router方式很像？
+	可以肯定，当Vuex挂载到vue实例中后，会有一句Vue.prototype.$store=store，
+	所以我们在其他组件就能使用$store获取共享变量
+*/</span></code></pre></li>
+</ul>
+<blockquote>
+<p><span id="b">Vuex核心概念</span></p>
+</blockquote>
+<p>Vuex核心概念主要就是讲讲存放共享变量和方法的对象属性的，state，mutations，modules，getters这些属性<br>有哪些作用及其使用，让我们开始吧：</p>
+<ul>
+<li><p>state<br>上面简单的案例中使用过，state就是存放共享变量的，除此之外，Vuex提出单一状态树的概念<br>意思是在Vuex配置文件store&#x2F;index.js中，只创建一个Vuex实例，例如下面的代码：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  <span class="token literal-property property">state</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">mutations</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">actions</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">modules</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">getters</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">/*
+	推荐只创建一个Vuex对象(store)，项目中所有共享变量都放在这个对象的state，而不是创建多个Vuex实例，
+	把共享变量分开存放到不同的state，这样做的好处是方便项目的管理和维护。
+*/</span></code></pre>
+</li>
+<li><p>mutations<br>mutations用于修改state中的变量的，我们在app.vue和helloVuex.vue中通过<code>$store.state.count</code>可以<br>访问的到共享变量count，你可能会通过<code>$store.state.count++</code>的方式使得共享变量+1，但是这种修改共享<br>变量的方式并不推荐，mutations是唯一能够修改state变量的方式，如果想要修改共享变量，你需要在<br>mutations中定义方法，然后在组件中去调用mutations中的方法，达到修改共享变量的目的，下面是具体代码：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//store/index.js，vuex配置文件</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  <span class="token literal-property property">state</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token literal-property property">count</span><span class="token operator">:</span> <span class="token number">999</span>	<span class="token comment">//共享变量</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">mutations</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">increment</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        state<span class="token punctuation">.</span>count<span class="token operator">++</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token function">decrement</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+          state<span class="token punctuation">.</span>count<span class="token operator">--</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token function">become100</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span>data</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>	<span class="token comment">//data接收组件传递过来的数据</span>
+          state<span class="token punctuation">.</span>count<span class="token operator">=</span>data<span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">actions</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">modules</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">getters</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">//在HelloVuex组件中使用mutatios的方法</span>
+<span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"add"</span><span class="token operator">></span><span class="token operator">+</span><span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+<span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"jian"</span><span class="token operator">></span><span class="token operator">-</span><span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+<span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"become100"</span><span class="token operator">></span>将共享变量变成<span class="token number">100</span><span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+<span class="token operator">&lt;</span>script<span class="token operator">></span>
+  <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">"HelloVuex"</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">methods</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">become100</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'become100'</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">)</span>	<span class="token comment">//调用mutations中become100方法并传递数据100</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token function">add</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">"increment"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//调用mutations中的increment方法</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      <span class="token function">jian</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">"decrement"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span>
+<span class="token comment">/*
+	在mutations中定义好修改state的方法，在组件中通过$store的commit方法调用mutations中的方法
+	如果你想在组件中传递数据到mutations中的方法，可以在mutations方法中增加一个data参数
+	用于接收组件传递过来的数据，这个参数被称为mutations的载荷(payLoad)，参数名随意
+	而参数state就是state属性值，可以拿到所有的共享变量。
+*/</span></code></pre>
+
+<p>mutations中有几处需要说明的地方</p>
+<ul>
+<li><p>mutations的提交方式<br>除了使用<code>this.$store.commit(&#39;become100&#39;,100)</code>方式调用mutations中的方法传递数据，<br>你还可以传递一个对象来调用mutations中的方法和传递数据，例如：<br><code>this.$store.commit(&#123;type: &#39;become100&#39;,count: 100&#125;)</code>，两种提交方式的区别是：<br>如果是第一种方式，则mutations方法的data参数是实际的数据，即100<br>如果是传递对象的方式提交，则mutations方法的data参数是你传递的对象，你想获取count数据<br>需要<code>data.count</code>才能拿到，例如下面这样：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">become100</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span>data</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>  <span class="token comment">//这个data就代表你传递的对象,即&#123;type: 'become100',count: 100&#125;</span>
+    state<span class="token punctuation">.</span>count<span class="token operator">=</span>data<span class="token punctuation">.</span>count<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+</li>
+<li><p>mutations响应规则<br>响应规则你需要遵守一定规则，才能使得数据state中共享变量数据被更改后，界面上也跟着更改，<br>即，遵守一定规则才能使得数据是响应式的：</p>
+<pre class="language-jav" data-language="jav"><code class="language-jav">1)提前在store中初始化好所需的属性，如果在mutations方法中新增共享变量，则也不是响应式的
+2)当给state中的对象(状态)添加新属性时，使用下面的方式
+	方式一：使用Vue.set(obj,&#39;newProp&#39;,123)，(如果是后来新添加的属性使用该方法，不然数据不会被响应到界面中)
+		obj.newProp&#x3D;123,这种方式，不是响应式的！！！即数据改变了，但是界面上不能响应
+	方式二：用新对象给旧对象重新赋值
+3)如果是删除对象属性，不能使用delete obj.oldProp，这种也不是响应式的删除对象属性的方法
+	你需要使用：Vue.delete(obj,&#39;oldProp&#39;)</code></pre>
+
+<p>之前提到，修改数组不能直接通过<code>arr[0]=100</code>这种方式修改数组中数据，这种方式不是响应式的，<br>其实这里的规则同样是vue中修改数据的规则</p>
+</li>
+<li><p>mutations常量类型<br>mutations可以被分为两部分：字符串的事件类型(type),一个回调函数，该回调函数的第一个参数就是state，如下所示：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token literal-property property">mutations</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//increment是事件类型(跟我们熟悉的事件没关系)，后面的部分就是回调函数了</span>
+    <span class="token function">increment</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        state<span class="token punctuation">.</span>count<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p>在mutations中，我们定义了很多事件类型(也就是mutations的方法名)，当mutations中方法越来越多时，<br>使用者需要花费大量的精力去记住这些方法，并且还可能敲错，我们可以将这些事件类型定义为常量，放到一个文件中<br>然后再在Vuex配置文件中引用这个常量，如下所示：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">increment</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    state<span class="token punctuation">.</span>count<span class="token operator">++</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+变成
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span><span class="token constant">INCREMENT</span><span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'./xxx/xxx.js'</span>
+<span class="token punctuation">[</span><span class="token constant">INCREMENT</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    state<span class="token punctuation">.</span>count<span class="token operator">++</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">//不过我感觉更加麻烦了，不知道实际开发中有没有用</span></code></pre></li>
+</ul>
+<p>最后说下，为什么一定要调用mutations方法才能更改state属性，而不直接引用state中变量进行修改<br>这里有一张Vuex状态管理图片，有时候我们需要查看是哪个组件修改了共享变量，如果直接修改state中共享<br>变量，则我们根本不知道哪个组件修改了，而如果我们使用mutations方法修改共享变量，那么通过浏览器<br>的devtools插件就能查看到是哪个组件修改了共享变量。<br><img src="https://cdn.jsdelivr.net/gh/NicknamedCoco/cdn/blog/vue/vuex.png" loading="lazy"></p>
+</li>
+<li><p>getters<br>类似计算属性,如果数据是组件自己的数据，并且这个数据要经过一些处理才能输出到页面，则要使用计算属性<br>当这个数据是共享变量时，就使用getters,对了，计算属性有缓存，这个getters大概率也是有缓存的<br>来看下具体使用代码：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//index.js,vuex配置文件中</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  <span class="token literal-property property">state</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">count</span><span class="token operator">:</span> <span class="token number">999</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">mutations</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">increment</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        state<span class="token punctuation">.</span>count<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">decrement</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      state<span class="token punctuation">.</span>count<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">become100</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span>data</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      state<span class="token punctuation">.</span>count<span class="token operator">=</span>data<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">getters</span><span class="token operator">:</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">//将count相乘</span>
+    <span class="token function">toDouble</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">.</span>count<span class="token operator">*</span>state<span class="token punctuation">.</span>count
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token comment">//将相乘的数再加100</span>
+    <span class="token function">toDoubleAnd100</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span>getter</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>	<span class="token comment">//通过getter参数可以调用其他getter方法</span>
+      <span class="token keyword">return</span> getter<span class="token punctuation">.</span>toDouble<span class="token operator">+</span><span class="token number">520</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token comment">//拿到state中的count的值，将该值与调用的值相加，即创建个闭包</span>
+    <span class="token function">addYouValue</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> state<span class="token punctuation">.</span>count<span class="token operator">+</span>value
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">//HelloVuex.vue中使用</span>
+<span class="token operator">&lt;</span>h2<span class="token operator">></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>getters<span class="token punctuation">.</span>toDouble<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">></span>
+<span class="token operator">&lt;</span>h2<span class="token operator">></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>getters<span class="token punctuation">.</span>toDoubleAnd100<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">></span>
+<span class="token operator">&lt;</span>h2<span class="token operator">></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>getters<span class="token punctuation">.</span><span class="token function">addYouValue</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">></span></code></pre>
+
+<p>在使用getters有两个需要注意的地方：</p>
+<ul>
+<li>上面例子中，getters方法可以有两个参数，第一个state参数，拿到共享变量，第二个getters则是getters<br>属性值，通过这个getters参数可以使用其他getter方法</li>
+<li>getters方法可以返回函数，即闭包，而返回的函数的参数，则可以由外界控制，就像上面例子的addYouValue方法一样，<br>通过<code>$store.getters.addYouValue</code>拿到闭包，然后使用(-5)，去调用这个闭包。<br>可以想象，既然store的getters可以使用闭包，那么计算属性可以创建闭包，<br>利用了计算属性的调用不需要括号的特性，此时如果带上括号，则就是闭包的使用</li>
+</ul>
+</li>
+<li><p>actions<br>通常情况下，vuex要求我们mutations中的方法必须是同步方法，主要原因是当我们使用devtools时，<br>devtools可以帮助我们捕捉mutations的快照，但是如果是异步操作，那么devtools将不能很好的追踪<br>这个操作什么时候会被完成，actions就是专门处理异步请求的地方。<br>actions方法与mutations方法，一个是执行异步操作的地方，一个是执行同步操作的地方，<br>在使用上还有很多差别，让我们来看看具体有哪些不同：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token number">1</span><span class="token punctuation">)</span>action方法中的方法参数是context，而mutations中方法参数是state，context指的是store对象，
+	同样的，action的方法参数也可以有两个，用于接收使用者传递的参数，这和mutations类似
+<span class="token number">2</span><span class="token punctuation">)</span>action方法中不能修改state中的共享变量，只能通过调用mutations中的方法修改变量，
+	context<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'mutations中的方法'</span><span class="token punctuation">)</span>	<span class="token comment">//就像$store.commit()一样</span>
+<span class="token number">3</span><span class="token punctuation">)</span>使用者在调用action中方法时：<span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span><span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token string">'action中方法名'</span><span class="token punctuation">,</span><span class="token string">'携带的信息'</span><span class="token punctuation">)</span>，
+	而mutations使用的是$store<span class="token punctuation">.</span>commit方法调用
+<span class="token number">4</span><span class="token punctuation">)</span>action方法中的异步操作可以返回Promise对象，如果使用了promise，使用者在调用action方法时
+	可以跟上<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">)</span>方法，这个then方法可以用来判断异步操作是否成功。</code></pre>
+
+<p>下面是一个使用actions的案例：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// store/index.js，Vuex配置文件</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  <span class="token literal-property property">state</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">count</span><span class="token operator">:</span> <span class="token number">999</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">mutations</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">increment</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        state<span class="token punctuation">.</span>count<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">actions</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">asyncTest</span><span class="token punctuation">(</span><span class="token parameter">context<span class="token punctuation">,</span>message</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token parameter">resolve</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>	 <span class="token comment">//创建一个Promise，这个对象会在下一篇axios重点讲</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>	<span class="token comment">//定时器，模拟异步操作</span>
+          console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          context<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'increment'</span><span class="token punctuation">)</span>	<span class="token comment">//调用mutations的increment方法</span>
+          <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">"异步操作完成"</span><span class="token punctuation">)</span>	 <span class="token comment">//调用resolve会去执行promise的then方法</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">//组件内，使用action中方法</span>
+<span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"asyncTest"</span><span class="token operator">></span>测试异步<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+<span class="token literal-property property">methods</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">asyncTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>$store
+        <span class="token punctuation">.</span><span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token string">'asyncTest'</span><span class="token punctuation">,</span><span class="token string">"正在执行异步操作"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+        	console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">/*
+	点击按钮，执行asyncTest方法，其中使用$store.dispatch执行actions中的asyncTest方法
+	并向该方法中传递参数，这个方法返回一个promise对象，执行定时器后，调用mutations中increment方法
+	接着执行resolve并传递参数，这个方法实际上执行的是组件中then方法;
+*/</span></code></pre>
+</li>
+<li><p>modules<br>当应用变得非常复杂时，store对象就有可能变得相当臃肿，为了解决这个问题，vuex允许我们将store分割成模块<br>而每个模块拥有自己的state,mutations，actions，getters，但是呢，模块中定义的state，使用者在使用时还是有些区别的</p>
+<pre class="language-java" data-language="java"><code class="language-java">没有使用模块，取值时：$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>name
+使用了模块<span class="token operator">:</span>
+	<span class="token comment">//index.js，vuex配置，在store实例的module中定义a模块</span>
+    modules<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        a<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            state<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+                name<span class="token operator">:</span> <span class="token char">'万一'</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+	<span class="token comment">//使用者取值时,需要选择哪个模块</span>
+	<span class="token generics"><span class="token punctuation">&lt;</span>h2<span class="token punctuation">></span></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>a<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">></span>，</code></pre>
+
+<p>另外模块中的getters，actions和外部的getters，actions方法还是有些区别的：</p>
+<pre class="language-none"><code class="language-none">1)模块中的getters还可以接收第三个参数，这个参数是外部的state，你可以给这个参数取名为rootState，
+	表示模块中能拿到store实例的state中的共享变量
+2)模块中actions的context参数调用commit方法只能调用模块内的mutations，
+	而不能调用外部的mutations中的方法，但是模块中actions的context中可以拿到RootGetters,RootState
+	表示可以调用外部的state的共享变量和getters中的方法。</code></pre></li>
+</ul>
+<blockquote>
+<p><span id="c">Vuex的文件组织</span></p>
+</blockquote>
+<p>目前我们的配置全是放在store中的index.js中，我们可以将store实例中的getter，actions，modules，mutations全部抽离出来<br>放在src&#x2F;store目录下，除了state不抽取成js文件外，其他配置全部抽取成js文件，使用es6的导入导出配置，<br>需要注意的是抽取的modules可能会有很多个，所以抽取的modules最好放在<code>store/modules/moduleA.js</code><br>创建个modules目录放在其中最好。</p>
+<p>2021年10月3日更新，看了尚硅谷的vue网课，感觉天禹老师讲的太好了，<br>关于vuex的模块化，请点击链接：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Zy4y1K7SH">尚硅谷vue网课</a>，P115，P116两节。</p>
+<blockquote>
+<p><span id="d">mapState,mapGetter等的使用</span></p>
+</blockquote>
+<p>vuex提供了四个函数可以帮我们简化代码的编写，分别是mapState,mapGetters,mapMutations,mapActions<br>通过练习，我感觉使用这些函数的作用相当于将共享对象中的state，getters等方法，数据都导入组件中，<br>实际上是根据共享变量中的state，getters等属性生成新的函数绑定到组件上，简化了代码编写，不使用vuex<br>提供的函数依然可以实现功能，这个在接下来的案例中你可以感受一下：</p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//App.vue</span>
+<span class="token operator">&lt;</span>template<span class="token operator">></span>
+  <span class="token operator">&lt;</span>div id<span class="token operator">=</span><span class="token string">"app"</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span>wan<span class="token operator">-</span>yi<span class="token operator">/</span><span class="token operator">></span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span>
+<span class="token operator">&lt;</span>script<span class="token operator">></span>
+  <span class="token keyword">import</span> WanYi <span class="token keyword">from</span> <span class="token string">'./components/WanYi'</span><span class="token punctuation">;</span>
+  <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span>
+      <span class="token literal-property property">components</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        WanYi<span class="token punctuation">,</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span>
+
+<span class="token comment">//axios/index.js</span>
+<span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span>
+<span class="token keyword">import</span> Vuex <span class="token keyword">from</span> <span class="token string">'vuex'</span>
+
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Vuex<span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  <span class="token comment">/*共享对象中的数据*/</span>
+  <span class="token literal-property property">state</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token literal-property property">msg</span><span class="token operator">:</span> <span class="token string">'万一梦想实现了呢？'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">school</span><span class="token operator">:</span> <span class="token string">'湖北师范大学'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">address</span><span class="token operator">:</span> <span class="token string">'湖北黄石'</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token comment">/*共享对象中更改数据*/</span>
+  <span class="token literal-property property">mutations</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">changeMsg</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span>data</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      state<span class="token punctuation">.</span>msg<span class="token operator">=</span>data
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">changeSchool</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span>data</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      state<span class="token punctuation">.</span>school<span class="token operator">=</span>data
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">changeAddress</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span>data</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      state<span class="token punctuation">.</span>address<span class="token operator">=</span>data
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token comment">/*共享对象中的计算属性*/</span>
+  <span class="token literal-property property">getters</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">getter1</span><span class="token punctuation">(</span><span class="token parameter">state</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token string">"中国-"</span><span class="token operator">+</span>state<span class="token punctuation">.</span>address
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">getter2</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span>getter</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token string">"地球-"</span><span class="token operator">+</span>getter<span class="token punctuation">.</span>getter1
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">getter3</span><span class="token punctuation">(</span><span class="token parameter">state<span class="token punctuation">,</span>getter</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token string">"银河系-"</span><span class="token operator">+</span>getter<span class="token punctuation">.</span>getter2
+    <span class="token punctuation">&#125;</span>
+
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">actions</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">action1</span><span class="token punctuation">(</span><span class="token parameter">context<span class="token punctuation">,</span>data</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token parameter">resolve</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"执行异步更改msg任务。。。。"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+          context<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">"changeMsg"</span><span class="token punctuation">,</span>data<span class="token punctuation">)</span>
+          <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">"异步任务已完成"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">action2</span><span class="token punctuation">(</span><span class="token parameter">context<span class="token punctuation">,</span>data</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token parameter">resolve</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"执行异步更改school任务。。。。"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+          context<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">"changeSchool"</span><span class="token punctuation">,</span>data<span class="token punctuation">)</span>
+          <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">"异步任务已完成"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">action3</span><span class="token punctuation">(</span><span class="token parameter">context<span class="token punctuation">,</span>data</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token parameter">resolve</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"执行异步更改address任务。。。。"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+          context<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">"changeAddress"</span><span class="token punctuation">,</span>data<span class="token punctuation">)</span>
+          <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">"异步任务已完成"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+<span class="token comment">//WanYi.vue</span>
+<span class="token operator">&lt;</span>template<span class="token operator">></span>
+  <span class="token operator">&lt;</span>div<span class="token operator">></span>
+    WanYi组件内：<span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span>测试mapState<span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">*</span><span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>传统方式拿到共享对象state中的数据<span class="token operator">--</span><span class="token operator">></span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>msg<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>school<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>state<span class="token punctuation">.</span>address<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token operator">&lt;</span>br<span class="token operator">/</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>使用mapState拿到共享对象中state数据，并生成相应的对象形式，对象写法<span class="token operator">--</span><span class="token operator">></span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>msg2<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>school2<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>address2<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>mapState的数组写法使用<span class="token operator">--</span><span class="token operator">></span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>msg<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>school<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>address<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token operator">&lt;</span>br<span class="token operator">/</span><span class="token operator">></span>
+
+    <span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span>测试mapMutations<span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">*</span><span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>传统方式调用mutations中的异步方法<span class="token operator">--</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"mutationsTest1"</span><span class="token operator">></span>传统方式调用mutations中的异步方法<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+    <span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>使用mapMutations<span class="token punctuation">,</span>对象写法<span class="token operator">--</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"mutationsTest2"</span><span class="token operator">></span>mapMutations方式使用mutations<span class="token punctuation">,</span>对象形式<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+    <span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>mapMutations数组写法使用<span class="token operator">--</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"mutationsTest3"</span><span class="token operator">></span>mapMutations方式使用mutations<span class="token punctuation">,</span>数组形式<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+    <span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span>测试mapGetters<span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">*</span><span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>传统方式使用getters<span class="token operator">--</span><span class="token operator">></span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>getters<span class="token punctuation">.</span>getter2<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>$store<span class="token punctuation">.</span>getters<span class="token punctuation">.</span>getter3<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>mapGetter对象形式<span class="token operator">--</span><span class="token operator">></span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>two<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>three<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>mapGetter数组形式<span class="token operator">--</span><span class="token operator">></span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>getter2<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>getter3<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+    <span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span>测试mapActions<span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">*</span><span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>传统方式调用actions中的异步方法<span class="token operator">--</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"actionsTest1"</span><span class="token operator">></span>传统方式调用actions中的异步方法<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span><span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>mapActions使用actions中的异步方法，对象形式<span class="token operator">--</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"actionsTest2"</span><span class="token operator">></span>mapActions使用actions中的异步方法，对象形式<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span><span class="token operator">&lt;</span>br<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>mapActions使用actions中的异步方法，数组形式<span class="token operator">--</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span>button @click<span class="token operator">=</span><span class="token string">"actionsTest3"</span><span class="token operator">></span>mapActions使用actions中的异步方法，数组形式<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span><span class="token operator">&lt;</span>br<span class="token operator">></span>
+  <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">></span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span>mapState<span class="token punctuation">,</span>mapGetters<span class="token punctuation">,</span>mapActions<span class="token punctuation">,</span>mapMutations<span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'vuex'</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">"WanYi"</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">methods</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">/*传统方式使用mutations更改数据*/</span>
+    <span class="token function">mutationsTest1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'changeMsg'</span><span class="token punctuation">,</span><span class="token string">'我的梦想在哪里？'</span><span class="token punctuation">)</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'changeSchool'</span><span class="token punctuation">,</span><span class="token string">'苏州大学'</span><span class="token punctuation">)</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token string">'changeAddress'</span><span class="token punctuation">,</span><span class="token string">'浙江省'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+
+    <span class="token comment">/*mapMutations对象写法*/</span>
+    <span class="token operator">...</span><span class="token function">mapMutations</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">changeMsg2</span><span class="token operator">:</span> <span class="token string">'changeMsg'</span><span class="token punctuation">,</span><span class="token literal-property property">changeSchool2</span><span class="token operator">:</span> <span class="token string">'changeSchool'</span><span class="token punctuation">,</span><span class="token literal-property property">changeAddress2</span><span class="token operator">:</span> <span class="token string">'changeAddress'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">mutationsTest2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token comment">/*
+        这里是直接在methods中执行导入的函数，你可以在DOM中设置一个点击按钮，回调这些函数，
+        例如：&lt;button @click="changeMsg2()">&lt;/button>
+        注意：就算没有参数要传，你还是要写上(),不然会出错，因为mapMutations等函数在帮我们创建方法的时候是下面这样的
+          changeMsg2(value)&#123;
+            this.$store.commit('changeMsg',value)
+          &#125;
+        如果你使用changeMsg2的时候，没有写上(),则就会传递一个event对象作为参数，
+        所以在DOM中调用这些函数就算没有参数传递，也必须写上()
+      */</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">changeMsg2</span><span class="token punctuation">(</span><span class="token string">"我的梦想在哪里？"</span><span class="token punctuation">)</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">changeSchool2</span><span class="token punctuation">(</span><span class="token string">"苏州大学"</span><span class="token punctuation">)</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">changeAddress2</span><span class="token punctuation">(</span><span class="token string">"浙江省"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+
+    <span class="token comment">/*mapMutations数组写法，要求是：生成的方法要与共享对象中的mutations中方法名相同*/</span>
+    <span class="token operator">...</span><span class="token function">mapMutations</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'changeMsg'</span><span class="token punctuation">,</span><span class="token string">'changeSchool'</span><span class="token punctuation">,</span><span class="token string">'changeAddress'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">mutationsTest3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">changeMsg</span><span class="token punctuation">(</span><span class="token string">"学习？学个屁"</span><span class="token punctuation">)</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">changeSchool</span><span class="token punctuation">(</span><span class="token string">"家里蹲大学"</span><span class="token punctuation">)</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">changeAddress</span><span class="token punctuation">(</span><span class="token string">"银河系第三宇宙"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+
+    <span class="token comment">/*传统方式调用actions中的异步方法*/</span>
+    <span class="token function">actionsTest1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>$store<span class="token punctuation">.</span><span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token string">'action1'</span><span class="token punctuation">,</span><span class="token string">'光在哪里？'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+
+    <span class="token comment">/*mapActions方式使用actions中方法*/</span>
+    <span class="token operator">...</span><span class="token function">mapActions</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">updateSchool</span><span class="token operator">:</span><span class="token string">'action2'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">actionsTest2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">updateSchool</span><span class="token punctuation">(</span><span class="token string">"中国科学院大学"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token comment">/*mapActions方式使用actions中方法*/</span>
+    <span class="token operator">...</span><span class="token function">mapActions</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'action3'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">actionsTest3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">action3</span><span class="token punctuation">(</span><span class="token string">"彭泽县南阳村"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token operator">=></span><span class="token punctuation">&#123;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">computed</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">/*从共享变量的state中读取数据，并生成响应的计算属性，这是对象写法*/</span>
+    <span class="token operator">...</span><span class="token function">mapState</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">msg2</span><span class="token operator">:</span><span class="token string">'msg'</span><span class="token punctuation">,</span><span class="token literal-property property">school2</span><span class="token operator">:</span> <span class="token string">'school'</span><span class="token punctuation">,</span><span class="token literal-property property">address2</span><span class="token operator">:</span> <span class="token string">'address'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">/*同上，不过是数组写法，这种写法要求生成的计算属性名与state中共享变量名相同*/</span>
+    <span class="token operator">...</span><span class="token function">mapState</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'msg'</span><span class="token punctuation">,</span><span class="token string">'school'</span><span class="token punctuation">,</span><span class="token string">'address'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+
+    <span class="token comment">/*mapGetter的对象形式*/</span>
+    <span class="token operator">...</span><span class="token function">mapGetters</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token literal-property property">two</span><span class="token operator">:</span><span class="token string">'getter2'</span><span class="token punctuation">,</span><span class="token literal-property property">three</span><span class="token operator">:</span><span class="token string">'getter3'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">/*mapGetter的数组形式，数组形式要求生成的计算属性名和getters中的函数名要相同*/</span>
+    <span class="token operator">...</span><span class="token function">mapGetters</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'getter2'</span><span class="token punctuation">,</span><span class="token string">'getter3'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">/*
+	小提示：
+		...是es6中的扩展运算符，可以将对象中的属性和方法赋值给另一个对象，例如：
+		let obj = &#123;a:1,b:2&#125;
+		let obj2=&#123;
+			c: 3,
+			d: 4,
+			...(obj)
+		&#125;
+		console.log(obj2) //&#123;a:1,b:2,c:3,d:4&#125;
+		上面的案例就是将新生成的函数赋值到computed，methods对象中
+*/</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span>
+<span class="token operator">&lt;</span>style scoped<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>style<span class="token operator">></span></code></pre>
+
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">一分也是爱~~</div><div id="qr" style="display:none;"><div style="display:inline-block"><a target="_blank" rel="noopener" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/alipay.jpg"><img loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/alipay.jpg" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-alipay-line"></use></svg></span></div></div><div style="display:inline-block"><a target="_blank" rel="noopener" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/wechatpay.jpg"><img loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/wechatpay.jpg" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-wechat-pay-line"></use></svg></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>NicknamedCoco</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://www.keyi.world/2021/09/11/Vue%E5%AD%A6%E4%B9%A0%E4%B9%8BVuex%E7%AF%87/" title="Vue学习之Vuex篇">http://www.keyi.world/2021/09/11/Vue%E5%AD%A6%E4%B9%A0%E4%B9%8BVuex%E7%AF%87/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2021/09/12/Vue%E5%AD%A6%E4%B9%A0%E4%B9%8Baxios%E7%AF%87/" rel="prev" title="Vue学习之axios篇"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">Vue学习之axios篇</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2021/09/09/Vue%E5%AD%A6%E4%B9%A0%E4%B9%8BVueRouter%E7%AF%87/" rel="next" title="Vue学习之VueRouter篇"><span class="post-nav-text">Vue学习之VueRouter篇</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>欢迎留下你的脚印~</span><br></div><div id="valine-container"></div><script type="module">import { getScript } from '/js/utils.js'
+getScript("https://fastly.jsdelivr.net/npm/valine@latest/dist/Valine.min.js", () => {
+  const valineConfig = {"enable":true,"appId":"zA6Qu4BTu9vaBgJ7esJjdzLz-gzGzoHsz","appKey":"gK7g8TcCnAg4X8fJ3pYHr7Yw","placeholder":"大佬求指教&nbsp_(:з」∠)_ （填写邮箱可以收到回复通知～）","avatar":null,"pageSize":10,"visitor":true,"highlight":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"emojiCDN":"//i0.hdslb.com/bfs/emote/","emojiMaps":{"tv_doge":"6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png","tv_亲亲":"a8111ad55953ef5e3be3327ef94eb4a39d535d06.png","tv_偷笑":"bb690d4107620f1c15cff29509db529a73aee261.png","tv_再见":"180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png","tv_冷漠":"b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png","tv_发怒":"34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png","tv_发财":"34db290afd2963723c6eb3c4560667db7253a21a.png","tv_可爱":"9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png","tv_吐血":"09dd16a7aa59b77baa1155d47484409624470c77.png","tv_呆":"fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png","tv_呕吐":"9f996894a39e282ccf5e66856af49483f81870f3.png","tv_困":"241ee304e44c0af029adceb294399391e4737ef2.png","tv_坏笑":"1f0b87f731a671079842116e0991c91c2c88645a.png","tv_大佬":"093c1e2c490161aca397afc45573c877cdead616.png","tv_大哭":"23269aeb35f99daee28dda129676f6e9ea87934f.png","tv_委屈":"d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png","tv_害羞":"a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png","tv_尴尬":"7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png","tv_微笑":"70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png","tv_思考":"90cf159733e558137ed20aa04d09964436f618a1.png","tv_惊吓":"0d15c7e2ee58e935adc6a7193ee042388adc22af.png","tv_打脸":"56ab10b624063e966bfcb76ea5dc4794d87dfd47.png","tv_抓狂":"fe31c08edad661d63762b04e17b8d5ae3c71a757.png","tv_抠鼻":"c666f55e88d471e51bbd9fab9bb308110824a6eb.png","tv_斜眼笑":"911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png","tv_无奈":"ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png","tv_晕":"5443c22b4d07fb1907ccc610c8e6db254f2461b7.png","tv_流汗":"cead1c351ab8d79e9f369605beb90148db0fbed3.png","tv_流泪":"7e71cde7858f0cd50d74b0264aa26db612a8a167.png","tv_流鼻血":"c32d39db2737f89b904ca32700d140a9241b0767.png","tv_点赞":"f85c354995bd99e28fc76c869bfe42ba6438eff4.png","tv_生气":"26702dcafdab5e8225b43ffd23c94ac1ff932654.png","tv_生病":"8b0ec90e6b86771092a498c54f09fc94621c1900.png","tv_疑问":"0793d949b18d7be716078349c202c15ff166f314.png","tv_白眼":"c1d59f439e379ee50eef488bcb5e5378e5044ea4.png","tv_皱眉":"72ccad6679fea0d14cce648b4d818e09b8ffea2d.png","tv_目瞪口呆":"0b8cb81a68de5d5365212c99375e7ace3e7891b7.png","tv_睡着":"8b196675b53af58264f383c50ad0945048290b33.png","tv_笑哭":"1abc628f6d4f4caf9d0e7800878f4697abbc8273.png","tv_腼腆":"89712c0d4af73e67f89e35cbc518420380a7f6f4.png","tv_色":"61822c7e9aae5da76475e7892534545336b23a6f.png","tv_调侃":"4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png","tv_调皮":"b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png","tv_鄙视":"6e72339f346a692a495b123174b49e4e8e781303.png","tv_闭嘴":"c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png","tv_难过":"87f46748d3f142ebc6586ff58860d0e2fc8263ba.png","tv_馋":"fc7e829b845c43c623c8b490ee3602b7f0e76a31.png","tv_鬼脸":"0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png","tv_黑人问号":"45821a01f51bc867da9edbaa2e070410819a95b2.png","tv_鼓掌":"1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"},"el":"#valine-container","lang":"zh-cn"}
+  valineConfig.path = "/2021/09/11/Vue%E5%AD%A6%E4%B9%A0%E4%B9%8BVuex%E7%AF%87/"
+  new Valine(valineConfig)
+}, window.Valine);</script></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2022 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> NicknamedCoco</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.9.3</span></div><div class="live-time"><span>本博客已萌萌哒地运行</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
+  setTimeout(blog_live_time, 1000);
+  const start = new Date('2020-09-22T00:00:00');
+  const now = new Date();
+  const timeDiff = (now.getTime() - start.getTime());
+  const msPerMinute = 60 * 1000;
+  const msPerHour = 60 * msPerMinute;
+  const msPerDay = 24 * msPerHour;
+  const passDay = Math.floor(timeDiff / msPerDay);
+  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
+  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
+  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
+  display_live_time.innerHTML = ` ${passDay} 天 ${passHour} 小时 ${passMinute} 分 ${passSecond} 秒`;
+}
+blog_live_time();
+</script></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><a class="popup-trigger hty-icon-button icon-search" id="search" href="javascript:;" title="搜索"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-search-line"></use></svg></span></a><script>window.addEventListener("DOMContentLoaded", () => {
+  // Handle and trigger popup window
+  document.querySelector(".popup-trigger").addEventListener("click", () => {
+    document.querySelector(".popup").classList.add("show");
+    setTimeout(() => {
+      document.querySelector(".search-input").focus();
+    }, 100);
+  });
+
+  // Monitor main search box
+  const onPopupClose = () => {
+    document.querySelector(".popup").classList.remove("show");
+  };
+
+  document.querySelector(".popup-btn-close").addEventListener("click", () => {
+    onPopupClose();
+  });
+
+  window.addEventListener("keyup", event => {
+    if (event.key === "Escape") {
+      onPopupClose();
+    }
+  });
+});
+</script><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/search/local-search.js" defer type="module"></script><div class="popup search-popup"><div class="search-header"><span class="popup-btn-close close-icon hty-icon-button"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close-line"></use></svg></span></div><div class="search-input-container"><input class="search-input" id="local-search-input" type="text" placeholder="搜索..." value=""></div><div id="local-search-result"></div></div></div></body></html>

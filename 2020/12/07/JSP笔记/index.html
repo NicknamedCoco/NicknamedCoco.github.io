@@ -1,0 +1,302 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="NicknamedCoco"><meta name="copyright" content="NicknamedCoco"><meta name="generator" content="Hexo 6.2.0"><meta name="theme" content="hexo-theme-yun"><title>JSP笔记 | CocoBlog</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.3.3/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="//at.alicdn.com/t/font_1140697_dxory92pb0h.js" async></script><script src="https://fastly.jsdelivr.net/npm/@unocss/runtime/mini.global.js"></script><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/png" href="/images/keyi.ico"><link rel="mask-icon" href="/images/keyi.ico" color="#0078E7"><link rel="preload" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"www.keyi.world","root":"/","title":["Coco","Coding"],"version":"1.9.3","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"local_search":{"path":"/search.xml"},"fireworks":{"colors":null},"vendors":{"darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/css/hexo-theme-yun.css"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="记录下JSP学习内容，以免老年痴呆  JSP的执行原理  浏览器访问的路径虽然是以.jsp结尾，访问的是某个jsp文件，其实底层执行的是jsp对应的java程序  Tomcat服务器负责将.jsp文件翻译生成.java源程序，并将这个源程序编译生成.class字节码文件，访问.jsp,其实底层还是执行了.class文件中的程序 Tomcat内置了一个jsp翻译引擎，专门负责jsp翻译文件，编译j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSP笔记">
+<meta property="og:url" content="http://www.keyi.world/2020/12/07/JSP%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="CocoBlog">
+<meta property="og:description" content="记录下JSP学习内容，以免老年痴呆  JSP的执行原理  浏览器访问的路径虽然是以.jsp结尾，访问的是某个jsp文件，其实底层执行的是jsp对应的java程序  Tomcat服务器负责将.jsp文件翻译生成.java源程序，并将这个源程序编译生成.class字节码文件，访问.jsp,其实底层还是执行了.class文件中的程序 Tomcat内置了一个jsp翻译引擎，专门负责jsp翻译文件，编译j">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-07T02:06:53.000Z">
+<meta property="article:modified_time" content="2020-12-07T03:41:28.721Z">
+<meta property="article:author" content="NicknamedCoco">
+<meta property="article:tag" content="JSP">
+<meta name="twitter:card" content="summary"><script>(function() {
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script></head><body><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="NicknamedCoco"><img width="96" loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/images/keyi.jpg" alt="NicknamedCoco"></a><div class="site-author-name"><a href="/about/">NicknamedCoco</a></div><a class="site-name" href="/about/site.html">CocoBlog</a><sub class="site-subtitle">OneForAll</sub><div class="site-description">寻找自己的价值，才是生命的意义</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="我的主页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">113</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">8</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">66</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://wpa.qq.com/msgrd?v=3&amp;uin=506579631&amp;site=qq&amp;menu=yes" title="QQ" target="_blank" style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/NicknamedCoco" title="GitHub" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://www.zhihu.com/people/NicknamedCoco/" title="知乎" target="_blank" style="color:#0084FF"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhihu-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://twitter.com/OneDayInAug" title="Twitter" target="_blank" style="color:#1da1f2"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-twitter-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E4%B8%8BJSP%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9%EF%BC%8C%E4%BB%A5%E5%85%8D%E8%80%81%E5%B9%B4%E7%97%B4%E5%91%86"><span class="toc-number">1.</span> <span class="toc-text">记录下JSP学习内容，以免老年痴呆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JSP%E7%9A%84%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">JSP的执行原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jsp%E6%96%87%E4%BB%B6%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%AE%BF%E9%97%AE%E7%9A%84%E6%97%B6%E5%80%99%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E6%85%A2%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">jsp文件第一次访问的时候为什么这么慢？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JSP%E8%AF%AD%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">JSP语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EL%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">EL表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JSTL"><span class="toc-number">6.</span> <span class="toc-text">JSTL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">7.</span> <span class="toc-text">过滤器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%91%E5%90%AC%E5%99%A8Listener"><span class="toc-number">8.</span> <span class="toc-text">监听器Listener</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="http://www.keyi.world/2020/12/07/JSP%E7%AC%94%E8%AE%B0/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="NicknamedCoco"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="CocoBlog"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">JSP笔记</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2020-12-07 10:06:53" itemprop="dateCreated datePublished" datetime="2020-12-07T10:06:53+08:00">2020-12-07</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">3.1k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">12m</span></span></span><span class="leancloud_visitors" id="/2020/12/07/JSP%E7%AC%94%E8%AE%B0/" data-flag-title="JSP笔记"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/Web%E5%90%8E%E7%AB%AF/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">Web后端</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/JSP/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">JSP</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><blockquote>
+<h4 id="记录下JSP学习内容，以免老年痴呆"><a href="#记录下JSP学习内容，以免老年痴呆" class="headerlink" title="记录下JSP学习内容，以免老年痴呆"></a>记录下JSP学习内容，以免老年痴呆</h4></blockquote>
+<blockquote>
+<h4 id="JSP的执行原理"><a href="#JSP的执行原理" class="headerlink" title="JSP的执行原理"></a>JSP的执行原理</h4></blockquote>
+<ul>
+<li>浏览器访问的路径虽然是以.jsp结尾，访问的是某个jsp文件，其实底层执行的是jsp对应的java程序<br>  Tomcat服务器负责将.jsp文件翻译生成.java源程序，并将这个源程序编译生成.class字节码文件，访问.jsp,其实底层还是执行了.class文件中的程序</li>
+<li>Tomcat内置了一个jsp翻译引擎，专门负责jsp翻译文件，编译java源文件</li>
+<li>index.jsp文件被翻译成index_jsp.java文件，编译生成index_jsp.class源文件<br>  index_jsp这个类继承HttpJspBase,而HttpJspBase继承了HttpServlet</li>
+<li>Tomcat目录下的work文件就是存放jsp转化成的.java文件</li>
+<li>JSP文件后缀，默认是.jsp，JSP后缀可以通过修改CATALINA_HOME&#x2F;conf&#x2F;web.xml中修改</li>
+<li>jsp就是servlet，只不过职责不同，jsp的强项是做页面展示</li>
+<li>在jsp文件中编写的所有html，css,JavaScript，对jsp来说，只不过是普通的字符串<br>  翻译成out.write(“翻译成这里”);</li>
+</ul>
+<blockquote>
+<h4 id="jsp文件第一次访问的时候为什么这么慢？"><a href="#jsp文件第一次访问的时候为什么这么慢？" class="headerlink" title="jsp文件第一次访问的时候为什么这么慢？"></a>jsp文件第一次访问的时候为什么这么慢？</h4></blockquote>
+<ul>
+<li>启动jsp引擎，需要一个翻译的过程，需要一个编译的过程，需要servlet对象的创建过程<br>init方法调用，service方法调用</li>
+<li>修改jsp文件不需要部署重启Tomcat文件<br>第二次访问jsp文件，底层直接调用service方法</li>
+<li>jsp也是单实例多线程环境下运行的一个servlet对象</li>
+</ul>
+<blockquote>
+<h4 id="JSP语法"><a href="#JSP语法" class="headerlink" title="JSP语法"></a>JSP语法</h4><p>1，jsp注释<br>2，jsp的小脚本<br>3，jsp的声明语法格式<br>4，jsp的九大内置对象<br>5，jsp表达式<br>6，jsp的指令<br>7，jsp的动作</p>
+</blockquote>
+<p>1，jsp注释</p>
+<pre class="language-none"><code class="language-none">&lt;%-- jsp专业注释，使用这种注释方式，不会被翻译到java源文件中 --%&gt;</code></pre>
+
+<p>2，jsp的小脚本<br>&lt;% 在这里编写jsp脚本语句 %&gt;</p>
+<ul>
+<li>小脚本中的java语句被翻译到servlet的“service方法”中，所以小脚本内必须编写java语句，java语句以分号结尾</li>
+<li>&lt;%%&gt;中的Java代码是在service方法中，service方法中不能定义实例变量，方法，静态语句块</li>
+</ul>
+<p>所谓的jsp规范，就是sun制定好的一些翻译规则，按照翻译规则进行翻译，生成对应的java源程序，不同的web服务器翻译的结果是完全相同的，因为这些服务器翻译的时候，都遵守了jsp翻译规范</p>
+<p>3，jsp的声明语法格式<br>&lt;%! 这里的Java语句是写在service方法之外的，可以写实例变量，静态变量，方法，静态语句块，构造函数，不能写Java语句，除非是变量声明 %&gt;<br>4，jsp的九大内置对象</p>
+<ul>
+<li><p>什么是内置对象啊<br>可以直接在jsp文件中拿来使用的对象引用</p>
+</li>
+<li><p>九大内置对象有哪些？</p>
+<pre class="language-none"><code class="language-none">内置对象名称			对应servlet类名
+PageContext         javax.servlet.jsp.PageContex        页面范围
+request             javax.servlet.http.HttpServletRequest   请求范围
+session             javax.servlet.http.HttpSession          会话范围
+application         javax.servlet.ServletContext            应用范围
+out                 javax.servlet.jsp.JspWriter(与PrintWriter类似)
+response            javax.servlet.http.HttpServletResponse
+config              javax.servlet.ServletConfig
+exception           java.lang.Throwable
+page                java.lang.Object(page&#x3D;this,就是指向本身)</code></pre>
+</li>
+<li><p>以上内置对象只能在service方法中“直接”使用，在其他方法中无法“直接”使用，可以间接使用</p>
+</li>
+<li><p>四个作用域对象&#x2F;范围对象<br>pageContext:在同一个jsp页面中共享数据，不能跨jsp页面<br>request:在同一个请求中共享数据<br>session:在同一个会话中共享数据<br>application:所有用户共享的数据可以放到应用范围</p>
+</li>
+</ul>
+<p>5，jsp表达式<br>登录成功，欢迎&lt;%&#x3D;username%&gt;回来，这种格式就是jsp表达式<br>6，jsp的指令</p>
+<ul>
+<li><p>指令的作用是指导jsp的翻译引擎如何翻译jsp代码</p>
+</li>
+<li><p>jsp中共三个指令：<br>page          页面指令<br>include       包含指令<br>taglib        标签库指令</p>
+</li>
+<li><p>指令的语法格式：&lt;%@指令名 属性名&#x3D;属性值 属性名&#x3D;属性值%&gt;</p>
+</li>
+<li><p>关于jsp中page指令，page指令中常用的属性</p>
+<ul>
+<li>contentType         设置JSP的响应内容类型，同时在响应的内容类型后面也可以指定响应的字符编码方式<br>&lt;%@page contentType&#x3D;”text&#x2F;html;charset&#x3D;utf-8”%&gt;</li>
+</ul>
+</li>
+</ul>
+<p>和&lt;%@page contentType&#x3D;”text&#x2F;html” pageEncoding&#x3D;”UTF-8”%&gt;一样</p>
+<ul>
+<li><p>pageEncoding        设置jsp响应时的字符编码方式</p>
+</li>
+<li><p>import              组织导入，导java类</p>
+</li>
+<li><p>session             设置当前jsp页面中是否可以直接使用session内置对象</p>
+<ul>
+<li>session&#x3D;”true”，表示在当前jsp中可以直接使用内置对象session，程序在执行的时候获取当前session会话对象，若获取不到则新建session对象</li>
+<li>session&#x3D;“false”,表示在当前jsp中不可以直接使用内置对象session,有时候并不想新建session,只是想获取当前session,就可以使用session&#x3D;”false”，若想用session，可以自己创建一个<br>HttpSession session &#x3D; request.getSession(false),获取当前session,获取不到返回null<br>若session属性不写，则默认session&#x3D;”true”</li>
+</ul>
+</li>
+<li><p>errorPage          错误页面，当程序出错时，跳转到指定的错误页面，跳转使用转发技术，</p>
+</li>
+</ul>
+  <pre class="language-none"><code class="language-none">errorPage&#x3D;&quot;&#x2F;index4.jsp&quot;,路径不包括项目名</code></pre>
+<ul>
+<li><p>isErrorPage         是否是错误页面，如果为true，表示当前页面为错误页面，可以使用exception对象，exception引用指向了抛出的异常</p>
+</li>
+<li><p>isELIgnored         是否忽略EL表达式</p>
+</li>
+<li><p>include指令<br>&lt;%@include file&#x3D;””%&gt;， 导入其他jsp文件内容，include指令只有一个file属性，一个jsp文件可以使用多个include指令，include指令是静态联编，即两个文件组成一份java源代码</p>
+</li>
+</ul>
+<p>7，jsp的动作</p>
+<ul>
+<li><p>语法格式：</p>
+<pre class="language-none"><code class="language-none">&lt;jsp:动作名 属性名&#x3D;属性值 属性名&#x3D;属性值&gt;&lt;&#x2F;jsp:动作名&gt;</code></pre>
+</li>
+<li><p>转发动作，达到页面转发技术效果</p>
+<pre class="language-none"><code class="language-none">&lt;jsp:forward page&#x3D;&quot;index2.jsp&quot;&gt;&lt;&#x2F;jsp:forward&gt;</code></pre>
+</li>
+<li><p>include动作,动态联编</p>
+<pre class="language-none"><code class="language-none">&lt;jsp:include page&#x3D;&quot;&#x2F;index2.jsp&quot;&gt;&lt;&#x2F;jsp:include&gt;</code></pre>
+<p>与静态联编不同的是，动态联编是生成两个java文件，两个servlet对象，所以两个文件可以存在同名变量</p>
+</li>
+</ul>
+<blockquote>
+<h4 id="EL表达式"><a href="#EL表达式" class="headerlink" title="EL表达式"></a>EL表达式</h4></blockquote>
+<ul>
+<li>在EL表达式中，jsp四大域对象都有相应的别名<br>application         applicationScope<br>session             sessionScope<br>request             requestScope<br>pageContext         pageScope</li>
+<li>EL表达式的作用：将作用域中的数据写到响应体中，即输出用的</li>
+<li>使用EL表达式的语法格式：${作用域.关键字}</li>
+<li>输出高级对象中的数据：<br>${作用域.user.name}，前提，user类中一定要提供get，set方法</li>
+<li>简化版EL表达式：<br>${作用域.关键字}中的作用域可以省略，EL表达式会自己去域对象中挨个找数据<br>查找顺序是从小到大的范围，先从pageScope中找，最后到applicationContext中查找</li>
+<li>EL表达式中除了以上四种内置对象，还有以下内置对象<ul>
+<li><p>param<br>使用：${param.请求参数名}<br>作用：读取请求协议包参数内容，即读取表单数据<br>代替：String value &#x3D; request.getParameter(“请求参数名”);<br>out.write(value);</p>
+</li>
+<li><p>paramValues<br>使用：${paramValues.请求参数名}<br>作用：读取请求协议包中关联多个值的请求参数，将参数内容保存到数组<br>代替：String[] array &#x3D; request.getParameterValues(“hobby”);</p>
+<p>表单提交的数据会被自动封装到request对象中，request对象中有map集合存储这些数据<br>map集合的key是name，字符串类型，value是一个字符串类型的一维数组<br>通过map集合的key获取value，适合取复选框数据<br>例如：${paramValues.hobby[0]}  &#x2F;&#x2F;取爱好数组中第一个值</p>
+</li>
+<li><p>initParam</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>使用：${initParam.共享数据名}<br>代替：String value &#x3D; application.getInitParameter(“driver”);<br>  out.write(value);</p>
+<blockquote>
+<h4 id="JSTL"><a href="#JSTL" class="headerlink" title="JSTL"></a>JSTL</h4><p>标签的使用</p>
+</blockquote>
+<ul>
+<li><p>&lt;c:set&gt;:<br>作用：在jsp文件上设置域对象中共享的数据<br>使用：&lt;c:set scope&#x3D;”session” var&#x3D;”key” value&#x3D;”10”&#x2F;&gt;<br>代替：&lt;% session.setAttribute(“key”,”10”); %&gt;</p>
+<ul>
+<li>属性：scope:指定操作的域对象别名</li>
+<li>var :指定域对象中的key</li>
+<li>value:设置value值</li>
+</ul>
+</li>
+<li><p>&lt;c:if&gt;:<br>作用：在jsp文件中控制哪些内容可以写到响应体中<br>使用：</p>
+<pre class="language-none"><code class="language-none">&lt;%
+	&lt;c:if test&#x3D;&quot;通过EL表达式进行判断&quot;&gt;
+		内容
+	&lt;&#x2F;c:if&gt;
+%&gt;</code></pre>
+</li>
+<li><p>&lt;c:choose&gt;:<br>作用：在jsp文件上实现多分支选择判断，决定哪一个内容能写到响应体<br>使用：</p>
+<pre class="language-none"><code class="language-none">&lt;c:choose&gt;
+	&lt;c:when test&#x3D;&quot;EL表达式进行判断&quot;&gt;内容1&lt;&#x2F;c:when&gt;
+	&lt;c:when test&#x3D;&quot;EL表达式进行判断&quot;&gt;内容2&lt;&#x2F;c:when&gt;
+	&lt;c:otherwise&gt;内容3&lt;&#x2F;c:otherwise&gt;
+&lt;&#x2F;c:choose&gt;</code></pre>
+</li>
+<li><p>&lt;c:foreach&gt;<br>作用：循环遍历</p>
+<ul>
+<li><p>第一种使用方式：</p>
+<pre class="language-none"><code class="language-none">&lt;c:foreach var&#x3D;&quot;声明循环变量名称&quot; begin&#x3D;&quot;初始化循环变量&quot; 
+end&#x3D;&quot;循环变量可以接收的最大值&quot; step&#x3D;&quot;循环变量的递增值或递减值&quot;&gt;
+	在jstl标签中，var变量被自动写入到pageContext中，
+	所以可以直接用EL表达式取值，$&#123;pageScope.i&#125;或者$&#123;i&#125;
+&lt;&#x2F;c:foreach&gt;</code></pre>
+</li>
+<li><p>第二种使用方式List集合：</p>
+<pre class="language-none"><code class="language-none">&lt;c:foreach items&#x3D;&quot;通过EL表达式获得的域对象集合&quot; var&#x3D;&quot;声明循环变量&quot;&gt;
+	取值：$&#123;循环变量.对象属性名&#125;
+&lt;&#x2F;c:foreach&gt;</code></pre>
+</li>
+<li><p>第三种使用方式Map集合：</p>
+<pre class="language-none"><code class="language-none">&lt;c:foreach items&#x3D;&quot;通过EL表达式获得的域对象集合&quot; var&#x3D;&quot;声明循环变量&quot;&gt;
+	var变量代表Map集合的键值对，EntrySet
+	$&#123;var.key&#125;,代表map集合一个键值对的key值
+	$&#123;var.value.属性名&#125;   代表map集合一个键值对的value值的属性值
+&lt;&#x2F;c:foreach&gt;</code></pre></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<h4 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h4></blockquote>
+<ul>
+<li><p>作用：<br>一般用于完成通用的操作，如：登录验证，统一编码获取，敏感字符过滤</p>
+</li>
+<li><p>执行流程，<br>请求在访问服务器上的资源时，会先执行过滤器的dofilter方法，在请求返回时也要经过过滤器</p>
+<pre class="language-none"><code class="language-none">  public void doFilter(ServletRequest servletRequest,
+  ServletResponse servletResponse, FilterChain filterChain)  &#123;
+  	System.out.println(&quot;过滤器在此执行&quot;);
+  	servletResponse.setContentType(&quot;text&#x2F;html;charset&#x3D;UTF-8&quot;);
+  	&#x2F;&#x2F;doFilter方法之前，对request进行操作
+  	filterChain.doFilter(servletRequest,servletResponse);
+  	&#x2F;&#x2F;doFilter方法之后，对response进行操作
+  	&#x2F;&#x2F;也就是说，一个访问的请求和访问都会经过doFilter方法，doFilter方法执行完，
+  	&#x2F;&#x2F;代表一次访问结束
+&#125;</code></pre>
+</li>
+<li><p>生命周期：</p>
+<ul>
+<li>init方法:服务器启动时，tomcat会创建filter对象，并调用init方法，init方法里一般会加载资源</li>
+<li>doFilter方法:每次请求都会被调用</li>
+<li>destroy方法：服务器关闭时，filter对象被销毁，如果服务器是正常关闭，则会执行destroy方法，destroy方法一般会释放资源</li>
+</ul>
+</li>
+<li><p>过滤器配置：</p>
+<ul>
+<li>拦截路径配置<br>1，具体资源路径：&#x2F;index.jsp     只有访问index.jsp资源时，过滤器才会被执行<br>2，拦截目录：&#x2F;user&#x2F;*            访问&#x2F;user下所有资源时，过滤器都会被执行<br>3，后缀名拦截：<code>*.jsp</code>         访问所有后缀名为jsp资源时，过滤器都会被执行<br>4，<code>/*</code>                         访问项目所有资源都会执行拦截器</li>
+<li>拦截方式配置：资源被访问的方式：普通的请求或者服务器内部servlet之间的转发<ul>
+<li>注解配置：<br>@WebFiler中设置dispatcherTypes属性<br>REQUEST，默认值，浏览器直接请求资源<br>FORWARD，转发访问资源<br>INCLUDE，包含访问资源<br>ERROR，错误跳转资源<br>ASYNC，异步访问资源</li>
+<li>web.xml:<br>filter-mapping标签中有dispatcher标签</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>过滤器链(配置多个过滤器)</p>
+<ul>
+<li>执行顺序：如果有两个过滤器，过滤器1，过滤器2<ul>
+<li>1，请求时，执行过滤器1，再执行过滤器2</li>
+<li>2，执行资源文件</li>
+<li>3，响应时，执行过滤器2，再执行过滤器1</li>
+</ul>
+</li>
+<li>过滤器先后顺序问题：什么时候让过滤器1先执行，什么时候让过滤器2先执行呢？<ul>
+<li>1，注解配置：按照字符串比较规则比较，值小的先执行<br>如：AFilter和BFilter两个过滤器类名，则AFilter先执行</li>
+<li>2，web.xml配置：<filter-mapping>谁先定义，谁先执行</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<h4 id="监听器Listener"><a href="#监听器Listener" class="headerlink" title="监听器Listener"></a>监听器Listener</h4></blockquote>
+<p>概念：web三大组件之一<br>事件监听机制：</p>
+<ul>
+<li>事件：一件事情</li>
+<li>事件源：事件发生的地方</li>
+<li>监听器：一个对象</li>
+<li>注册监听：将事件源，事件，监听器绑定在一起，当事件源上发生某个事件后，执行监听器代码</li>
+</ul>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">一分也是爱~~</div><div id="qr" style="display:none;"><div style="display:inline-block"><a target="_blank" rel="noopener" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/alipay.jpg"><img loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/alipay.jpg" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-alipay-line"></use></svg></span></div></div><div style="display:inline-block"><a target="_blank" rel="noopener" href="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/wechatpay.jpg"><img loading="lazy" src="https://fastly.jsdelivr.net/gh/NicknamedCoco/cdn/blog/pay/wechatpay.jpg" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-wechat-pay-line"></use></svg></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>NicknamedCoco</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://www.keyi.world/2020/12/07/JSP%E7%AC%94%E8%AE%B0/" title="JSP笔记">http://www.keyi.world/2020/12/07/JSP%E7%AC%94%E8%AE%B0/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2020/12/08/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" rel="prev" title="代理模式之动态代理"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">代理模式之动态代理</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2020/11/29/Servlet%E7%AC%94%E8%AE%B0/" rel="next" title="Servlet笔记"><span class="post-nav-text">Servlet笔记</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>欢迎留下你的脚印~</span><br></div><div id="valine-container"></div><script type="module">import { getScript } from '/js/utils.js'
+getScript("https://fastly.jsdelivr.net/npm/valine@latest/dist/Valine.min.js", () => {
+  const valineConfig = {"enable":true,"appId":"zA6Qu4BTu9vaBgJ7esJjdzLz-gzGzoHsz","appKey":"gK7g8TcCnAg4X8fJ3pYHr7Yw","placeholder":"大佬求指教&nbsp_(:з」∠)_ （填写邮箱可以收到回复通知～）","avatar":null,"pageSize":10,"visitor":true,"highlight":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"emojiCDN":"//i0.hdslb.com/bfs/emote/","emojiMaps":{"tv_doge":"6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png","tv_亲亲":"a8111ad55953ef5e3be3327ef94eb4a39d535d06.png","tv_偷笑":"bb690d4107620f1c15cff29509db529a73aee261.png","tv_再见":"180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png","tv_冷漠":"b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png","tv_发怒":"34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png","tv_发财":"34db290afd2963723c6eb3c4560667db7253a21a.png","tv_可爱":"9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png","tv_吐血":"09dd16a7aa59b77baa1155d47484409624470c77.png","tv_呆":"fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png","tv_呕吐":"9f996894a39e282ccf5e66856af49483f81870f3.png","tv_困":"241ee304e44c0af029adceb294399391e4737ef2.png","tv_坏笑":"1f0b87f731a671079842116e0991c91c2c88645a.png","tv_大佬":"093c1e2c490161aca397afc45573c877cdead616.png","tv_大哭":"23269aeb35f99daee28dda129676f6e9ea87934f.png","tv_委屈":"d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png","tv_害羞":"a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png","tv_尴尬":"7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png","tv_微笑":"70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png","tv_思考":"90cf159733e558137ed20aa04d09964436f618a1.png","tv_惊吓":"0d15c7e2ee58e935adc6a7193ee042388adc22af.png","tv_打脸":"56ab10b624063e966bfcb76ea5dc4794d87dfd47.png","tv_抓狂":"fe31c08edad661d63762b04e17b8d5ae3c71a757.png","tv_抠鼻":"c666f55e88d471e51bbd9fab9bb308110824a6eb.png","tv_斜眼笑":"911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png","tv_无奈":"ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png","tv_晕":"5443c22b4d07fb1907ccc610c8e6db254f2461b7.png","tv_流汗":"cead1c351ab8d79e9f369605beb90148db0fbed3.png","tv_流泪":"7e71cde7858f0cd50d74b0264aa26db612a8a167.png","tv_流鼻血":"c32d39db2737f89b904ca32700d140a9241b0767.png","tv_点赞":"f85c354995bd99e28fc76c869bfe42ba6438eff4.png","tv_生气":"26702dcafdab5e8225b43ffd23c94ac1ff932654.png","tv_生病":"8b0ec90e6b86771092a498c54f09fc94621c1900.png","tv_疑问":"0793d949b18d7be716078349c202c15ff166f314.png","tv_白眼":"c1d59f439e379ee50eef488bcb5e5378e5044ea4.png","tv_皱眉":"72ccad6679fea0d14cce648b4d818e09b8ffea2d.png","tv_目瞪口呆":"0b8cb81a68de5d5365212c99375e7ace3e7891b7.png","tv_睡着":"8b196675b53af58264f383c50ad0945048290b33.png","tv_笑哭":"1abc628f6d4f4caf9d0e7800878f4697abbc8273.png","tv_腼腆":"89712c0d4af73e67f89e35cbc518420380a7f6f4.png","tv_色":"61822c7e9aae5da76475e7892534545336b23a6f.png","tv_调侃":"4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png","tv_调皮":"b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png","tv_鄙视":"6e72339f346a692a495b123174b49e4e8e781303.png","tv_闭嘴":"c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png","tv_难过":"87f46748d3f142ebc6586ff58860d0e2fc8263ba.png","tv_馋":"fc7e829b845c43c623c8b490ee3602b7f0e76a31.png","tv_鬼脸":"0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png","tv_黑人问号":"45821a01f51bc867da9edbaa2e070410819a95b2.png","tv_鼓掌":"1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"},"el":"#valine-container","lang":"zh-cn"}
+  valineConfig.path = "/2020/12/07/JSP%E7%AC%94%E8%AE%B0/"
+  new Valine(valineConfig)
+}, window.Valine);</script></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2022 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> NicknamedCoco</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.9.3</span></div><div class="live-time"><span>本博客已萌萌哒地运行</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
+  setTimeout(blog_live_time, 1000);
+  const start = new Date('2020-09-22T00:00:00');
+  const now = new Date();
+  const timeDiff = (now.getTime() - start.getTime());
+  const msPerMinute = 60 * 1000;
+  const msPerHour = 60 * msPerMinute;
+  const msPerDay = 24 * msPerHour;
+  const passDay = Math.floor(timeDiff / msPerDay);
+  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
+  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
+  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
+  display_live_time.innerHTML = ` ${passDay} 天 ${passHour} 小时 ${passMinute} 分 ${passSecond} 秒`;
+}
+blog_live_time();
+</script></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><a class="popup-trigger hty-icon-button icon-search" id="search" href="javascript:;" title="搜索"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-search-line"></use></svg></span></a><script>window.addEventListener("DOMContentLoaded", () => {
+  // Handle and trigger popup window
+  document.querySelector(".popup-trigger").addEventListener("click", () => {
+    document.querySelector(".popup").classList.add("show");
+    setTimeout(() => {
+      document.querySelector(".search-input").focus();
+    }, 100);
+  });
+
+  // Monitor main search box
+  const onPopupClose = () => {
+    document.querySelector(".popup").classList.remove("show");
+  };
+
+  document.querySelector(".popup-btn-close").addEventListener("click", () => {
+    onPopupClose();
+  });
+
+  window.addEventListener("keyup", event => {
+    if (event.key === "Escape") {
+      onPopupClose();
+    }
+  });
+});
+</script><script src="https://fastly.jsdelivr.net/gh/NicknamedCoco/NicknamedCoco.github.io@master/js/search/local-search.js" defer type="module"></script><div class="popup search-popup"><div class="search-header"><span class="popup-btn-close close-icon hty-icon-button"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close-line"></use></svg></span></div><div class="search-input-container"><input class="search-input" id="local-search-input" type="text" placeholder="搜索..." value=""></div><div id="local-search-result"></div></div></div></body></html>
