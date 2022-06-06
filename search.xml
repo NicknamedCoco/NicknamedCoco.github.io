@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>测试文件</title>
+      <link href="2022/06/06/%E6%B5%8B%E8%AF%95%E6%96%87%E4%BB%B6/"/>
+      <url>2022/06/06/%E6%B5%8B%E8%AF%95%E6%96%87%E4%BB%B6/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://fastly.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://fastly.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://fastly.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>反射和代理模式</title>
       <link href="2022/06/05/%E5%8F%8D%E5%B0%84%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"/>
       <url>2022/06/05/%E5%8F%8D%E5%B0%84%E5%92%8C%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</url>
