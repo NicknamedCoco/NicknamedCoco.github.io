@@ -8,38 +8,38 @@ document.addEventListener("pjax:success", initScrollReveal);
 </script><link rel="icon" type="image/png" href="https://cdn.keyiup.com/blog/bg/keyi.ico"><link rel="mask-icon" href="https://cdn.keyiup.com/blog/bg/keyi.ico" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
     window.Yun = {}
     window.CONFIG = {"hostname":"keyiup.com","root":"/","title":["Coco","Coding"],"version":"1.10.2","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"local_search":{"path":"/search.xml"},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false,"src":"/js/search/local-search.js"},"fireworks":{"colors":null},"waline":{"config":{"enable":true,"serverURL":"https://waline.keyiup.com","comment":true,"placeholder":"要文明评论哦, 不然会被打屁屁","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-cn","visitor":false,"comment_count":true,"emoji":["https://fastly.jsdelivr.net/gh/walinejs/emojis@latest/bilibili/","https://fastly.jsdelivr.net/gh/walinejs/emojis@latest/weibo/","https://fastly.jsdelivr.net/gh/walinejs/emojis@latest/qq/"],"locale":{"placeholder":"填写邮箱，可以收到回复通知哦～","requiredFields":["nick"]},"QMSG_KEY":"29c69c9f11f0812041673f0693f04a4b","QQ_ID":506579631,"AUTHOR_EMAIL":"one.dayinaug@gmail.com","SITE_NAME":"CocoBlog","SITE_URL":"keyiup.com","SMTP_SERVICE":"Gmail","SMTP_USER":"one.dayinaug@gmail.com","SMTP_PASS":"tgy153rfvhu14863","SMTP_SECURE":false,"el":"#waline"},"cdn":"https://fastly.jsdelivr.net/npm/@waline/client@v2/dist/waline.js","dark":"html.dark"},"vendors":{"darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
-  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="近况  再来水一篇博客，我觉得写博客最重要的是创新，总结，而不是照搬，不然和重复造轮子有什么分别但我个人实在太菜，要做创新也是非常难的，想到一个笑话：把别人的变成自己的，把自己的变成祖传的~ 话不多说，让我们来看看这篇博客具体水哪些内容吧  缓存误用场景  如何保证缓存与数据一致性  三个经典的缓存模式  多级缓存的概念    缓存误用场景   误用一：把缓存作为服务与服务之间传递数据的媒介如上">
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><meta name="description" content="近况  再来水一篇博客，我觉得写博客最重要的是创新，总结，而不是照搬，不然和重复造轮子有什么分别但我个人实在太菜，要做创新也是非常难的，想到一个笑话：把别人的变成自己的，把自己的变成祖传的~ 话不多说，让我们来看看这篇博客具体水哪些内容吧  缓存误用场景  如何保证缓存与数据一致性  三个经典的缓存模式  多级缓存的概念    缓存误用场景   误用一：把缓存作为服务与服务之间传递数据的媒介">
 <meta property="og:type" content="article">
 <meta property="og:title" content="缓存数据一致性及多级缓存概念">
 <meta property="og:url" content="https://keyiup.com/2021/12/01/%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%E6%80%A7%E5%8F%8A%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98%E6%A6%82%E5%BF%B5/index.html">
 <meta property="og:site_name" content="CocoBlog">
-<meta property="og:description" content="近况  再来水一篇博客，我觉得写博客最重要的是创新，总结，而不是照搬，不然和重复造轮子有什么分别但我个人实在太菜，要做创新也是非常难的，想到一个笑话：把别人的变成自己的，把自己的变成祖传的~ 话不多说，让我们来看看这篇博客具体水哪些内容吧  缓存误用场景  如何保证缓存与数据一致性  三个经典的缓存模式  多级缓存的概念    缓存误用场景   误用一：把缓存作为服务与服务之间传递数据的媒介如上">
+<meta property="og:description" content="近况  再来水一篇博客，我觉得写博客最重要的是创新，总结，而不是照搬，不然和重复造轮子有什么分别但我个人实在太菜，要做创新也是非常难的，想到一个笑话：把别人的变成自己的，把自己的变成祖传的~ 话不多说，让我们来看看这篇博客具体水哪些内容吧  缓存误用场景  如何保证缓存与数据一致性  三个经典的缓存模式  多级缓存的概念    缓存误用场景   误用一：把缓存作为服务与服务之间传递数据的媒介">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/1.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/2.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/3.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/4.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/5.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/6.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/7.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/8.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/9.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/10.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/11.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/12.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/13.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/14.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/15.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/16.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/17.png">
-<meta property="og:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/18.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/1.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/2.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/3.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/4.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/5.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/6.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/7.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/8.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/9.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/10.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/11.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/12.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/13.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/14.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/15.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/16.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/17.png">
+<meta property="og:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/18.png">
 <meta property="article:published_time" content="2021-12-01T08:33:56.000Z">
-<meta property="article:modified_time" content="2022-09-10T06:34:44.886Z">
+<meta property="article:modified_time" content="2023-06-16T01:28:01.374Z">
 <meta property="article:author" content="NicknamedCoco">
 <meta property="article:tag" content="Redis">
 <meta property="article:tag" content="Canal">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.wanyiai.com/blog/redis/cache-consistent/1.png"><script>(function() {
+<meta name="twitter:image" content="https://cdn.keyiup.com/blog/redis/cache-consistent/1.png"><script>(function() {
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
   const setting = localStorage.getItem('darken-mode') || 'auto'
   if (setting === 'dark' || (prefersDark && setting !== 'light'))
@@ -55,7 +55,7 @@ IconifyProviders = {
     // Wait for 1 second before switching API hosts
     rotate: 1000,
   },
-};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button sidebar-nav-active" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel sidebar-panel-active" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="NicknamedCoco"><img width="96" loading="lazy" src="https://cdn.keyiup.com/blog/bg/keyi.jpg" alt="NicknamedCoco"></a><div class="site-author-name"><a href="/about/">NicknamedCoco</a></div><a class="site-name" href="/about/site.html">CocoBlog</a><sub class="site-subtitle">OneForAll</sub><div class="site-description">寻找自己的价值，才是生命的意义</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="我的主页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">128</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">8</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">81</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://wpa.qq.com/msgrd?v=3&amp;uin=506579631&amp;site=qq&amp;menu=yes" title="QQ" target="_blank" style="color:#12B7F5"><span class="icon iconify" data-icon="ri:qq-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/NicknamedCoco" title="GitHub" target="_blank" style="color:#1da1f2"><span class="icon iconify" data-icon="ri:github-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://www.zhihu.com/people/NicknamedCoco/" title="知乎" target="_blank" style="color:#0084FF"><span class="icon iconify" data-icon="ri:zhihu-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://twitter.com/NicknamedCoco" title="Twitter" target="_blank" style="color:#1da1f2"><span class="icon iconify" data-icon="ri:twitter-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content">此文章未包含目录</div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://keyiup.com/2021/12/01/%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%E6%80%A7%E5%8F%8A%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98%E6%A6%82%E5%BF%B5/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="NicknamedCoco"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="CocoBlog"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">缓存数据一致性及多级缓存概念</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2021-12-01 16:33:56" itemprop="dateCreated datePublished" datetime="2021-12-01T16:33:56+08:00">2021-12-01</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-2-line"></span></span> <time title="修改时间：2022-09-10 14:34:44" itemprop="dateModified" datetime="2022-09-10T14:34:44+08:00">2022-09-10</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><span class="icon iconify" data-icon="ri:file-word-line"></span></span> <span title="本文字数">5.8k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><span class="icon iconify" data-icon="ri:timer-line"></span></span> <span title="阅读时长">20m</span></span></span><span class="post-meta-divider">-</span><a href="#comment"><span class="post-meta-item-icon" title="评论数"><span class="icon iconify" data-icon="ri:chat-3-line"></span> <span class="waline-comment-count" id="/2021/12/01/%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%E6%80%A7%E5%8F%8A%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98%E6%A6%82%E5%BF%B5/"></span></span></a><div class="post-classify"><span class="post-tag"><a class="tag-item" href="/tags/Redis/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">Redis</span></a><a class="tag-item" href="/tags/Canal/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">Canal</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><blockquote>
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button" data-target="post-toc-wrap" title="文章目录"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button sidebar-nav-active" data-target="site-overview-wrap" title="站点概览"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel sidebar-panel-active" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="NicknamedCoco"><img width="96" loading="lazy" src="https://cdn.keyiup.com/blog/bg/keyi.jpg" alt="NicknamedCoco"></a><div class="site-author-name"><a href="/about/">NicknamedCoco</a></div><a class="site-name" href="/about/site.html">CocoBlog</a><sub class="site-subtitle">OneForAll</sub><div class="site-description">寻找自己的价值，才是生命的意义</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="我的主页"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">129</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">8</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">81</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://wpa.qq.com/msgrd?v=3&amp;uin=506579631&amp;site=qq&amp;menu=yes" title="QQ" target="_blank" style="color:#12B7F5"><span class="icon iconify" data-icon="ri:qq-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/NicknamedCoco" title="GitHub" target="_blank" style="color:#1da1f2"><span class="icon iconify" data-icon="ri:github-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://www.zhihu.com/people/NicknamedCoco/" title="知乎" target="_blank" style="color:#0084FF"><span class="icon iconify" data-icon="ri:zhihu-line"></span></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://twitter.com/NicknamedCoco" title="Twitter" target="_blank" style="color:#1da1f2"><span class="icon iconify" data-icon="ri:twitter-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content">此文章未包含目录</div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://keyiup.com/2021/12/01/%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%E6%80%A7%E5%8F%8A%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98%E6%A6%82%E5%BF%B5/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="NicknamedCoco"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="CocoBlog"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">缓存数据一致性及多级缓存概念</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="创建时间：2021-12-01 16:33:56" itemprop="dateCreated datePublished" datetime="2021-12-01T16:33:56+08:00">2021-12-01</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-2-line"></span></span> <time title="修改时间：2023-06-16 09:28:01" itemprop="dateModified" datetime="2023-06-16T09:28:01+08:00">2023-06-16</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><span class="icon iconify" data-icon="ri:file-word-line"></span></span> <span title="本文字数">5.8k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><span class="icon iconify" data-icon="ri:timer-line"></span></span> <span title="阅读时长">20m</span></span></span><span class="post-meta-divider">-</span><a href="#comment"><span class="post-meta-item-icon" title="评论数"><span class="icon iconify" data-icon="ri:chat-3-line"></span> <span class="waline-comment-count" id="/2021/12/01/%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%E6%80%A7%E5%8F%8A%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98%E6%A6%82%E5%BF%B5/"></span></span></a><div class="post-classify"><span class="post-tag"><a class="tag-item" href="/tags/Redis/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">Redis</span></a><a class="tag-item" href="/tags/Canal/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">Canal</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><blockquote>
 <p>近况</p>
 </blockquote>
 <p>再来水一篇博客，我觉得写博客最重要的是创新，总结，而不是照搬，不然和重复造轮子有什么分别<br>但我个人实在太菜，要做创新也是非常难的，想到一个笑话：把别人的变成自己的，把自己的变成祖传的~</p>
@@ -74,7 +74,12 @@ IconifyProviders = {
 <p><span id="a">缓存误用场景</span></p>
 </blockquote>
 <ul>
-<li><p><strong>误用一：把缓存作为服务与服务之间传递数据的媒介</strong><br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/1.png" loading="lazy"><br>如上图：<br>服务1和服务2约定好key和value，通过缓存传递数据<br>服务1将数据写入缓存，服务2从缓存读取数据，达到两个服务通信的目的</p>
+<li><p><strong>误用一：把缓存作为服务与服务之间传递数据的媒介</strong></p>
+<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/1.png"/ loading="lazy">
+如上图：
+服务1和服务2约定好key和value，通过缓存传递数据
+服务1将数据写入缓存，服务2从缓存读取数据，达到两个服务通信的目的
+
 <p>该方案存在的问题：</p>
 <ul>
 <li><p>数据管道，数据通知场景，MQ更加适合</p>
@@ -94,27 +99,40 @@ IconifyProviders = {
 </li>
 </ul>
 </li>
-<li><p><strong>误用二：使用缓存未考虑雪崩</strong><br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/2.png" loading="lazy"><br>常规的缓存玩法，如上图：<br>服务先读缓存，缓存命中则返回<br>缓存不命中，再读数据库</p>
+<li><p><strong>误用二：使用缓存未考虑雪崩</strong></p>
+<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/2.png"/ loading="lazy">
+常规的缓存玩法，如上图：
+服务先读缓存，缓存命中则返回
+缓存不命中，再读数据库
+
 <p><strong>什么时候会产生雪崩？</strong><br>答：如果缓存挂掉，所有的请求会压到数据库，如果未提前做容量预估，可能会把数据库压垮<br>（在缓存恢复之前，数据库可能一直都起不来），导致系统整体不可服务。</p>
 <p><strong>如何应对潜在的雪崩？</strong><br>答：提前做容量预估，如果缓存挂掉，数据库仍能扛住，才能执行上述方案。</p>
 <p>否则，就要进一步设计，常见方案如下：</p>
 <ul>
-<li><p><strong>高可用缓存</strong><br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/3.png" loading="lazy"></p>
+<li><p><strong>高可用缓存</strong></p>
+<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/3.png"/ loading="lazy">
+
 <p>使用高可用缓存集群，一个缓存实例挂掉后，能够自动做故障转移。</p>
 </li>
-<li><p><strong>缓存水平切分</strong><br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/4.png" loading="lazy"></p>
+<li><p><strong>缓存水平切分</strong></p>
+<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/4.png"/ loading="lazy">
+
 <p>如上图：使用缓存水平切分（推荐使用一致性哈希算法进行切分），一个缓存实例挂掉后，不至于所有的流量都压到数据库上。</p>
 </li>
 </ul>
 </li>
-<li><p><strong>误用三：调用方缓存数据</strong><br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/5.png" loading="lazy"></p>
+<li><p><strong>误用三：调用方缓存数据</strong></p>
+<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/5.png"/ loading="lazy">
+
 <p>如上图：<br>服务提供方缓存，向调用方屏蔽数据获取的复杂性（这个没问题）<br>服务调用方，也缓存一份数据，先读自己的缓存，再决定是否调用服务（这个有问题）</p>
 <p>该方案存在的问题是：</p>
 <pre class="language-none"><code class="language-none">1、调用方需要关注数据获取的复杂性（耦合问题）
 2、更严重的，服务修改db里的数据，淘汰了服务cache之后，难以通知调用方淘汰其cache里的数据，从而导致数据不一致（带入一致性问题）
 3、有人说，服务可以通过MQ通知调用方淘汰数据，额，难道下游的服务要依赖上游的调用方，分层架构设计不是这么玩的（反向依赖问题）</code></pre>
 </li>
-<li><p><strong>误用四：多服务共用缓存实例</strong><br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/6.png" loading="lazy"></p>
+<li><p><strong>误用四：多服务共用缓存实例</strong></p>
+<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/6.png"/ loading="lazy">
+
 <p>如上图：服务A和服务B共用一个缓存实例（不是通过这个缓存实例交互数据）</p>
 <p>该方案存在的问题是：</p>
 <pre class="language-none"><code class="language-none">1、可能导致key冲突，彼此冲掉对方的数据
@@ -122,7 +140,9 @@ IconifyProviders = {
 2、不同服务对应的数据量，吞吐量不一样，共用一个实例容易导致一个服务把另一个服务的热数据挤出去
 3、共用一个实例，会导致服务之间的耦合，与微服务架构的“数据库，缓存私有”的设计原则是相悖的</code></pre>
 
-<p>建议的玩法是：<br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/7.png" loading="lazy"></p>
+<p>建议的玩法是：</p>
+<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/7.png"/ loading="lazy">
+
 <p>如上图：各个服务私有化自己的数据存储，对上游屏蔽底层的复杂性。</p>
 </li>
 <li><p><strong>总结</strong></p>
@@ -257,18 +277,29 @@ IconifyProviders = {
 </li>
 </ul>
 </li>
-<li><p><strong>在有主从时延的情况下，上面两个方案的比较</strong><br>先来个结论：发生写请求后（不管是先操作数据库，还是先删除缓存），在主从数据库同步完成之前，<br>如果有读请求，都可能发生读Cache Miss，读从库把旧数据存入缓存的情况。<br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/8.png" loading="lazy"><br>上图是先操作缓存，其实先操作数据库也是同样的情况，都会发生数据不一致情况。<br>主从时延导致的数据不一致问题根本原因是数据库主从不一致引起的，当主库上发生写操作之后，<br>从库binlog同步的时间间隔内，读请求，可能导致有旧数据入缓存。</p>
+<li><p><strong>在有主从时延的情况下，上面两个方案的比较</strong><br>先来个结论：发生写请求后（不管是先操作数据库，还是先删除缓存），在主从数据库同步完成之前，<br>如果有读请求，都可能发生读Cache Miss，读从库把旧数据存入缓存的情况。</p>
+<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/8.png"/ loading="lazy">
+上图是先操作缓存，其实先操作数据库也是同样的情况，都会发生数据不一致情况。
+主从时延导致的数据不一致问题根本原因是数据库主从不一致引起的，当主库上发生写操作之后，
+从库binlog同步的时间间隔内，读请求，可能导致有旧数据入缓存。
+
 <p>那么主从时延的问题如何解决？这里有一个思路：<br><strong>可选择性读主</strong></p>
 <pre class="language-none"><code class="language-none">那能不能写操作记录下来，在主从时延的时间段内，读取修改过的数据的话，强制读主，并且更新缓存，
 这样子缓存内的数据就是最新。在主从时延过后，这部分数据继续读从库，从而继续利用从库提高读取能力。</code></pre>
 
-<p>可以利用一个缓存记录必须读主的数据。<br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/9.png" loading="lazy"><br>如上图，当写请求发生时：</p>
+<p>可以利用一个缓存记录必须读主的数据。</p>
+<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/9.png"/ loading="lazy">
+如上图，当写请求发生时：
+
 <pre class="language-none"><code class="language-none">1)写主库
 2)将哪个库，哪个表，哪个主键三个信息拼装一个key设置到cache里，这条记录的超时时间，设置为“主从同步时延”
     PS：key的格式为“db:table:PK”，假设主从延时为1s，这个key的cache超时时间也为1s。
 注意：你别跟我说在1,2步之间如果有读请求查询发现没这个key,就去读从库了，没完没了了~</code></pre>
 
-<p><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/10.png" loading="lazy"><br>如上图，当读请求发生时：<br>这是要读哪个库，哪个表，哪个主键的数据呢，也将这三个信息拼装一个key，到cache里去查询</p>
+<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/10.png"/ loading="lazy">
+如上图，当读请求发生时：
+这是要读哪个库，哪个表，哪个主键的数据呢，也将这三个信息拼装一个key，到cache里去查询
+
 <pre class="language-none"><code class="language-none">1)如果cache里有这个key，说明1s内刚发生过写请求，数据库主从同步可能还没有完成，此时就应该去主库查询。
     并且把主库的数据set到缓存中，防止下一次cahce miss。
 2)如果cache里没有这个key，说明最近没有发生过写请求，此时就可以去从库查询</code></pre>
@@ -277,8 +308,13 @@ IconifyProviders = {
 </li>
 <li><p><strong>缓存删除重试机制</strong><br>删除缓存失败，如果同步再删除缓存，大概率还会失败，一般都是通过异步的方式<br>异步删除缓存分为两种，一种使用消息队列的方式，一种使用订阅数据库的binlog二进制日志文件。</p>
 <ul>
-<li>使用消息队列方式<br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/11.png" style="zoom:80%;" / loading="lazy"><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/12.png" loading="lazy"><br>此时解决方案就是利用消息队列进行删除的补偿。但是这个方案会有一个缺点<br>就是会对业务代码造成大量的侵入，深深的耦合在一起，所以我们可以尝试下面的方式。</li>
-<li>使用订阅数据库binlog方式<br>我们知道对 Mysql 数据库更新操作后再 binlog 日志中我们都能够找到相应的操作，<br>那么我们可以订阅 Mysql 数据库的 binlog 日志对缓存进行操作。<br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/13.png" loading="lazy"><br>订阅binlog服务方式比直接使用消息队列方式要好，因为订阅binlog服务方式是独立的服务<br>而消息队列则要集成到微服务中，耦合性要低，阿里巴巴有一个叫canal的框架，就可以帮助我们<br>将binlog日志采集发送到MQ队列里面，然后通过ACK机制确认处理这条更新消息，删除缓存，保证数据缓存一致性</li>
+<li>使用消息队列方式<br><img src="https://cdn.keyiup.com/blog/redis/cache-consistent/11.png" style="zoom:80%;" / loading="lazy"><img src="https://cdn.keyiup.com/blog/redis/cache-consistent/12.png"/ loading="lazy"><br>此时解决方案就是利用消息队列进行删除的补偿。但是这个方案会有一个缺点<br>就是会对业务代码造成大量的侵入，深深的耦合在一起，所以我们可以尝试下面的方式。</li>
+<li>使用订阅数据库binlog方式<br>我们知道对 Mysql 数据库更新操作后再 binlog 日志中我们都能够找到相应的操作，<br>那么我们可以订阅 Mysql 数据库的 binlog 日志对缓存进行操作。<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/13.png"/ loading="lazy">
+订阅binlog服务方式比直接使用消息队列方式要好，因为订阅binlog服务方式是独立的服务
+而消息队列则要集成到微服务中，耦合性要低，阿里巴巴有一个叫canal的框架，就可以帮助我们
+将binlog日志采集发送到MQ队列里面，然后通过ACK机制确认处理这条更新消息，删除缓存，保证数据缓存一致性
+
+</li>
 </ul>
 </li>
 </ul>
@@ -314,20 +350,28 @@ IconifyProviders = {
 </li>
 <li><p><strong>Read-Through/Write through</strong><br>这两个模式统称为读写穿透模式，该模式中服务端把缓存作为主要数据存储。应用程序跟数据库缓存交互，都通过<strong>抽象缓存层</strong>完成的<br>抽象缓存层是请求和缓存之间的一层，我们只需要操作抽象缓存层即可，不用管下面如何实现，计算机不就是<br>不停的封装，抽象嘛，任何问题都可以通过加一层来解决，如果不行，加两层~<br>让我们看看Read-Through/Write through的工作流程</p>
 <ul>
-<li>Read-Through<br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/14.png" loading="lazy"><br>Read-Through实际只是在<strong>Cache-Aside</strong>之上进行了一层封装，它会让程序代码变得更简洁，同时也减少数据源上的负载。</li>
-<li>Write through<br>Write-Through模式下，当发生写请求时，也是由缓存抽象层完成数据源和缓存数据的更新,流程如下：<br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/15.png" loading="lazy"></li>
+<li>Read-Through<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/14.png"/ loading="lazy">
+Read-Through实际只是在**Cache-Aside**之上进行了一层封装，它会让程序代码变得更简洁，同时也减少数据源上的负载。</li>
+<li>Write through<br>Write-Through模式下，当发生写请求时，也是由缓存抽象层完成数据源和缓存数据的更新,流程如下：<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/15.png"/ loading="lazy">
+</li>
 </ul>
 </li>
 <li><p><strong>Write behind</strong></p>
-<p>异步缓存写入模式，Write behind跟Read-Through/Write-Through有相似的地方，<br>都是由<code>Cache Provider</code>来负责缓存和数据库的读写。它俩又有个很大的不同：<br><strong>Read/Write Through</strong>是同步更新缓存和数据的，<br><strong>Write Behind</strong>则是只更新缓存，不直接更新数据库，通过<strong>批量异步</strong>的方式来更新数据库。<br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/16.png" loading="lazy"><br>这种方式下，缓存和数据库的一致性不强，<strong>对一致性要求高的系统要谨慎使用</strong>。但是它适合频繁写的场景，<br>MySQL的<strong>InnoDB Buffer Pool机制</strong>就使用到这种模式。</p>
+<p>异步缓存写入模式，Write behind跟Read-Through/Write-Through有相似的地方，<br>都是由<code>Cache Provider</code>来负责缓存和数据库的读写。它俩又有个很大的不同：<br><strong>Read/Write Through</strong>是同步更新缓存和数据的，<br><strong>Write Behind</strong>则是只更新缓存，不直接更新数据库，通过<strong>批量异步</strong>的方式来更新数据库。</p>
+<img src="https://cdn.keyiup.com/blog/redis/cache-consistent/16.png"/ loading="lazy">
+这种方式下，缓存和数据库的一致性不强，**对一致性要求高的系统要谨慎使用**。但是它适合频繁写的场景，
+MySQL的**InnoDB Buffer Pool机制**就使用到这种模式。
+
+
+
 </li>
 </ul>
 <blockquote>
 <p><span id="d">多级缓存的概念</span></p>
 </blockquote>
-<p>聊多级缓存之前，我们看看之前我们脑中缓存的流程：<br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/17.png" loading="lazy"></p>
+<p>聊多级缓存之前，我们看看之前我们脑中缓存的流程：<br><img src="https://cdn.keyiup.com/blog/redis/cache-consistent/17.png"/ loading="lazy"></p>
 <p>请求来到后端服务器，后端服务器查询redis，如果查询失败，则查询数据库，查到后将数据回填到redis中</p>
-<p>那么多级缓存是个什么概念呢？请看下图：<br><img src="https://cdn.wanyiai.com/blog/redis/cache-consistent/18.png" loading="lazy"></p>
+<p>那么多级缓存是个什么概念呢？请看下图：<br><img src="https://cdn.keyiup.com/blog/redis/cache-consistent/18.png"/ loading="lazy"></p>
 <pre class="language-none"><code class="language-none">1，请求先查询浏览器缓存(localStorage,SessionStorage)
 2，如果没查到，请求来看nginx反向代理服务器，经过反向代理，来到nginx的本地缓存集群
     使用nginx存储本地缓存
